@@ -9,5 +9,6 @@
 
 ### Assumptions
 
-- Blog posts are under the control of Chronicle Heads
-- User roles are assigned as signame_member/signame_head
+- Sig heads are assigned "staff" status
+- Everyone's accounts have to be made manually
+- Passwords can be changed once logged in, default username-firstnamelastname, default password-istenitk
