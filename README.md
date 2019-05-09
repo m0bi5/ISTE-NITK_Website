@@ -13,3 +13,8 @@
 - Sig heads are assigned "staff" status
 - Everyone's accounts have to be made manually
 - Passwords can be changed once logged in, default username-firstnamelastname, default password-istenitk
+
+### Testing
+
+- Use ankitkarody or amodhshenoy as member accounts
+- Use mohitbhasi or niharchitnis as SIG head accounts
