@@ -1,0 +1,2 @@
+django_ckeditor==5.7.0
+Django==2.2
