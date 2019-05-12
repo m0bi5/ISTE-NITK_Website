@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'recruitments',
     'blogs',
     'ckeditor',
+    'multiselectfield',
     'ckeditor_uploader'
 ]
 
