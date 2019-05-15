@@ -4,6 +4,7 @@ from datetime import date
 
 # Create your models here.
 class Blog(models.Model):
+    blog_id=models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
     title=models.CharField(default="",max_length=200)
     categories=models.CharField(default="",max_length=200)
     abstract=models.CharField(default="",max_length=200)
