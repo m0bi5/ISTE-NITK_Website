@@ -1,13 +1,14 @@
 from django.urls import path,include
 from events import views
+from django.conf.urls import url
 
 urlpatterns = [
     # /events/
-    path('', views.events, name='events')
+    url(r'', views.events, name='events'),
 
     # /events/event_id/
-    path(r'^(?P<event_id>[0-9]+)/$', views.eventdetails, name='eventdetails')
+    url(r'^(?P<event_id>[0-9]+)/$', views.eventdetails, name='eventdetails'),
 
     # /events/event_id/register/
-    path(r'^(?P<event_id>[0-9]+)/register/$', view.eventregister, name='eventregister')
+    url(r'^(?P<event_id>[0-9]+)/register/$', views.eventregister, name='eventregister')
 ] 
