@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <!--
+    <form id="progress_form">
+        <input id="passcode" placeholder="Enter passcode"> 
+    </form>
+    <button id="progress_button" onclick="check_code()">Check Progress</button>
+    -->
+    <script>
+        /*
+        function sha256(input){
+            var hasher = forge.md.sha256.create();  
+            hasher.start();  
+            hasher.update(input, "utf8");  
+            var hash = hasher.digest().toHex();  
+            return new String(hash)
+        }
+        function check_code(){            
+            var db_passcode="{{applicant_passcode}}"
+            var entered_passcode=sha256($('#passcode').val())
+            if(db_passcode==entered_passcode){
+                $('#progress_form').hide()
+                $('#progress_button').hide()
+
+            }
+        }
+        */
+    </script>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>Project Name: {{ project.name}} </h3>
+  <p>Members: {{ project.members }} </p>
+  <p>Mentors: {{ project.mentors }} </p>
+  <p>Description: {{ project.description|safe }}</p>
+{% endblock %}
