@@ -1,4 +1,6 @@
 from django.db import models
+import time
+from datetime import datetime
 
 year_choices = (
     ('2nd year','2nd year'),
@@ -29,7 +31,9 @@ class ApplicantResponses(models.Model):
     responses = models.TextField(blank=True)
     progress = models.IntegerField(default=0)
     qualified_for_next = models.BooleanField(default=False)
-    next_round_time = models.DateField(null=True)
+    now_timestamp = time.time()
+    offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(now_timestamp)
+    next_round_time = models.DateTimeField(default=datetime.now(), blank=True,null=True)
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
 
 class SIGRound(models.Model):
