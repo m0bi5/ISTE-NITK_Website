@@ -11,10 +11,7 @@ def projects(request):
         sigs = ['Crypt','Charge','Credit','Chronicle','Clutch','Concrete','Create','Catalyst']
         for sig in sigs:
             projects_list[year][sig] = Project.objects.filter(year=year,sig=sig)
-<<<<<<< HEAD
-=======
     print(projects_list)
->>>>>>> efcb0f26f8d46ae67ab1d5d3af81da4956b94641
     return render(request,'projects/project_list.html',{'projects': projects_list})
 
 def show_project(request,id):

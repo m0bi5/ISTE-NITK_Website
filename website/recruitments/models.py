@@ -1,12 +1,5 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
 
-<<<<<<< HEAD
-# Create your models here.
-#class ApplicantPasscode(models.Model):
-#    applicant_id=models.CharField(default="",max_length=100) #Change this to foreign key
-#    applicant_passcode=models.CharField(default="",max_length=100) #No need to hash, seems unnecessary
-=======
 year_choices = (
     ('2nd year','2nd year'),
     ('3rd year','3rd year'))
@@ -48,4 +41,3 @@ class Question(models.Model):
     id = models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
     body = models.TextField(blank=True)
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
->>>>>>> fc5014123bf93ac65610d1fb1d52524d45f940e5
