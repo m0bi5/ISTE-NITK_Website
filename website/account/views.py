@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login as l
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 def login(request):
     if request.method!="POST":

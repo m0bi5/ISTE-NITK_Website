@@ -1,6 +1,5 @@
 from django.shortcuts import render
-#from .models import ApplicantPasscode
-import hashlib
+from django.contrib.auth.decorators import login_required
 from .models import *
 
 # Create your views here.
@@ -9,7 +8,7 @@ def recruitments(request):
 
 def application_progress(request,applicant_id):
     applicant=Applicant.objects.get(id=applicant_id)
-    sigs_progress=ApplicantResponses.objects.filter(applicant=applicant)
+    sigs_progress=ApplicantProgress.objects.filter(applicant=applicant)
     scores_calculated=[]
     #Get application of other people applied to the same sig and in the same round
     other_applicants_status=[ [applicant.qualified_for_next for applicant in ApplicantResponses.objects.filter(progress=obj.progress,sig=obj.sig).exclude(applicant=applicant)] for obj in sigs_progress]
@@ -21,3 +20,8 @@ def application_progress(request,applicant_id):
             scores_calculated.append(False)
             
     return render(request,'recruitments/application_progress.html',{'progress_and_scores':zip(scores_calculated,sigs_progress)})
+
+@login_required(login_url='/account/')
+def interview(request):
+    print(vars(request.user))
+    return

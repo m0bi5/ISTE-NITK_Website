@@ -26,10 +26,23 @@ class Applicant(models.Model):
     def __str__(self):
         return self.name
 
-class ApplicantResponses(models.Model):
+class Question(models.Model):
+    id = models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
+    body = models.TextField(blank=True)
+    sig = models.CharField(max_length=9, choices=SIG_CHOICES)
+
+    def __str__(self):
+        return self.body
+
+class ApplicantResponse(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
-    responses = models.TextField(blank=True)
-    progress = models.IntegerField(default=0)
+    response = models.TextField(blank=True)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    sig = models.CharField(max_length=9, choices=SIG_CHOICES)
+    
+class ApplicantProgress(models.Model):
+    applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
+    round_completed = models.IntegerField(default=0)
     qualified_for_next = models.BooleanField(default=False)
     now_timestamp = time.time()
     offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(now_timestamp)
@@ -40,8 +53,3 @@ class SIGRound(models.Model):
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
     round_number = models.IntegerField(default=1)
     round_description = models.CharField(max_length=500)
-
-class Question(models.Model):
-    id = models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
-    body = models.TextField(blank=True)
-    sig = models.CharField(max_length=9, choices=SIG_CHOICES)
