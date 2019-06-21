@@ -4,11 +4,11 @@ from django.conf.urls import url
 
 urlpatterns = [
     # /events/
-    url(r'', views.events, name='events'),
+    url(r'', views.event_view, name='event_view'),
 
     # /events/event_id/
-    url(r'^(?P<event_id>[0-9]+)/$', views.eventdetails, name='eventdetails'),
+    url(r'^(?P<event_id>[0-9]+)/$', views.eventdetails, name='event_details'),
 
     # /events/event_id/register/
-    url(r'^(?P<event_id>[0-9]+)/register/$', views.eventregister, name='eventregister')
+    url(r'^(?P<event_id>[0-9]+)/register/$', views.eventregister, name='event_register')
 ] 

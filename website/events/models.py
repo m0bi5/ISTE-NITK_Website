@@ -13,7 +13,7 @@ class EventDetails(models.Model):
     ('Credit','Credit'),
     ('Crypt','Crypt'),
     )
-
+    
     event_name=models.CharField(default="",max_length=200)
     contact1_name=models.CharField(default="",max_length=200)
     contact1_number=models.IntegerField(default=0)
