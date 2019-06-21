@@ -1,6 +1,7 @@
-from django.db import models
+from django.db import models,migrations
 import time
 from datetime import datetime
+from django.contrib.postgres.fields import HStoreField
 
 year_choices = (
     ('2nd year','2nd year'),
@@ -16,6 +17,7 @@ SIG_CHOICES=(
     ('Create','CREATE'),
     ('Catalyst','CATALYST'))
 
+
 class Applicant(models.Model):
     id = models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
     name = models.CharField(default="",max_length=50)
@@ -26,7 +28,7 @@ class Applicant(models.Model):
     def __str__(self):
         return self.name
 
-class Question(models.Model):
+class Round0Question(models.Model):
     id = models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
     body = models.TextField(blank=True)
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
@@ -37,7 +39,7 @@ class Question(models.Model):
 class ApplicantResponse(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     response = models.TextField(blank=True)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Round0Question, on_delete=models.CASCADE)
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
     
 class ApplicantProgress(models.Model):
@@ -53,3 +55,7 @@ class SIGRound(models.Model):
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
     round_number = models.IntegerField(default=1)
     round_description = models.CharField(max_length=500)
+    criteria = HStoreField(default=None,blank=True)
+    #Some questions you want to make sure the interviewer asks
+    question = HStoreField(default=None,blank=True)
+    

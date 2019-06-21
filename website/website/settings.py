@@ -33,19 +33,23 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #Built in
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'django.contrib.postgres',
+    #Developed
     'home',
     'account',
     'events',
     'projects',
     'recruitments',
     'blogs',
+    #3rd Party
+    'django_admin_hstore_widget',
     'ckeditor',
     'ckeditor_uploader',
 ]
@@ -86,8 +90,12 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'istenitk',
+        'USER':'postgres',
+        'PASSWORD':'mohit123',
+        'HOST': 'localhost',
+        'PORT':'9000',
     }
 }
 
