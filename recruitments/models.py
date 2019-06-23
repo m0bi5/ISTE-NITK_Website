@@ -29,7 +29,7 @@ class Applicant(models.Model):
         return self.name
 
 class Round0Question(models.Model):
-    id = models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
+    id = models.AutoField(primary_key=True)
     body = models.TextField(blank=True)
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
 
