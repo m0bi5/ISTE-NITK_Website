@@ -1,0 +1,6 @@
+django_ckeditor==5.7.0
+Django==2.2
+django_admin_hstore_widget==1.0.1
+python-decouple==3.1
+dj-database-url==0.4.2
+dj-static==0.0.6
