@@ -7,7 +7,7 @@ from django import forms
 
 @admin.register(Applicant)
 class ApplicantAdmin(admin.ModelAdmin):
-    list_display=('id','name','phone','email','year')
+    list_display=('name','phone','email','year')
 
 @admin.register(ApplicantResponse)
 class ApplicantResponseAdmin(admin.ModelAdmin):
