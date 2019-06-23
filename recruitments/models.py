@@ -19,7 +19,7 @@ SIG_CHOICES=(
 
 
 class Applicant(models.Model):
-    id = models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(default="",max_length=50)
     phone = models.IntegerField()
     email = models.EmailField()
