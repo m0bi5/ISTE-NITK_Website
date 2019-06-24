@@ -1,4 +1,4 @@
-# ISTE-NITK-GOAT_Website
+# ISTE-NITK_Website
 
 ### Things to keep in mind
 
@@ -16,5 +16,4 @@
 
 ### Testing
 
-- Use ankitkarody or amodhshenoy as member accounts
-- Use mohitbhasi or niharchitnis as SIG head accounts
+- Use mohitbhasi to login
