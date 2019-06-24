@@ -1,6 +1,7 @@
 from django.db import models,migrations
 import time
 from datetime import datetime
+from django.core.validators import RegexValidator
 from django.contrib.postgres.fields import HStoreField
 
 year_choices = (
@@ -20,8 +21,10 @@ SIG_CHOICES=(
 
 class Applicant(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(default="",max_length=50)
-    phone = models.IntegerField()
+    first_name = models.CharField(default="",max_length=50)
+    last_name = models.CharField(default="",max_length=50)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     email = models.EmailField()
     year = models.CharField(choices=year_choices, max_length=8)
 
