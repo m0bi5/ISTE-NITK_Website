@@ -12,7 +12,7 @@
     Last Name <input value="{{user.last_name}}" name="last_name" type="text"/>
     Email <input value="{{user.email}}" name="email" type="email"/>
     Phone Number <input value="{{user.phone_number}}" name="phone_number" type="tel"/>
-    {% if user.avatar.url %}
+    {% if user.avatar %}
         Avatar <img width="100" height="100" src="{{user.avatar.url}}"/>
     {% endif %}
     <input type="file" name="avatar" />
