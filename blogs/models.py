@@ -5,7 +5,7 @@ from account import models as account_models
 
 # Create your models here.
 class Blog(models.Model):
-    id=models.IntegerField(auto_created=True,editable=False,primary_key=True,unique=True)
+    id=models.AutoField(primary_key=True)
     title=models.CharField(default="",max_length=200)
     categories=models.CharField(default="",max_length=200)
     abstract=models.CharField(default="",max_length=200)
