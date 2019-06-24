@@ -17,18 +17,24 @@ class ApplicantResponseAdmin(admin.ModelAdmin):
 class ApplicantProgressAdmin(admin.ModelAdmin):
     list_display=('applicant','round_completed','qualified_for_next','next_round_time','sig')
 
-class SIGRoundAdminForm(forms.ModelForm):
-    criteria = HStoreFormField()
-    question = HStoreFormField()
-    class Meta:
-       model = SIGRound
-       list_display=('sig','round_number','round_description')
-       exclude=()
+
+class QuestionInline(admin.TabularInline):
+    model = SIGRound.questions.through
+
+class CriteriaInline(admin.TabularInline):
+    model = SIGRound.criteria.through
 
 @admin.register(SIGRound)
 class SIGRoundAdmin(admin.ModelAdmin):
-    form = SIGRoundAdminForm
+    inlines=[CriteriaInline,QuestionInline]
+    exclude=('criteria','questions')
+    list_display=('sig','round_number','round_description')
 
-@admin.register(Round0Question)
-class Round0QuestionAdmin(admin.ModelAdmin):
+#@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display=('id','body','sig')
+
+
+#@admin.register(Criteria)
+class CriteriaAdmin(admin.ModelAdmin):
     list_display=('id','body','sig')
