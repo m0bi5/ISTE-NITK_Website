@@ -29,7 +29,7 @@ class Applicant(models.Model):
     year = models.CharField(choices=year_choices, max_length=8)
 
     def __str__(self):
-        return self.name
+        return self.first_name+' '+self.last_name
 
 class Round0Question(models.Model):
     id = models.AutoField(primary_key=True)
