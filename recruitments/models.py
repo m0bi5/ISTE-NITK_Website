@@ -37,7 +37,7 @@ class Round0Question(models.Model):
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
 
     def __str__(self):
-        return self.body
+        return self.sig+'-'+self.body
 
 class ApplicantResponse(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
