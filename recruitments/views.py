@@ -71,8 +71,8 @@ def questions(request,applicant_rollno,sigs):
                 question = Question.objects.get(id=int(id))
                 ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig=question.sig)
 
-            gmailaddress = "amodhshenoy@gmail.com"
-            gmailpassword = "iwannaknow101"
+            gmailaddress = "istenitkchapter@gmail.com"
+            gmailpassword = "#includeistenitk.h"
             mailto = applicant.email
 
             mailServer = smtplib.SMTP('smtp.gmail.com' , 587)
