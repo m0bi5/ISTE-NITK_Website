@@ -78,7 +78,7 @@ def questions(request,applicant_rollno,sigs):
             mailServer = smtplib.SMTP('smtp.gmail.com' , 587)
             mailServer.starttls()
             mailServer.login(gmailaddress , gmailpassword)
-            msg = text('''Hey {}!!\n\tThank you for participating in the recruitment process!!! Your applicant ID for the recruitment process is:{}'''.format(applicant.first_name,str(applicant.rollno)))
+            msg = text('''Hey {}!!\n\tThank you for participating in the recruitment process!!! Your progress will be uploaded soon, which can be viewed by clicking on this link: http://127.0.0.1:8000/recruitments/progress/{}/'''.format(applicant.first_name,str(applicant.rollno)))
             msg['Subject'] = 'ISTE Recruitments - Applicant ID'
             msg['From'] = gmailaddress
             msg['To'] = mailto
@@ -91,8 +91,8 @@ def questions(request,applicant_rollno,sigs):
             messages.add_message(request,messages.ERROR,"ERROR IN RECAPTCHA!! PLEASE TRY AGAIN!!")
             return redirect('/recruitments/questions/{}/{}'.format(applicant_rollno,sigs))
 
-def application_progress(request,applicant_id):
-    applicant=Applicant.objects.get(id=applicant_id)
+def application_progress(request,applicant_rollno):
+    applicant=Applicant.objects.get(rollno=applicant_rollno)
     sigs_progress=ApplicantProgress.objects.filter(applicant=applicant)
     scores_calculated=[]
     #Get application of other people applied to the same sig and in the same round
