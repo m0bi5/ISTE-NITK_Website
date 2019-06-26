@@ -27,7 +27,11 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['istenitk.herokuapp.com','127.0.0.1','localhost']
+=======
+ALLOWED_HOSTS = ['istenitk.herokuapp.com','localhost','210.212.194.6']
+>>>>>>> upstream/master
 
 # Application definition
 
@@ -81,7 +85,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'website.wsgi.application'
-
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # default
+    'guardian.backends.ObjectPermissionBackend',
+)
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

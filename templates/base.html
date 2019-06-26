@@ -16,10 +16,15 @@
     {% endif %}
     {% if user.is_authenticated %}
         Hi {{user.first_name}}!
-        <a href="{% url 'change_password' %}">Change password</a>
+        <a href="{% url 'interview' %}">Conduct Interview</a>
     {% else %}
         <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'recruitments' %}">Get Recruited</a>
+    
     {% endif %}
+    <a href="{% url 'projects_list' %}">Projects</a>
+    <a href="{% url 'blogs' %}">Blogs</a>
+    
     {% block content %}
     {% endblock content %}
     </body>
