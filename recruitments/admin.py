@@ -34,7 +34,7 @@ class SIGRoundAdmin(admin.ModelAdmin):
 class QuestionAdmin(admin.ModelAdmin):
     list_display=('id','body','sig')
 
-
+admin.site.register(Question)
 #@admin.register(Criteria)
 class CriteriaAdmin(admin.ModelAdmin):
     list_display=('id','body','sig')
