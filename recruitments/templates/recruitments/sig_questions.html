@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="post">
+  {% csrf_token %}
+  {% for sig,quests in questions.items %}
+    <h3>{{sig}}</h3>
+    {% for question in quests %}
+      <p>{{question.body}}</p>
+      <textarea name={{question.id}} rows="10" cols="100"></textarea>
+    {% endfor %}
+  {% endfor %}
+  <br>
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <div class="g-recaptcha" data-sitekey="6LexoqoUAAAAAPAb_LVSUpzht2E-Zjf9tGfxz1rZ" required></div>
+  <button type="submit" class="btn btn-primary">Submit Answers</button>
+</form>
+{% endblock %}
