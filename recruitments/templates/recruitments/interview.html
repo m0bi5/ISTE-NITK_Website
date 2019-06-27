@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+Conduct interview for
+
+{% for sig in interviewable %}
+    <a href="{% url 'sig_interview' sig.name %}">{{sig.name}}</a>
+{% endfor %}
+{% endblock %} 

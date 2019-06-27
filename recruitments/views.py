@@ -20,6 +20,7 @@ def applicant_details(request):
             applicant = Applicant.objects.filter(rollno=details['rollno'])
             if len(applicant)==0:
                 applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
+               
             else:
                 applicant=applicant[0]
             not_chosen = []
@@ -48,6 +49,7 @@ def questions(request,applicant_rollno,sigs):
         questions = {}
         for sig in sig_choices:
             questions[sig] = Question.objects.filter(sig=sig)
+            ApplicantProgress.objects.create(applicant=applicant,sig=sig)
         return render(request,'recruitments/sig_questions.html',{'questions':questions})
     else:
         recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -96,7 +98,7 @@ def application_progress(request,applicant_rollno):
     sigs_progress=ApplicantProgress.objects.filter(applicant=applicant)
     scores_calculated=[]
     #Get application of other people applied to the same sig and in the same round
-    other_applicants_status=[ [applicant.qualified_for_next for applicant in ApplicantProgress.objects.filter(progress=obj.round_completed,sig=obj.sig).exclude(applicant=applicant)] for obj in sigs_progress]
+    other_applicants_status=[ [applicant.qualified_for_next for applicant in ApplicantProgress.objects.filter(round_completed=obj.round_completed,sig=obj.sig).exclude(applicant=applicant)] for obj in sigs_progress]
     #If other people have qualified, applicant with applicant_id has not qualified
     for applicant_status in other_applicants_status:
         if True in applicant_status:
@@ -108,5 +110,41 @@ def application_progress(request,applicant_rollno):
 
 @login_required(login_url='/account/')
 def interview(request):
-    print(vars(request.user))
-    return
+    applications=[]
+    sigs=request.user.sigs.all()
+    context={'interviewable':sigs}
+    interviewable_sigs=[]
+    return render(request,'recruitments/interview.html',context)
+
+def sig_interview(request,sig):
+    applicants=list(ApplicantResponse.objects.filter(sig=sig))
+    for applicant in applicants:
+        progress=ApplicantProgress.objects.get(applicant=applicant.applicant,sig=sig)
+        if progress.interview_done:
+            del applicants[applicants.index(applicant)]
+
+    context={'applicants':applicants,'sig':sig}
+    if request.POST:
+        try:
+            context['applicants']=ApplicantResponse.objects.filter(sig=sig,applicant=Applicant.objects.get(rollno=request.POST['rollno']))
+        except:
+            messages.add_message(request,messages.ERROR,"Roll number not found")
+    return render(request,'recruitments/sig_interview.html',context)
+
+def personal_interview(request,sig,rollno):
+    applicant=Applicant.objects.get(rollno=rollno)
+    responses=ApplicantResponse.objects.filter(sig=sig,applicant=applicant)
+    progress=ApplicantProgress.objects.get(sig=sig,applicant=applicant)
+    sig_round=SIGRound.objects.get(sig=sig,round_number=progress.round_completed+1)
+    criteria=Criteria.objects.filter(sig=sig_round)
+    context={'sig':sig,'rollno':rollno,'applicant':applicant,'criteria':criteria,'sig_round':sig_round,'progress':progress,'responses':responses}
+    if progress.interview_done:
+        return redirect('sig_interview',sig)
+    if request.POST:
+        for crit in criteria:
+            InterviewResponse.objects.create(criteria=crit,response=request.POST[str(crit.id)],sig=sig,applicant=applicant,interviewer=request.user)
+        progress.interview_done=True
+        progress.save()
+        return redirect('sig_interview',sig)
+       
+    return render(request,'recruitments/personal_interview.html',context)

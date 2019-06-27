@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<br/>
+
+<form action="{% url 'personal_interview' sig rollno %}" method="POST">
+    {% csrf_token %}
+    <input name="first_name" type="text" value="{{applicant.first_name}}" disabled></input>
+    <input name="last_name" type="text" value="{{applicant.last_name}}" disabled></input>
+    <input name="rollno" type="text" value="{{applicant.rollno}}" disabled></input>
+    <input name="email" type="text" value="{{applicant.email}}" disabled></input>
+    <input name="phone" type="text" value="{{applicant.phone}}" disabled></input>
+    {% for response in responses %}
+        {{response.question.body}}
+        <input name="answer" type="text" value="{{response.response}}" disabled></input>
+    {% endfor %}
+    {% for crit in criteria %}
+        {{crit.body}}
+        <input name="{{crit.id}}" type="text" value=""></input>
+    {% endfor %}
+    <input type="submit">
+</form>
+
+{% endblock %} 

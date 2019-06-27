@@ -3,9 +3,13 @@
     {% for score_calculated,progress in progress_and_scores %}
         <br>
         Your progress in {{progress.sig}}
-        You have completed {{progress.progress}} rounds
+        You have completed {{progress.round_completed}} round(s)
         {% if progress.qualified_for_next %}
-            Your next round is on {{progress.next_round_time}}
+            {% if progress.next_round_time %}
+                Your next round is on {{progress.next_round_time}}
+            {% else %}
+                Your next round timings have not been allocated
+            {% endif %}
         {% else %}
             {% if score_calculated %}
                 Did not qualify

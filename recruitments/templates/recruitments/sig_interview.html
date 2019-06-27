@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<br/>
+
+Conducting interviews for {{sig}}
+
+<a href="{% url 'interview' %}">Conduct interview for another sig</a>
+
+<form action="{% url 'sig_interview' sig %}" method="POST">
+    {% csrf_token %}
+    <input placeholder="Search for roll number" name="rollno" type="text"></input>
+    <input type="submit">
+</form>
+
+{% for applicant in applicants %}
+    <a href="{% url 'personal_interview' sig applicant.applicant.rollno %}">{{applicant.applicant.rollno}}</a>
+{% endfor %}
+{% endblock %} 
