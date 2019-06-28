@@ -19,7 +19,7 @@ SIG_CHOICES=(
 
 
 class Applicant(models.Model):
-    rollno_regex = RegexValidator(regex=r'^1[78]1(IT|MN|MT|ME|CS|EE|EC|CH|D)[12][0-7][0-9]$',message="Roll number must be in the format: 1[7/8]1XX[1/2]XX")
+    rollno_regex = RegexValidator(regex=r'^1[78]1(IT|MN|MT|ME|CS|EE|EC|CH|CV)[12][0-7][0-9]$',message="Roll number must be in the format: 1[7/8]1XX[1/2]XX")
     rollno = models.CharField(validators=[rollno_regex],max_length=8,primary_key=True,default="")
     first_name = models.CharField(default="",max_length=50)
     last_name = models.CharField(default="",max_length=50)

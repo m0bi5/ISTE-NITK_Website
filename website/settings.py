@@ -83,7 +83,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'website.wsgi.application'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
-    'guardian.backends.ObjectPermissionBackend',
+    #'guardian.backends.ObjectPermissionBackend',
 )
 
 # Database

@@ -27,7 +27,7 @@ def applicant_details(request):
             chosen = []
 
             for i in details['sig_choices']:
-                if len(ApplicantResponse.objects.filter(applicant=applicant,sig=i))==0:
+                if len(ApplicantResponse.objects.filter(applicant=applicant,sig=SIGRound.objects.get(sig=i)))==0:
                     not_chosen.append(i)
                 else:
                     chosen.append(i)
@@ -81,7 +81,7 @@ def questions(request,applicant_rollno,sigs):
             mailServer.starttls()
             mailServer.login(gmailaddress , gmailpassword)
             msg = text('''Hey {}!!\n\tThank you for participating in the recruitment process!!! Your progress will be uploaded soon, which can be viewed by clicking on this link: http://127.0.0.1:8000/recruitments/progress/{}/'''.format(applicant.first_name,str(applicant.rollno)))
-            msg['Subject'] = 'ISTE Recruitments - Applicant ID'
+            msg['Subject'] = 'ISTE Recruitments - Applicant Progress'
             msg['From'] = gmailaddress
             msg['To'] = mailto
             mailServer.sendmail(gmailaddress, mailto , msg.as_string())
