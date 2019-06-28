@@ -2,7 +2,11 @@
 
 {% block content %}
   <h3>Project Name: {{ project.name}} </h3>
-  <p>Members: {{ project.members }} </p>
-  <p>Mentors: {{ project.mentors }} </p>
+  <p>Members:</p>
+  {% for member in post.members.all %}
+    {{member.first_name}}<br>
+  {% endfor %}
+  <p>SIG: {{ project.sig }} </p>
+  <p>Year: {{ project.year }} </p>
   <p>Description: {{ project.description|safe }}</p>
 {% endblock %}

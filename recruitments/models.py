@@ -35,7 +35,7 @@ class SIGRound(models.Model):
     sig = models.CharField(max_length=9, choices=SIG_CHOICES)
     round_number = models.IntegerField(default=1)
     round_description = models.CharField(max_length=500)
-    
+
     def __str__(self):
         return self.sig+'-'+str(self.round_number)
 
@@ -55,7 +55,7 @@ class ApplicantResponse(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     response = models.TextField(blank=True)
     question = models.ForeignKey(Question,on_delete=models.CASCADE)
-    sig = models.CharField(choices=SIG_CHOICES,max_length=9)
+    sig = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.response

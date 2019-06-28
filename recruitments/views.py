@@ -20,7 +20,7 @@ def applicant_details(request):
             applicant = Applicant.objects.filter(rollno=details['rollno'])
             if len(applicant)==0:
                 applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
-               
+
             else:
                 applicant=applicant[0]
             not_chosen = []
@@ -48,8 +48,8 @@ def questions(request,applicant_rollno,sigs):
         sig_choices = sigs.split('&')
         questions = {}
         for sig in sig_choices:
-            questions[sig] = Question.objects.filter(sig=sig)
-            ApplicantProgress.objects.create(applicant=applicant,sig=sig)
+            questions[sig] = Question.objects.filter(sig=SIGRound.objects.get(sig=sig))
+            ApplicantProgress.objects.create(applicant=Applicant.objects.get(rollno=applicant_rollno),sig=sig)
         return render(request,'recruitments/sig_questions.html',{'questions':questions})
     else:
         recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -146,5 +146,5 @@ def personal_interview(request,sig,rollno):
         progress.interview_done=True
         progress.save()
         return redirect('sig_interview',sig)
-       
+
     return render(request,'recruitments/personal_interview.html',context)
