@@ -1,10 +1,23 @@
+
+{% extends 'base.html' %}
 {% block content %}
 <h1>Blogs</h1>
+<form method="POST" action="{% url 'blogs' %}">
+    {% csrf_token %}
+    <input name='query' placeholder="Search"></input>
+    <select name='filter'>
+        <option selected value="-publishing_date">Most Recent</option>
+        <option value="-views">Most Viewed</option>
+    </select>
+    <input type="submit"></input>
+</form>
 {% for post in posts %}
-{{post.title}}
-{{post.abstract}}
-{{post.categories}}
-{{post.publishing_date}}
-<a href="blog/{{post.id}}">View blog</a>
+    {{post.title}}
+    {{post.abstract}}
+    {{post.categories}}
+    {{post.publishing_date}}
+    {{post.sig}}
+    {{post.views}}
+    <a href="blog/{{post.id}}">View blog</a>
 {% endfor %}
 {% endblock content %}

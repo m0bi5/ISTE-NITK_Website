@@ -1,15 +1,20 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
-from datetime import date
+import datetime
 from account import models as account_models
 
-# Create your models here.
 class Blog(models.Model):
-    id=models.AutoField(primary_key=True)
     title=models.CharField(default="",max_length=200)
     categories=models.CharField(default="",max_length=200)
     abstract=models.CharField(default="",max_length=200)
     views=models.IntegerField(default=0,editable=False)
     content=RichTextUploadingField()
-    publishing_date=models.DateField(default=date.today)
+    publishing_date=models.DateField(default=datetime.date.today)
     author=models.ForeignKey(account_models.User,on_delete=models.PROTECT)
+    sig = models.ForeignKey(account_models.SIG,on_delete=models.CASCADE)
+
+class BlogHits(models.Model):
+    blog = models.ForeignKey(Blog,on_delete=models.CASCADE)
+    fingerprint = models.CharField(max_length=40)
+    created = models.DateTimeField(default=datetime.datetime.now())
+
