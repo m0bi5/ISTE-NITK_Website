@@ -27,10 +27,10 @@ def applicant_details(request):
             chosen = []
 
             for i in details['sig_choices']:
-                if len(ApplicantResponse.objects.filter(applicant=applicant,sig=SIGRound.objects.get(sig=i)))==0:
-                    not_chosen.append(i)
+                if len(ApplicantResponse.objects.filter(applicant=applicant,sig_round=SIGRound.objects.filter(sig=i)[0]))==0:
+                    not_chosen.append(str(i.id))
                 else:
-                    chosen.append(i)
+                    chosen.append(str(i.id))
             if len(chosen)!=0 and len(not_chosen)>0:
                 messages.add_message(request,messages.ERROR,"ERROR!!! Cannot display questions for these SIGs as you've already submitted responses:{}".format(", ".join(chosen)))
             elif len(not_chosen)==0:
@@ -46,9 +46,10 @@ def applicant_details(request):
 def questions(request,applicant_rollno,sigs):
     if request.method=='GET':
         sig_choices = sigs.split('&')
+        sig_choices=[account_models.SIG.objects.get(id=i) for i in sig_choices]
         questions = {}
         for sig in sig_choices:
-            questions[sig] = Question.objects.filter(sig=SIGRound.objects.get(sig=sig))
+            questions[sig] = Question.objects.filter(sig_round=SIGRound.objects.get(sig=sig,round_number=1))
             ApplicantProgress.objects.create(applicant=Applicant.objects.get(rollno=applicant_rollno),sig=sig)
         return render(request,'recruitments/sig_questions.html',{'questions':questions})
     else:
@@ -71,7 +72,7 @@ def questions(request,applicant_rollno,sigs):
             quest_ids.remove('g-recaptcha-response')
             for id in quest_ids:
                 question = Question.objects.get(id=int(id))
-                ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig=question.sig)
+                ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig_round=question.sig_round)
 
             gmailaddress = "istenitkchapter@gmail.com"
             gmailpassword = "#includeistenitk.h"
@@ -86,7 +87,6 @@ def questions(request,applicant_rollno,sigs):
             msg['To'] = mailto
             mailServer.sendmail(gmailaddress, mailto , msg.as_string())
             mailServer.quit()
-
             return render(request,'recruitments/finished.html')
         else:
             print("ERROR IN RECAPTCHA!")
@@ -96,19 +96,18 @@ def questions(request,applicant_rollno,sigs):
 def application_progress(request,applicant_rollno):
     applicant=Applicant.objects.get(rollno=applicant_rollno)
     sigs_progress=ApplicantProgress.objects.filter(applicant=applicant)
-    scores_calculated=[]
-    #Get application of other people applied to the same sig and in the same round
-    other_applicants_status=[ [applicant.qualified_for_next for applicant in ApplicantProgress.objects.filter(round_completed=obj.round_completed,sig=obj.sig).exclude(applicant=applicant)] for obj in sigs_progress]
-    #If other people have qualified, applicant with applicant_id has not qualified
-    for applicant_status in other_applicants_status:
-        if True in applicant_status:
-            scores_calculated.append(True)
+    
+    score_calculated=[]
+    for progress in sigs_progress:
+        other_applicants_progress=ApplicantProgress.objects.filter(sig=progress.sig,round_completed__gt=progress.round_completed).exclude(id=progress.id)
+        if len(other_applicants_progress)>0:
+            score_calculated.append(True)
         else:
-            scores_calculated.append(False)
+            score_calculated.append(False)
 
-    return render(request,'recruitments/application_progress.html',{'progress_and_scores':zip(scores_calculated,sigs_progress)})
+    return render(request,'recruitments/application_progress.html',{'sigs_progress':zip(score_calculated,list(sigs_progress)),'applicant':applicant})
 
-@login_required(login_url='/account/')
+@login_required(login_url='/account/login')
 def interview(request):
     applications=[]
     sigs=request.user.sigs.all()
@@ -116,10 +115,13 @@ def interview(request):
     interviewable_sigs=[]
     return render(request,'recruitments/interview.html',context)
 
+@login_required(login_url='/account/login')
 def sig_interview(request,sig):
-    applicants=list(ApplicantResponse.objects.filter(sig=sig))
+    applicants=ApplicantResponse.objects.filter(sig_round__sig__name=sig,sig_round__round_number=1).values_list('applicant', flat=True).distinct()
+    applicants=[Applicant.objects.get(rollno=applicant) for applicant in applicants]
+    print(applicants)
     for applicant in applicants:
-        progress=ApplicantProgress.objects.get(applicant=applicant.applicant,sig=sig)
+        progress=ApplicantProgress.objects.get(applicant=applicant,sig__name=sig)
         if progress.interview_done:
             del applicants[applicants.index(applicant)]
 
@@ -131,18 +133,19 @@ def sig_interview(request,sig):
             messages.add_message(request,messages.ERROR,"Roll number not found")
     return render(request,'recruitments/sig_interview.html',context)
 
+@login_required(login_url='/account/login')
 def personal_interview(request,sig,rollno):
     applicant=Applicant.objects.get(rollno=rollno)
-    responses=ApplicantResponse.objects.filter(sig=sig,applicant=applicant)
-    progress=ApplicantProgress.objects.get(sig=sig,applicant=applicant)
-    sig_round=SIGRound.objects.get(sig=sig,round_number=progress.round_completed+1)
-    criteria=Criteria.objects.filter(sig=sig_round)
+    responses=ApplicantResponse.objects.filter(sig_round__sig__name=sig,sig_round__round_number=1,applicant=applicant)
+    progress=ApplicantProgress.objects.get(sig__name=sig,applicant=applicant)
+    sig_round=SIGRound.objects.get(sig__name=sig,round_number=progress.round_completed+1)
+    criteria=Criteria.objects.filter(sig_round=sig_round)
     context={'sig':sig,'rollno':rollno,'applicant':applicant,'criteria':criteria,'sig_round':sig_round,'progress':progress,'responses':responses}
     if progress.interview_done:
         return redirect('sig_interview',sig)
     if request.POST:
         for crit in criteria:
-            InterviewResponse.objects.create(criteria=crit,response=request.POST[str(crit.id)],sig=sig,applicant=applicant,interviewer=request.user)
+            InterviewResponse.objects.create(criteria=crit,response=request.POST[str(crit.id)],sig_round=sig_round,applicant=applicant,interviewer=request.user)
         progress.interview_done=True
         progress.save()
         return redirect('sig_interview',sig)

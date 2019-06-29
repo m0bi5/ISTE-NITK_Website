@@ -13,6 +13,6 @@ Conducting interviews for {{sig}}
 </form>
 
 {% for applicant in applicants %}
-    <a href="{% url 'personal_interview' sig applicant.applicant.rollno %}">{{applicant.applicant.rollno}}</a>
+    <a href="{% url 'personal_interview' sig applicant.rollno %}">{{applicant.rollno}}</a>
 {% endfor %}
 {% endblock %} 

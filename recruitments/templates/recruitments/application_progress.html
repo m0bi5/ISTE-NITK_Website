@@ -1,21 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% for score_calculated,progress in progress_and_scores %}
+    {% for score_calculated,progress in sigs_progress %}
         <br>
+        Hi {{progress.applicant.first_name}} {{progress.applicant.last_name}}
         Your progress in {{progress.sig}}
         You have completed {{progress.round_completed}} round(s)
-        {% if progress.qualified_for_next %}
+        
+        {% if score_calculated %}
+            Did not qualify
             {% if progress.next_round_time %}
                 Your next round is on {{progress.next_round_time}}
-            {% else %}
-                Your next round timings have not been allocated
             {% endif %}
         {% else %}
-            {% if score_calculated %}
-                Did not qualify
-            {% else %}
-                Scores for current round have not been calculated yet
-            {% endif %}
+            Scores for current round have not been calculated yet
         {% endif %}
         <br>
     {% endfor %}

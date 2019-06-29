@@ -7,17 +7,6 @@ year_choices = (
     ('2nd year','2nd year'),
     ('3rd year','3rd year'))
 
-SIG_CHOICES=(
-    ('Crypt','CRYPT'),
-    ('Charge','CHARGE'),
-    ('Credit','CREDIT'),
-    ('Chronicle','CHRONICLE'),
-    ('Clutch','CLUTCH'),
-    ('Concrete','CONCRETE'),
-    ('Create','CREATE'),
-    ('Catalyst','CATALYST'))
-
-
 class Applicant(models.Model):
     rollno_regex = RegexValidator(regex=r'^1[78]1(IT|MN|MT|ME|CS|EE|EC|CH|CV)[12][0-7][0-9]$',message="Roll number must be in the format: 1[7/8]1XX[1/2]XX")
     rollno = models.CharField(validators=[rollno_regex],max_length=8,primary_key=True,default="")
@@ -32,22 +21,22 @@ class Applicant(models.Model):
         return self.first_name+' '+self.last_name
 
 class SIGRound(models.Model):
-    sig = models.CharField(max_length=9, choices=SIG_CHOICES)
+    sig = models.ForeignKey(account_models.SIG,on_delete=models.CASCADE)
     round_number = models.IntegerField(default=1)
     round_description = models.CharField(max_length=500)
 
     def __str__(self):
-        return self.sig+'-'+str(self.round_number)
+        return self.sig.name+'-'+str(self.round_number)
 
 class Question(models.Model):
     body = models.TextField(blank=True)
-    sig = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
+    sig_round = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
     def __str__(self):
         return self.body
 
 class Criteria(models.Model):
     body = models.TextField(blank=True)
-    sig = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
+    sig_round = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
     def __str__(self):
         return self.body
 
@@ -55,7 +44,7 @@ class ApplicantResponse(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     response = models.TextField(blank=True)
     question = models.ForeignKey(Question,on_delete=models.CASCADE)
-    sig = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
+    sig_round = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.response
@@ -65,7 +54,7 @@ class InterviewResponse(models.Model):
     interviewer = models.ForeignKey(account_models.User,on_delete=models.CASCADE)
     criteria = models.ForeignKey(Criteria,on_delete=models.CASCADE)
     response = models.TextField(blank=True)
-    sig = models.CharField(max_length=9,choices=SIG_CHOICES)
+    sig_round = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
     def get_round(self):
         return self.criteria.sig
     def __str__(self):
@@ -79,4 +68,4 @@ class ApplicantProgress(models.Model):
     now_timestamp = time.time()
     offset = datetime.fromtimestamp(now_timestamp) - datetime.utcfromtimestamp(now_timestamp)
     next_round_time = models.DateTimeField(blank=True,null=True)
-    sig = models.CharField(max_length=9, choices=SIG_CHOICES)
+    sig = models.ForeignKey(account_models.SIG,on_delete=models.CASCADE)
