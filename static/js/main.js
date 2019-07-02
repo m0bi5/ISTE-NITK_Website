@@ -21,3 +21,12 @@ $(document).ready(function() {
 // USED IN APPLICANT_DEETS.HTML
 //
 ////////////////////////////////////////////////////////////
+$("#show_about").click(function(){
+    $( "#details_form" ).slideToggle('slow');
+    $( "#about_sigs" ).slideToggle('slow');
+})
+
+$("#show_form").click(function(){
+    $( "#details_form" ).slideToggle('slow');
+    $( "#about_sigs" ).slideToggle('slow');
+})

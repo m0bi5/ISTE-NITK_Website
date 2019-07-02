@@ -4,7 +4,7 @@
 {% if user.is_authenticated %}
     <h1 class="center-align">You are already in the club!</h1>
 {% else %}
-<div class="row center">
+<div id="details_form" class="row center">
     <div class="col l6 offset-l3 m6">
         <div class="card">
             <div class="card-content black-text">
@@ -58,7 +58,8 @@
                                 <div class="input-field col s12">
                                     {{form.sig_choices}}
                                     <label for="id_sig_choices">Pick SIGs to apply for</label>
-                                </div>    
+                                </div> 
+                                <a id="show_about" href="#">Learn about the SIGs</a>   
                             </div>
                         </div>
                     </div>
@@ -70,7 +71,10 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div id="about_sigs" hidden class="row">
+<div class="row center">
+    <a id="show_form" href="#">Go back</a> 
+</div>                          
 {% for sig_choice in form.sigs %}
 <div class="col s12 l4">
     <div class="card">
