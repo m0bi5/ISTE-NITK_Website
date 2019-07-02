@@ -15,4 +15,4 @@ class ApplicantForm(forms.Form):
     email = forms.EmailField(required=True)
     year = forms.ChoiceField(choices=year_choices, required=True)
     sigs=account_models.SIG.objects.all()
-    sig_choices = forms.ModelMultipleChoiceField(widget=forms.CheckboxInput(attrs={'data-limit':'3','class':'limit'}),queryset=account_models.SIG.objects.all(),required=True)
+    sig_choices = forms.ModelMultipleChoiceField(widget=forms.SelectMultiple(attrs={'data-limit':'3','class':'limit'}),queryset=account_models.SIG.objects.all(),required=True)

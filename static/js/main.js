@@ -21,11 +21,3 @@ $(document).ready(function() {
 // USED IN APPLICANT_DEETS.HTML
 //
 ////////////////////////////////////////////////////////////
-
-$('#id_sig_choices').on('change', function() {
-    console.log($('.selected').length)
-   if($('.selected').length == 3) {
-       console.log($('.selected')[0])
-        $($('.selected')[0]).removeClass('selected');
-   }
-});
