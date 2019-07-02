@@ -2,8 +2,12 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.utils.html import mark_safe
+from ckeditor_uploader.fields import RichTextUploadingField
+
 def user_avatar_path(instance, filename):
     return 'user_{0}/avatar/{1}'.format(instance.id, filename)
+def sig_avatar_path(instance, filename):
+    return 'sig_{0}/avatar/{1}'.format(instance.id, filename)
 
 SIG_CHOICES=(
     ('Crypt','CRYPT'),
@@ -17,7 +21,8 @@ SIG_CHOICES=(
 
 class SIG(models.Model):
     name = models.CharField(max_length=9, choices=SIG_CHOICES)
-    description = models.TextField(max_length=10000,default="")
+    avatar=models.ImageField(upload_to=sig_avatar_path,blank=True)
+    description = RichTextUploadingField()
     def __str__(self):
         return self.name
 

@@ -27,6 +27,7 @@ def applicant_details(request):
             chosen = []
 
             for i in details['sig_choices']:
+                #i=SIG.objects.filter(id=i)
                 if len(ApplicantResponse.objects.filter(applicant=applicant,sig_round=SIGRound.objects.filter(sig=i)[0]))==0:
                     not_chosen.append(str(i.id))
                 else:

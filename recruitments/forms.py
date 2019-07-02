@@ -14,4 +14,5 @@ class ApplicantForm(forms.Form):
     phone = forms.CharField(validators=[phone_regex], max_length=17, required=True)
     email = forms.EmailField(required=True)
     year = forms.ChoiceField(choices=year_choices, required=True)
-    sig_choices = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,queryset=account_models.SIG.objects.all(),required=True)
+    sigs=account_models.SIG.objects.all()
+    sig_choices = forms.ModelMultipleChoiceField(widget=forms.CheckboxInput(attrs={'data-limit':'3','class':'limit'}),queryset=account_models.SIG.objects.all(),required=True)
