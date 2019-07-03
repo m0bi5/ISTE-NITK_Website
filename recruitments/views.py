@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render_to_response,render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import ApplicantForm
@@ -10,6 +10,7 @@ import json
 import smtplib
 from email.mime.text import MIMEText as text
 from django.contrib import messages
+from django.template import RequestContext
 
 # Create your views here.
 def applicant_details(request):
@@ -17,41 +18,41 @@ def applicant_details(request):
         form = ApplicantForm(request.POST)
         if form.is_valid():
             details = form.cleaned_data
-            applicant = Applicant.objects.filter(rollno=details['rollno'])
-            if len(applicant)==0:
-                applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
-
-            else:
-                applicant=applicant[0]
             not_chosen = []
             chosen = []
 
             for i in details['sig_choices']:
-                #i=SIG.objects.filter(id=i)
-                if len(ApplicantResponse.objects.filter(applicant=applicant,sig_round=SIGRound.objects.filter(sig=i)[0]))==0:
+                if len(ApplicantResponse.objects.filter(applicant__rollno=details['rollno'],sig_round=SIGRound.objects.filter(sig=i)[0]))==0:
                     not_chosen.append(str(i.id))
                 else:
                     chosen.append(str(i.id))
+            del details['sig_choices']
+
             if len(chosen)!=0 and len(not_chosen)>0:
                 messages.add_message(request,messages.ERROR,"ERROR!!! Cannot display questions for these SIGs as you've already submitted responses:{}".format(", ".join(chosen)))
             elif len(not_chosen)==0:
                 messages.add_message(request,messages.INFO,"YOU HAVE ALREADY SUBMITTED RESPONSES FOR ALL THE SELECTED SIGS!!!")
                 return render(request,'recruitments/finished.html')
-            sigs = '&'.join(not_chosen)
 
-            return redirect('/recruitments/questions/{}/{}'.format(applicant.rollno,sigs))
+            sigs = '&'.join(not_chosen)
+            response=redirect('/recruitments/questions/{}/{}'.format(details['rollno'],sigs))
+            response.set_cookie('details',str(details))
+            return response
+        else:
+            return render(request,'recruitments/applicant_deets.html',{'form':form})
+
     else:
         form = ApplicantForm()
-    return render(request,'recruitments/applicant_deets.html',{'form':form})
+        return render(request,'recruitments/applicant_deets.html',{'form':form})
+    # response.set_cookies('details',details)
+    # return response
 
 def questions(request,applicant_rollno,sigs):
     if request.method=='GET':
-        sig_choices = sigs.split('&')
-        sig_choices=[account_models.SIG.objects.get(id=i) for i in sig_choices]
+        sig_choices=[account_models.SIG.objects.get(id=i) for i in sigs.split('&')]
         questions = {}
         for sig in sig_choices:
             questions[sig] = Question.objects.filter(sig_round=SIGRound.objects.get(sig=sig,round_number=1))
-            ApplicantProgress.objects.create(applicant=Applicant.objects.get(rollno=applicant_rollno),sig=sig)
         return render(request,'recruitments/sig_questions.html',{'questions':questions})
     else:
         recaptcha_response = request.POST.get('g-recaptcha-response')
@@ -66,7 +67,11 @@ def questions(request,applicant_rollno,sigs):
         result = json.load(response)
 
         if result['success']:
-            applicant = Applicant.objects.get(rollno=applicant_rollno)
+            details = eval(request.COOKIES['details'])
+            applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
+            sig_choices=[account_models.SIG.objects.get(id=i) for i in sigs.split('&')]
+            for sig in sig_choices:
+                ApplicantProgress.objects.create(applicant=applicant,sig=sig)
             response = dict(request.POST.copy())
             quest_ids = list(response.keys())
             quest_ids.remove('csrfmiddlewaretoken')
@@ -97,7 +102,7 @@ def questions(request,applicant_rollno,sigs):
 def application_progress(request,applicant_rollno):
     applicant=Applicant.objects.get(rollno=applicant_rollno)
     sigs_progress=ApplicantProgress.objects.filter(applicant=applicant)
-    
+
     score_calculated=[]
     for progress in sigs_progress:
         other_applicants_progress=ApplicantProgress.objects.filter(sig=progress.sig,round_completed__gt=progress.round_completed).exclude(id=progress.id)
