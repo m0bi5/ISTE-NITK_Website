@@ -29,9 +29,9 @@ def applicant_details(request):
             del details['sig_choices']
 
             if len(chosen)!=0 and len(not_chosen)>0:
-                messages.add_message(request,messages.ERROR,"ERROR!!! Cannot display questions for these SIGs as you've already submitted responses:{}".format(", ".join(chosen)))
+                messages.add_message(request,messages.ERROR,"Cannot display questions for these SIGs as you've already submitted responses:{}".format(", ".join(chosen)))
             elif len(not_chosen)==0:
-                messages.add_message(request,messages.INFO,"YOU HAVE ALREADY SUBMITTED RESPONSES FOR ALL THE SELECTED SIGS!!!")
+                messages.add_message(request,messages.INFO,"You have already applied for the selected SIGs")
                 return render(request,'recruitments/finished.html')
 
             sigs = '&'.join(not_chosen)
@@ -44,8 +44,6 @@ def applicant_details(request):
     else:
         form = ApplicantForm()
         return render(request,'recruitments/applicant_deets.html',{'form':form})
-    # response.set_cookies('details',details)
-    # return response
 
 def questions(request,applicant_rollno,sigs):
     if request.method=='GET':
@@ -76,6 +74,7 @@ def questions(request,applicant_rollno,sigs):
             quest_ids = list(response.keys())
             quest_ids.remove('csrfmiddlewaretoken')
             quest_ids.remove('g-recaptcha-response')
+            quest_ids.remove('action')
             for id in quest_ids:
                 question = Question.objects.get(id=int(id))
                 ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig_round=question.sig_round)
@@ -95,8 +94,7 @@ def questions(request,applicant_rollno,sigs):
             mailServer.quit()
             return render(request,'recruitments/finished.html')
         else:
-            print("ERROR IN RECAPTCHA!")
-            messages.add_message(request,messages.ERROR,"ERROR IN RECAPTCHA!! PLEASE TRY AGAIN!!")
+            messages.add_message(request,messages.ERROR,"Error in ReCaptcha, try again")
             return redirect('/recruitments/questions/{}/{}'.format(applicant_rollno,sigs))
 
 def application_progress(request,applicant_rollno):
@@ -136,8 +134,12 @@ def sig_interview(request,sig):
     context={'applicants':applicants,'sig':sig}
     if request.POST:
         try:
-            context['applicants']=ApplicantResponse.objects.filter(sig=sig,applicant=Applicant.objects.get(rollno=request.POST['rollno']))
-        except:
+            applicants=Applicant.objects.filter(rollno=request.POST['rollno'])
+            if len(applicants)==0:
+                messages.add_message(request,messages.ERROR,"Roll number not found")
+
+            context['applicants']=applicants
+        except Exception as e:
             messages.add_message(request,messages.ERROR,"Roll number not found")
     return render(request,'recruitments/sig_interview.html',context)
 

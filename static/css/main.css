@@ -43,3 +43,38 @@
 .card-title, .form-icon, h2,h4{
     color:#0d47a1;
 }
+
+td a{
+  display: block;
+  color:black;
+}
+
+h3{
+    text-align:center;
+}
+h3 span{
+  display:inline-block;
+  position:relative;
+  overflow:hidden;
+}
+h3 span:after,
+h3 span:before{
+  content:"";
+  height:1px;
+  width:100%;
+  position:absolute;
+  bottom:0px;
+  left:0;
+  transition: 3s;
+}
+h3 span:before{
+  background:#ccc;
+}
+/* We'll animate this one to -75% */
+h3 span:after{ 
+  background:#000;
+  left:100%;
+}
+h3 span.animateLine:after{
+  left: -75%;
+}

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h3><span>Projects</span></h3>
   {% for year,yearly_projects in projects.items %}
     <div><h2> {{ year }}<br></h2>
     {% for sig,list in yearly_projects.items %}
