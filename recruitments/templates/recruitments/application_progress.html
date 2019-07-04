@@ -1,21 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
+<div>
+    <div class="row center">
+    <h4 id="progress_header">Hi {{applicant.first_name}} {{applicant.last_name}}, here is your progress</h4>
+    </div>
+    <div hidden id="progress" class="row">
     {% for score_calculated,progress in sigs_progress %}
-        <br>
-        Hi {{progress.applicant.first_name}} {{progress.applicant.last_name}}
-        Your progress in {{progress.sig}}
-        You have completed {{progress.round_completed}} round(s)
-        
+        <div class="col l6 s12">
+            <div class="card">
+                <div class="card-content black-text">
+                        <span class="center card-title">{{progress.sig}}</span> 
+                                Rounds Completed : {{progress.round_completed}}
+                                <br>
         {% if score_calculated %}
-            Did not qualify
             {% if progress.next_round_time %}
                 Your next round is on {{progress.next_round_time}}
+            {% else %}
+                Sorry, you did not qualify for the next round
             {% endif %}
+            
         {% else %}
             Scores for current round have not been calculated yet
         {% endif %}
-        <br>
+                </div>
+            </div>
+        </div>
+
     {% endfor %}
+    </div>
+</div>
 
     <!--
     <form id="progress_form">

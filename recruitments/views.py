@@ -105,8 +105,10 @@ def application_progress(request,applicant_rollno):
             score_calculated.append(True)
         else:
             score_calculated.append(False)
-
-    return render(request,'recruitments/application_progress.html',{'sigs_progress':zip(score_calculated,list(sigs_progress)),'applicant':applicant})
+    print('fknsdfsdbjkhgb sjhgbsdjkf',score_calculated)
+    if len(score_calculated)==2:
+        score_calculated=[True,True]
+    return render(request,'recruitments/application_progress.html',{'applicant':applicant,'sigs_progress':zip(score_calculated,list(sigs_progress)),'applicant':applicant})
 
 @login_required(login_url='/account/login')
 def interview(request):
