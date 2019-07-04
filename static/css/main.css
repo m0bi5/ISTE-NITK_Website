@@ -40,11 +40,6 @@
     color: white;
     cursor:pointer; 
 }
-
-.form-icon{
-    color:#0d47a1;
-}
-
-.card-title{
+.card-title, .form-icon, h2,h4{
     color:#0d47a1;
 }

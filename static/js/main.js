@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('.sidenav').sidenav();
     $('.tooltipped').tooltip();
     $('select').formSelect();
+    $( "#progress" ).slideToggle('slow');
  });
 
  ////////////////////////////////////////////////////////////
@@ -30,3 +31,9 @@ $("#show_form").click(function(){
     $( "#details_form" ).slideToggle('slow');
     $( "#about_sigs" ).slideToggle('slow');
 })
+
+////////////////////////////////////////////////////////////
+//
+// USED IN APPLICANT_PROGRESS.HTML
+//
+////////////////////////////////////////////////////////////
