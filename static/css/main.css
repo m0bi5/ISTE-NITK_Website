@@ -50,6 +50,7 @@ td a{
 }
 
 h3{
+    color: #0d47a1;
     text-align:center;
 }
 h3 span{
@@ -77,4 +78,8 @@ h3 span:after{
 }
 h3 span.animateLine:after{
   left: -75%;
+}
+
+body{
+  background-color: white;
 }

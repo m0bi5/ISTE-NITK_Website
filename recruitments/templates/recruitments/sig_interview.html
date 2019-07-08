@@ -12,13 +12,12 @@
             <form action="{% url 'sig_interview' sig %}" method="POST">
                 {% csrf_token %}
                 <div class="center row">
-                    <div class="col s12 input-field">
+                    <div class="col offset-l3 l4 s6 input-field">
                         <input id="roll" name="rollno" type="text"></input>
                         <label for="roll">Search for Roll Number</label>
                     </div>
-                </div>
-                <div class="row center">
-                    <div class="col s12">
+                    
+                    <div class="col l4 s6 input-field">
                         <button class="btn waves-effect waves-light" type="submit" name="action">Search
                             <i class="material-icons right">send</i>
                         </button>
@@ -30,10 +29,10 @@
                     <tr>
                         <th>Roll Number</th>
                         <th>Name</th>
-                        <th>Round</th>
+                        <th>Round(s) Completed</th>
                     </tr>
                 </thead>
-                {% for applicant in applicants %}
+                {% for applicant,progress in applicants %}
                 
                     <tr onclick="window.location=">
                         <td>
@@ -43,7 +42,7 @@
                             <a href="{% url 'personal_interview' sig applicant.rollno %}">{{applicant.first_name}} {{applicant.last_name}}</a>
                         </td>
                         <td>
-                            <a href="{% url 'personal_interview' sig applicant.rollno %}">{{applicant.first_name}} {{applicant.last_name}}</a>
+                            <a href="{% url 'personal_interview' sig applicant.rollno %}">{{progress.round_completed}}</a>
                         </td>
                     </tr>
                 {% endfor %}

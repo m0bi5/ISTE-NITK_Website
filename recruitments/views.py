@@ -69,7 +69,7 @@ def questions(request,applicant_rollno,sigs):
             applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
             sig_choices=[account_models.SIG.objects.get(id=i) for i in sigs.split('&')]
             for sig in sig_choices:
-                ApplicantProgress.objects.create(applicant=applicant,sig=sig)
+                ApplicantProgress.objects.create(applicant=applicant,sig=sig,round_completed=1)
             response = dict(request.POST.copy())
             quest_ids = list(response.keys())
             quest_ids.remove('csrfmiddlewaretoken')
@@ -125,23 +125,38 @@ def interview(request):
 def sig_interview(request,sig):
     applicants=ApplicantResponse.objects.filter(sig_round__sig__name=sig,sig_round__round_number=1).values_list('applicant', flat=True).distinct()
     applicants=[Applicant.objects.get(rollno=applicant) for applicant in applicants]
-    print(applicants)
+    progresses=[]
     for applicant in applicants:
         progress=ApplicantProgress.objects.get(applicant=applicant,sig__name=sig)
         if progress.interview_done:
             del applicants[applicants.index(applicant)]
+        else:
+            progresses.append(progress)
 
-    context={'applicants':applicants,'sig':sig}
+    context={'applicants':zip(applicants,progresses),'sig':sig}
     if request.POST:
         try:
             applicants=Applicant.objects.filter(rollno=request.POST['rollno'])
             if len(applicants)==0:
                 messages.add_message(request,messages.ERROR,"Roll number not found")
-
-            context['applicants']=applicants
+            progress=ApplicantProgress.objects.get(applicant=[applicant for applicant in applicants],sig__name=sig)
+            context['applicants']=zip(applicants,progress)
         except Exception as e:
             messages.add_message(request,messages.ERROR,"Roll number not found")
     return render(request,'recruitments/sig_interview.html',context)
+
+@login_required(login_url='/account/login')
+def edit_applicant(request,sig,rollno):
+    applicant=Applicant.objects.get(rollno=rollno)
+    applicant.first_name=request.POST['first_name']
+    applicant.last_name=request.POST['last_name']
+    applicant.rollno=request.POST['rollno']
+    applicant.email=request.POST['email']
+    applicant.phone=request.POST['phone']
+    applicant.save()
+    messages.add_message(request,messages.SUCCESS,"Applicant details edited")
+
+    return redirect('personal_interview',sig,rollno)
 
 @login_required(login_url='/account/login')
 def personal_interview(request,sig,rollno):
@@ -150,7 +165,7 @@ def personal_interview(request,sig,rollno):
     progress=ApplicantProgress.objects.get(sig__name=sig,applicant=applicant)
     sig_round=SIGRound.objects.get(sig__name=sig,round_number=progress.round_completed+1)
     criteria=Criteria.objects.filter(sig_round=sig_round)
-    context={'sig':sig,'rollno':rollno,'applicant':applicant,'criteria':criteria,'sig_round':sig_round,'progress':progress,'responses':responses}
+    context={'round_number':progress.round_completed+1,'sig':sig,'rollno':rollno,'applicant':applicant,'criteria':criteria,'sig_round':sig_round,'progress':progress,'responses':responses}
     if progress.interview_done:
         return redirect('sig_interview',sig)
     if request.POST:

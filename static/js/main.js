@@ -31,6 +31,11 @@ $("#show_form").click(function(){
     $( "#details_form" ).slideToggle('slow');
     $( "#about_sigs" ).slideToggle('slow');
 })
+////////////////////////////////////////////////////////////
+//
+// USED IN PERSONAL_INTERVIEW.HTML
+//
+////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////
 //
@@ -55,3 +60,5 @@ $("#show_form").click(function(){
   $("h3 span").inViewport(function(px){
     $(this).toggleClass("animateLine", !!px);
   });
+
+  

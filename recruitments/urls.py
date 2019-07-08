@@ -8,4 +8,5 @@ urlpatterns = [
     path('interview/<sig>',views.sig_interview,name='sig_interview'),
     path('interview/<sig>/<rollno>',views.personal_interview,name='personal_interview'),
     path('questions/<applicant_rollno>/<sigs>',views.questions,name='questions'),
+    path('edit_applicant/<sig>/<rollno>',views.edit_applicant,name='edit_applicant'),
 ]

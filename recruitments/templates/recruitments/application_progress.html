@@ -2,7 +2,7 @@
 {% block content %}
 <div>
     <div class="row center">
-    <h4 id="progress_header">Hi {{applicant.first_name}} {{applicant.last_name}}, here is your progress</h4>
+        <h4 id="progress_header">Hi {{applicant.first_name}} {{applicant.last_name}}, here is your progress</h4>
     </div>
     <div hidden id="progress" class="row">
     {% for score_calculated,progress in sigs_progress %}
