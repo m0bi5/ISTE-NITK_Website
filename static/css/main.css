@@ -80,6 +80,14 @@ h3 span.animateLine:after{
   left: -75%;
 }
 
-body{
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
   background-color: white;
 }
+
+main {
+  flex: 1 0 auto;
+}
+    
