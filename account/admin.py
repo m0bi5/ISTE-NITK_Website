@@ -11,7 +11,7 @@ class UserManager(models.Manager):
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display=('id','first_name','last_name','email','phone_number','batch_of')
-    
+    search_fields=('first_name','last_name')
     def get_exclude(self, request, obj=None):
         excluded = super().get_exclude(request, obj) or [] # get overall excluded fields
 
@@ -32,6 +32,12 @@ class UserAdmin(admin.ModelAdmin):
         else:
             obj.set_password(obj.password)
         obj.save()
+
 @admin.register(SIG)
 class SIGAdmin(admin.ModelAdmin):
     list_display=('name',)
+
+@admin.register(Core)
+class CoreAdmin(admin.ModelAdmin):
+    list_display=('user','role')
+

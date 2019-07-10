@@ -34,3 +34,8 @@ class User(AbstractUser):
     batch_of=models.IntegerField(default=2020)
     def __str__(self):
         return self.first_name+' '+self.last_name
+
+
+class Core(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    role = models.CharField(default="",max_length=100)
