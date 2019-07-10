@@ -20,6 +20,11 @@
   python3 manage.py runserver 0.0.0.0:8000 #for mobile dev
 ```
 
+### Contributing
+
+- Place all CSS and JS code in `static/{css or js}/main.{css or js}` (bad practice, code will be refactored later)
+
+
 To open the website in mobile view you could-
 
 - Use your desktop browser
