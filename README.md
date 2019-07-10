@@ -15,7 +15,7 @@
 - Passwords can be changed once logged in, default username-firstnamelastname, default password-istenitk
 
 ### Running instructions
-'''
+`
   pip3 install requirements.txt
   python3 manage.py runserver 0.0.0.0:8000 #for mobile dev
-'''
+`
