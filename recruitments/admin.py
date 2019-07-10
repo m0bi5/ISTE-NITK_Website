@@ -3,6 +3,8 @@ from django_admin_hstore_widget.forms import HStoreFormField
 from .models import *
 from django import forms
 
+from django.contrib.auth.models import Group
+
 def send_to_next_round_interview(modeladmin, request, queryset):
     applicants=[i.applicant for i in queryset]
     unselected=InterviewResponse.objects.filter(sig_round=queryset[0].sig_round).exclude(applicant__in=applicants)
@@ -54,6 +56,14 @@ class ApplicantProgressAdmin(admin.ModelAdmin):
     search_fields=('applicant__first_name',)
     ordering=('applicant__first_name','applicant__last_name')
 
+
+class InterviewResponseManager(models.Manager):
+    def get_queryset(self, request):
+        if request.user.groups.exists():
+            if request.user.groups.get(name='Member'):
+                return InterviewResponse.objects.filter(interviewer=request.user)
+        return InterviewResponse.objects.all()
+
 @admin.register(ApplicantResponse)
 class ApplicantResponseAdmin(admin.ModelAdmin):
     list_filter=('sig_round','question__sig_round__round_number','applicant__year')
@@ -63,11 +73,14 @@ class ApplicantResponseAdmin(admin.ModelAdmin):
 
 @admin.register(InterviewResponse)
 class InterviewResponseAdmin(admin.ModelAdmin):
-    list_filter=('sig_round','criteria__sig_round__round_number','applicant__year')
+    list_filter=('sig_round','applicant__year')
     list_display=('applicant','interviewer','criteria','response','sig_round')
     search_fields=('applicant__first_name',)
     ordering=('applicant__first_name','applicant__last_name')
-    actions = [send_to_next_round_interview]
+    actions = [send_to_next_round_interview]    
+    def get_queryset(self,request):
+        qs = InterviewResponseManager.get_queryset(self,request)
+        return qs
 
 class QuestionInline(admin.TabularInline):
     #model = SIGRound.questions.through
