@@ -19,3 +19,14 @@
   pip3 install requirements.txt
   python3 manage.py runserver 0.0.0.0:8000 #for mobile dev
 ```
+
+To open the website in mobile view you could-
+
+- Use your desktop browser
+  - Firefox: https://developer.mozilla.org/en-US/docs/Tools/Responsive_Design_Mode
+  - Chrome: https://developers.google.com/web/tools/chrome-devtools/device-mode/
+  
+- Use your mobile browser
+  - Ensure your mobile and laptop are on the same network
+  - Find your IPv4 address using ipconfig or ifconfig command
+  - Use http://IP_address:8000 as the URL to access the website from your mobile browser
