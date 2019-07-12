@@ -61,7 +61,7 @@ h3 span{
 h3 span:after,
 h3 span:before{
   content:"";
-  height:1px;
+  height:0.1rem;
   width:100%;
   position:absolute;
   bottom:0px;
