@@ -73,7 +73,8 @@ h3 span:before{
 }
 
 h3 span:after{ 
-  background:#000;
+  background:#1a237e;
+
   left:100%;
 }
 h3 span.animateLine:after{
@@ -107,6 +108,7 @@ main {
   position: relative;
   flex-direction: row;
   width: 150px;
+  margin: 2%;
 }
 
 .core_img img {
@@ -135,4 +137,12 @@ main {
   background-color: rgba(26,35,126,0.8);
   color: #fafafa;
   font-size: 15px;
+}
+
+.flexrow{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }

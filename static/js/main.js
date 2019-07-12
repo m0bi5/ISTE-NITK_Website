@@ -5,7 +5,7 @@ $(document).ready(function() {
     $('select').formSelect();
     $( "#progress" ).slideToggle('slow');
  });
-
+ $('body').on('touchstart', function() {});
  ////////////////////////////////////////////////////////////
 //
 // USED IN LOGIN.HTML

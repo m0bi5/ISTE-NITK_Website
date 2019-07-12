@@ -24,16 +24,18 @@
 
 <div class="center row">
     <h3><span>The Core</span></h3>
-    {% for member in core %}
-    <a class="core_img " href="#">
-        <div class="img__overlay">
-            {{member.user.first_name}} {{member.user.last_name}}
-            <br>
-            {{member.role}}
-        </div>
-        <img src='media/{{member.user.avatar}}'>
-    </a>
-    {% endfor %}
+    <div class='flexrow'>
+        {% for member in core %}
+        <a class="core_img ">
+            <div class="img__overlay">
+                {{member.user.first_name}} {{member.user.last_name}}
+                <br>
+                {{member.role}}
+            </div>
+            <img src='media/{{member.user.avatar}}'>
+        </a>
+        {% endfor %}
+    </div>
 </div>
 
 
