@@ -1,8 +1,0 @@
-{% block content %}
-<form method="POST" action="{% url 'login'%}">
-{% csrf_token %}
-Enter username <input name="username" type="text"/>
-Enter password <input name="password" type="password"/>
-<input type="submit"/>
-</form>
-{% endblock content %}

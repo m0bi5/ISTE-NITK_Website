@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<br>
+<h3><span>Conduct Interview For</span></h3>
+
+<div class="row">
+{% for sig in interviewable %}
+    <a href="{% url 'sig_interview' sig.name %}" class="col s12 l4">
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img src="/media/{{sig.avatar}}">
+            </div>
+            <div class="center card-content">
+                <span class="card-title grey-text text-darken-4">{{sig.name}}</span>
+            </div>
+        </div>
+    </a>
+{% endfor %}
+</div>
+{% endblock %} 

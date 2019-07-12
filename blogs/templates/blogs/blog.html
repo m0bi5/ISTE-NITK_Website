@@ -1,0 +1,13 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{post.title}}</h1>
+
+{{post.abstract}}
+{{post.categories}}
+{{post.content|safe}}
+{{post.publishing_date}}
+{{post.author}}
+{{post.sig}}
+{{post.views}}
+{% endblock content %}   

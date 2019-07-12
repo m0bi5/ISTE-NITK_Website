@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3><span>Projects</span></h3>
+  {% for year,yearly_projects in projects.items %}
+    <div><h2> {{ year }}<br></h2>
+    {% for sig,list in yearly_projects.items %}
+      <div><h3> {{ sig }}</h3>
+      {% for project in list %}
+          <p>Title:<a href='projects/{{project.id}}'> {{ project.name }}</a></p>
+      {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+{% endblock %}

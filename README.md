@@ -1,4 +1,4 @@
-# ISTE-NITK-GOAT_Website
+# ISTE-NITK_Website
 
 ### Things to keep in mind
 
@@ -14,7 +14,24 @@
 - Everyone's accounts have to be made manually
 - Passwords can be changed once logged in, default username-firstnamelastname, default password-istenitk
 
-### Testing
+### Running instructions
+```
+  pip3 install requirements.txt
+  python3 manage.py runserver 0.0.0.0:8000 #for mobile dev
+```
 
-- Use ankitkarody or amodhshenoy as member accounts
-- Use mohitbhasi or niharchitnis as SIG head accounts
+### Contributing
+
+- Place all CSS and JS code in `static/{css or js}/main.{css or js}` (bad practice, code will be refactored later)
+
+
+To open the website in mobile view you could-
+
+- Use your desktop browser
+  - Firefox: https://developer.mozilla.org/en-US/docs/Tools/Responsive_Design_Mode
+  - Chrome: https://developers.google.com/web/tools/chrome-devtools/device-mode/
+  
+- Use your mobile browser
+  - Ensure your mobile and laptop are on the same network
+  - Find your IPv4 address using ipconfig or ifconfig command
+  - Use http://IP_address:8000 as the URL to access the website from your mobile browser

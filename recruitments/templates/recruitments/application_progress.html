@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <div class="row center">
+        <h4 id="progress_header">Hi {{applicant.first_name}} {{applicant.last_name}}, here is your progress</h4>
+    </div>
+    <div hidden id="progress" class="row">
+    {% for score_calculated,progress in sigs_progress %}
+        <div class="col l6 s12">
+            <div class="card">
+                <div class="card-content black-text">
+                        <span class="center card-title">{{progress.sig}}</span> 
+                                Rounds Completed : {{progress.round_completed}}
+                                <br>
+        {% if score_calculated %}
+            {% if progress.next_round_time %}
+                Your next round is on {{progress.next_round_time}}
+            {% else %}
+                Sorry, you did not qualify for the next round
+            {% endif %}
+            
+        {% else %}
+            Scores for current round have not been calculated yet
+        {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    </div>
+</div>
+
+    <!--
+    <form id="progress_form">
+        <input id="passcode" placeholder="Enter passcode"> 
+    </form>
+    <button id="progress_button" onclick="check_code()">Check Progress</button>
+    -->
+    <script>
+        /*
+        function sha256(input){
+            var hasher = forge.md.sha256.create();  
+            hasher.start();  
+            hasher.update(input, "utf8");  
+            var hash = hasher.digest().toHex();  
+            return new String(hash)
+        }
+        function check_code(){            
+            var db_passcode="{{applicant_passcode}}"
+            var entered_passcode=sha256($('#passcode').val())
+            if(db_passcode==entered_passcode){
+                $('#progress_form').hide()
+                $('#progress_button').hide()
+
+            }
+        }
+        */
+    </script>
+{% endblock %}

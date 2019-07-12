@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>Project Name: {{ project.name}} </h3>
+  <p>Members:</p>
+  {% for member in project.members.all %}
+    {{member.first_name}} {{member.last_name}}<br>
+  {% endfor %}
+  <p>SIG: {{ project.sig }} </p>
+  <p>Year: {{ project.year }} </p>
+  <p>Description: {{ project.description|safe }}</p>
+{% endblock %}
