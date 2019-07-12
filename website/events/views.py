@@ -2,9 +2,9 @@ import json
 import urllib
 
 from django.shortcuts import render, redirect
-from django.cong import settings
+from django.conf import settings
 from django.contrib import messages
-from .forms import Registrationform
+from .forms import RegistrationForm
 from .models import Registration, EventDetails
 from .emailer import EmailHandler as em
 
@@ -47,7 +47,7 @@ def event_register(request, event_id):
     
             return redirect(event_register,event_id)
     else:
-    form = Registrationform()
+        form = Registrationform()
 
     context = {
         'form': form

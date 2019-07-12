@@ -7,8 +7,8 @@ urlpatterns = [
     url(r'', views.event_view, name='event_view'),
 
     # /events/event_id/
-    url(r'^(?P<event_id>[0-9]+)/$', views.eventdetails, name='event_details'),
+    url(r'^(?P<event_id>[0-9]+)/$', views.event_details, name='event_details'),
 
     # /events/event_id/register/
-    url(r'^(?P<event_id>[0-9]+)/register/$', views.eventregister, name='event_register')
+    url(r'^(?P<event_id>[0-9]+)/register/$', views.event_register, name='event_register')
 ] 
