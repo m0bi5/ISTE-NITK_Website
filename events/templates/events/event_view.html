@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for event in all_events %}
+<h1>{{event.event_name}}</h1>
+<img src="{{item.poster_image}}">
+<p>{{event.contact1_name}}</p>
+<p>{{event.contact1_number}}</p>
+<p>{{event.contact2_name}}</p>
+<p>{{event.contact2_number}}</p>
+<a href="/events/{{event.id}}/">Click here for more details</a>
+{% endfor %}
+
+{% endblock %}
