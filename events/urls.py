@@ -4,7 +4,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     # /events/
-    url(r'', views.event_view, name='event_view'),
+    url(r'', views.event_view, name='events'),
 
     # /events/event_id/
     url(r'^(?P<event_id>[0-9]+)/$', views.event_details, name='event_details'),

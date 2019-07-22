@@ -8,5 +8,13 @@
   {% endfor %}
   <p>SIG: {{ project.sig }} </p>
   <p>Year: {{ project.year }} </p>
+  <p>
+    Tags:
+    {% for tag in project.tags %}
+      {{tag}}
+    {% endfor %}
+  </p>
   <p>Description: {{ project.description|safe }}</p>
+
 {% endblock %}
+

@@ -16,4 +16,5 @@ def projects(request):
 
 def show_project(request,id):
     project=Project.objects.get(id=id)
+    project.tags=project.tags.split(';')
     return render(request,'projects/project.html',{'project':project})

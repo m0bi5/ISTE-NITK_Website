@@ -33,7 +33,7 @@
                 <li><a href="{% url 'recruitments' %}">Get Recruited</a></li>
             {% endif %}
             <li><a href="{% url 'projects_list' %}">Projects</a></li>
-            <li><a href="#">Events</a></li>
+            <li><a href="{% url 'events' %}">Events</a></li>
             <li><a href="{% url 'blogs' %}">Blogs</a></li>
         </ul>
         <nav>
@@ -48,7 +48,7 @@
                         <li><a href="{% url 'recruitments' %}">Get Recruited</a></li>
                     {% endif %}
                     <li><a href="{% url 'projects_list' %}">Projects</a></li>
-                    <li><a href="#">Events</a></li>
+                    <li><a href="{% url 'events' %}">Events</a></li>
                     <li><a href="{% url 'blogs' %}">Blogs</a></li>
                 </ul>
             </div>
@@ -121,7 +121,7 @@
                             <li><a class="white-text" href="{% url 'login' %}">Login</a></li>
                             <li><a class="white-text" href="{% url 'recruitments' %}">Get Recruited</a></li>
                             <li><a class="white-text" href="{% url 'projects_list' %}">Projects</a></li>
-                            <li><a class="white-text" href="#">Events</a></li>
+                            <li><a class="white-text" href="{% url 'events' %}">Events</a></li>
                             <li><a class="white-text" href="{% url 'blogs' %}">Blogs</a></li>
                         </ul>
                     </div>

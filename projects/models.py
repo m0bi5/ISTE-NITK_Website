@@ -9,6 +9,7 @@ def year_choices():
 
 class Project(models.Model):
     name = models.CharField(default="",max_length=200)
+    tags = models.CharField(default="",max_length=200)
     members = models.ManyToManyField(account_models.User)
     sig = models.ForeignKey(account_models.SIG,on_delete=models.CASCADE)
     year = models.IntegerField(choices=year_choices(),default=datetime.date.today().year)

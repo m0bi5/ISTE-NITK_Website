@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django_admin_hstore_widget.forms import HStoreFormField
 from .models import *
 from django import forms
 
