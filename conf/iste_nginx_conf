@@ -1,0 +1,9 @@
+server {
+    listen 80;
+    server_name 192.168.193.136;
+
+    location / {
+        include         uwsgi_params;
+        uwsgi_pass      unix:/root/Desktop/ISTE-NITK_Website/conf/website.sock;
+    }
+}
