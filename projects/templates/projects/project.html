@@ -1,20 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h3>Project Name: {{ project.name}} </h3>
-  <p>Members:</p>
-  {% for member in project.members.all %}
-    {{member.first_name}} {{member.last_name}}<br>
-  {% endfor %}
-  <p>SIG: {{ project.sig }} </p>
-  <p>Year: {{ project.year }} </p>
-  <p>
-    Tags:
-    {% for tag in project.tags %}
-      {{tag}}
-    {% endfor %}
-  </p>
-  <p>Description: {{ project.description|safe }}</p>
-
+<div class="row-center">
+  <div class="col l6 offset -l3 s12">
+    <div class="card-panel hoverable">
+      <div class="card-content black-text">
+        <h3>{{ project.name}}  :  {{ project.sig }} </h3><div class="center">
+        <h4><b>{{ project.year }}</b></h4> </div>
+        <h5><b>Members:</b></h5><h6>
+        {% for member in project.members.all %}
+          {{member.first_name}} {{member.last_name}}
+        {% endfor %}</h6>
+        <h5><b>
+          Description:</b></h5>
+          {{ project.description|safe }}
+      <h6><b>
+      Tags:</b></h6>
+      {% for tag in project.tags %}
+        <div class="chip">
+          {{tag}}</div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
-
