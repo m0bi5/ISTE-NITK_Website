@@ -4,6 +4,7 @@ $(document).ready(function() {
     $('.tooltipped').tooltip();
     $('select').formSelect();
     $( "#progress" ).slideToggle('slow');
+    $('.fixed-action-btn').floatingActionButton();
  });
  $('body').on('touchstart', function() {});
  ////////////////////////////////////////////////////////////
@@ -61,4 +62,3 @@ $("#show_form").click(function(){
     $(this).toggleClass("animateLine", !!px);
   });
 
-  

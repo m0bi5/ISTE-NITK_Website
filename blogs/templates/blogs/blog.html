@@ -27,19 +27,8 @@
                 {% endfor %}
             </div>
             <div class="col s12 m4">
-                <ul class='social-buttons'>
-                    <li>{% post_to_facebook request.path '<i class="fab fa-facebook fa-3x"></i>' %}</li> 
 
-                    <li>{% post_to_gplus request.path '<i class="fab fa-google-plus fa-3x"></i>'%}</li>
-
-                    <li>{% post_to_twitter "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-twitter fa-3x"></i>' %}</li>
-
-                    <li>{% post_to_linkedin "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-linkedin fa-3x"></i>'%}</li>
-
-                    <li>{% post_to_reddit "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-reddit fa-3x"></i>'%}</li>
-
-                    <li>{% post_to_telegram "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-telegram fa-3x"></i>'%}</li>
-                </ul>
+      
             </div>
         </div>
         </div>
@@ -47,4 +36,21 @@
       </div>    
     </div>
   </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red">
+            <i class="large material-icons">share</i>
+        </a>
+        <ul>
+            <li>{% post_to_facebook request.path '<i class="fab fa-facebook-square fa-3x"></i>' %}</li>
+            <li>{% post_to_gplus request.path '<i class="fab fa-google-plus-square fa-3x"></i>'%}</li>
+            <li>{% post_to_twitter "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-twitter-square fa-3x"></i>' %}</li>
+            <li>{% post_to_linkedin "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-linkedin fa-3x"></i>'%}</li>
+            <li>{% post_to_reddit "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-reddit-square fa-3x"></i>'%}</li>
+        </ul>
+    </div>
+
+                    
+
+
   {% endblock content %}  
