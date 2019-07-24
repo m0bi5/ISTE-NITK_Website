@@ -12,6 +12,7 @@ class Blog(models.Model):
     publishing_date=models.DateField(default=datetime.date.today)
     author=models.ForeignKey(account_models.User,on_delete=models.PROTECT)
     sig = models.ForeignKey(account_models.SIG,on_delete=models.CASCADE)
+    
 
 class BlogHits(models.Model):
     blog = models.ForeignKey(Blog,on_delete=models.CASCADE)

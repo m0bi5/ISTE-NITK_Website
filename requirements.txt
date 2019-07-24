@@ -1,0 +1,8 @@
+django_ckeditor==5.7.0
+django
+python-decouple==3.1
+dj-database-url==0.4.2
+Pillow==6.0.0
+dj-static==0.0.6
+django-dotenv==1.4.2
+django-social-share

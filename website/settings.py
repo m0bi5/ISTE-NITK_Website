@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'blogs',
     #3rd Party
     'ckeditor',
+    'django_social_share',
     'ckeditor_uploader',
 ]
 

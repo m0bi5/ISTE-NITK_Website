@@ -1,13 +1,50 @@
 
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{post.title}}</h1>
+{% load social_share %}
+  <div class="row">
+    <div class="col s12 m12">
+      <div class="card ">
+        <div class="card-content ">
+        <div class="row">
+            <div class="col s12 center">
+                <span  class=""><h3>{{post.title}}</h3></span>
+                <br>{{post.publishing_date}}
+                <br>By {{post.author}}
+            </div>
+        </div>
+        <div class="row ckeditor_content">
+            {{post.content|safe}}
+        </div>
+        <div class="row">
+            <div class="col s12 m8">
+            
+        <div style="border-bottom:1px black solid" class="row">
+        <i class="material-icons">local_offer</i><span style="font-size:32px;">Tags</span>
+        </div>
+                {% for category in post.categories %}
+                    <div class="chip">{{category}}</div>
+                {% endfor %}
+            </div>
+            <div class="col s12 m4">
+                <ul class='social-buttons'>
+                    <li>{% post_to_facebook request.path '<i class="fab fa-facebook fa-3x"></i>' %}</li> 
 
-{{post.abstract}}
-{{post.categories}}
-{{post.content|safe}}
-{{post.publishing_date}}
-{{post.author}}
-{{post.sig}}
-{{post.views}}
-{% endblock content %}   
+                    <li>{% post_to_gplus request.path '<i class="fab fa-google-plus fa-3x"></i>'%}</li>
+
+                    <li>{% post_to_twitter "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-twitter fa-3x"></i>' %}</li>
+
+                    <li>{% post_to_linkedin "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-linkedin fa-3x"></i>'%}</li>
+
+                    <li>{% post_to_reddit "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-reddit fa-3x"></i>'%}</li>
+
+                    <li>{% post_to_telegram "Check out this amazing article from ISTE NITK!" request.path '<i class="fab fa-telegram fa-3x"></i>'%}</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+        </div>
+      </div>    
+    </div>
+  </div>
+  {% endblock content %}  
