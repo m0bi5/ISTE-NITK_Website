@@ -14,6 +14,7 @@ def blogs(request):
 
 def show_blog(request,id):
     post=Blog.objects.get(id=int(id))
+    post.categories=post.categories.split(';')
     if not BlogHits.objects.filter(blog=post):
         view = BlogHits(blog=post,fingerprint=request.META['REMOTE_ADDR'],created=datetime.datetime.now())
         view.save()
