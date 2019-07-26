@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="center row">
+<!--<div class="center row">
     <h3><span>Special Interest Groups (SIGs)</span></h3>
     {% for sig_choice in sigs %}
     <div class="col s12 l3">
@@ -21,24 +21,7 @@
     </div>
     {% endfor %}
 </div>
-
-<div class="center row">
-    <h3><span>The Core</span></h3>
-    <div class='flexrow'>
-        {% for member in core %}
-        <a class="core_img ">
-            <div class="img__overlay">
-                {{member.user.first_name}} {{member.user.last_name}}
-                <br>
-                {{member.role}}
-            </div>
-            <img src='media/{{member.user.avatar}}'>
-        </a>
-        {% endfor %}
-    </div>
-</div>
-
-
+-->
 
 
 <div id="counter" class="center row">
@@ -58,8 +41,21 @@
 </div>
 
 
-
-
+<div class="center row">
+    <h3><span>The Core</span></h3>
+    <div class='flexrow'>
+        {% for member in core %}
+        <a class="core_img ">
+            <div class="img__overlay">
+                {{member.user.first_name}} {{member.user.last_name}}
+                <br>
+                {{member.role}}
+            </div>
+            <img src='media/{{member.user.avatar}}'>
+        </a>
+        {% endfor %}
+    </div>
+</div>
 
 <script type="text/javascript">
     $(window).scroll(check_position);

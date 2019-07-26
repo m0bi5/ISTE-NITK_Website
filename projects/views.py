@@ -11,7 +11,7 @@ def projects(request):
         projects_list[year] = {}
         sigs = ['Crypt','Charge','Credit','Chronicle','Clutch','Concrete','Create','Catalyst']
         for sig in account_models.SIG.objects.all():
-            projects_list[year][sig.name] = Project.objects.filter(year=year,sig=sig)
+            projects_list[year][sig] = Project.objects.filter(year=year,sig=sig)
     return render(request,'projects/project_list.html',{'projects': projects_list})
 
 def show_project(request,id):

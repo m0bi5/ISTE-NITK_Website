@@ -34,9 +34,17 @@ $("#show_form").click(function(){
 })
 ////////////////////////////////////////////////////////////
 //
-// USED IN PERSONAL_INTERVIEW.HTML
+// USED IN PROJECT_LIST.HTML
 //
 ////////////////////////////////////////////////////////////
+$('.projects_show').click(function(){
+	$('.projects_show').slideToggle('slow')
+	$("#projects"+this.id).slideToggle('slow')
+})
+$('.projects_back').click(function(){
+	$('.projects_show').slideToggle('slow')
+	$("#projects"+this.id).slideToggle('slow')
+})
 
 ////////////////////////////////////////////////////////////
 //

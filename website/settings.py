@@ -146,3 +146,16 @@ MEDIA_URL = '/media/'
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LexoqoUAAAAAE9tc1yAnWZNJUKvIghOM_3fO2_q'
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'stylesSet': [
+            {
+                'name': 'Image-Responsive',
+                'element': 'Image',
+                'attributes': {'class': 'responsive-img'},
+            },
+        ],
+    }
+}

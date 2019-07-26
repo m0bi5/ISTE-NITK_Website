@@ -5,17 +5,34 @@
   <div class="col l6 offset -l3 s12">
     <div class="card-panel hoverable">
       <div class="card-content black-text">
-        <h3>{{ project.name}}  :  {{ project.sig }} </h3><div class="center">
-        <h4><b>{{ project.year }}</b></h4> </div>
-        <h5><b>Members:</b></h5><h6>
-        {% for member in project.members.all %}
-          {{member.first_name}} {{member.last_name}}
-        {% endfor %}</h6>
-        <h5><b>
-          Description:</b></h5>
-          {{ project.description|safe }}
-      <h6><b>
-      Tags:</b></h6>
+        <h3>{{ project.name}}</h3><div class="center">
+        <h5>{{ project.sig }} | {{ project.year }}</h5> </div>
+        <div style="border-bottom:1px black solid" class="row">
+        <i class="material-icons">person</i><span style="font-size:26px;">Members</span>
+      </div>
+      <div class="center row">
+          <div class='flexrow'>
+              {% for member in project.members.all %}
+              <a class="core_img ">
+                  <div class="img__overlay">
+                      {{member.first_name}} {{member.last_name}}
+                      <br>
+                  </div>
+                  <img src='../../media/{{member.avatar}}'>
+              </a>
+              {% endfor %}
+          </div>
+      </div>
+        
+      <div style="border-bottom:1px black solid" class="row">
+        <i class="material-icons">description</i><span style="font-size:26px;">Description</span>
+      </div>
+          <div class="row ckeditor_content">
+            {{ project.description|safe }}
+          </div>
+      <div style="border-bottom:1px black solid" class="row">
+        <i class="material-icons">local_offer</i><span style="font-size:26px;">Tags</span>
+      </div>
       {% for tag in project.tags %}
         <div class="chip">
           {{tag}}</div>

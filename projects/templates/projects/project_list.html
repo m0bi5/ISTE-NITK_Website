@@ -1,16 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3><span>Projects</span></h3>
+<h3><span>Projects</span></h3>     
   {% for year,yearly_projects in projects.items %}
-    <div><h2> {{ year }}<br></h2>
-    {% for sig,list in yearly_projects.items %}
-      <div><h3> {{ sig }}</h3>
-      {% for project in list %}
-          <p>Title:<a href='projects/{{project.id}}'> {{ project.name }}</a></p>
-      {% endfor %}
-      </div>
-      {% endfor %}
+  <div class="center flexrow">
+    <h2 class="circle projects_show" id="{{year}}">{{ year }}<br></h2>
+
+  </div>
+    <div hidden id="projects{{year}}" class="row">
+    <div class="row center">
+      <a id="{{year}}" class=" projects_back">View projects from another year</a>
     </div>
+    <div class="row">
+        {% for sig,list in yearly_projects.items %}
+            <div class="col s12 l3">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="../media/{{sig.avatar}}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{sig.name}}<i class="material-icons right">more_vert</i></span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{sig.name}}<i class="material-icons right">close</i></span>
+                        <br>
+                        <ul>
+                        {% for project in list %}
+                            <li><a class="indigo-text" style="text-decoration: underline;" href='projects/{{project.id}}'> {{ project.name }}</a></li>
+                            <br>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
   {% endfor %}
 {% endblock %}
