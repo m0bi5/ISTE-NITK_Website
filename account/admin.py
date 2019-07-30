@@ -16,7 +16,7 @@ class UserAdmin(admin.ModelAdmin):
         excluded = super().get_exclude(request, obj) or [] # get overall excluded fields
 
         if not request.user.is_superuser: # if user is not a superuser
-            return excluded + ['last_login','groups','user_permissions','is_staff','is_active','date_joined','is_superuser']
+            return excluded + ['first_name','last_name','username','last_login','groups','user_permissions','is_staff','is_active','date_joined','is_superuser']
 
         return excluded # otherwise return the default excluded fields if any
     def get_queryset(self, request):

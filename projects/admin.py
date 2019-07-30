@@ -6,6 +6,8 @@ class MembershipInline(admin.TabularInline):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
+    list_filter=('sig',)
+    search_fields=('name',)
     inlines=[MembershipInline]
     exclude=('members',)
     list_display=('id','name','sig','year')

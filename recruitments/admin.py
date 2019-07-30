@@ -59,8 +59,8 @@ class ApplicantProgressAdmin(admin.ModelAdmin):
 class InterviewResponseManager(models.Manager):
     def get_queryset(self, request):
         if request.user.groups.exists():
-            if request.user.groups.get(name='Member'):
-                return InterviewResponse.objects.filter(interviewer=request.user)
+            return InterviewResponse.objects.filter(interviewer=request.user)
+        
         return InterviewResponse.objects.all()
 
 @admin.register(ApplicantResponse)

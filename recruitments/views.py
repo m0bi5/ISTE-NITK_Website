@@ -39,6 +39,7 @@ def applicant_details(request):
             response.set_cookie('details',str(details))
             return response
         else:
+            print("sdgfbsjdknawmlkfbn")
             return render(request,'recruitments/applicant_deets.html',{'form':form})
 
     else:
@@ -80,12 +81,12 @@ def questions(request,applicant_rollno,sigs):
                 ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig_round=question.sig_round)
 
             gmailaddress = "istenitkchapter@gmail.com"
-            gmailpassword = "#includeistenitk.h"
+            gmailpassword = "tqlsyhqfyskwutxh"
             mailto = applicant.email
-
-            mailServer = smtplib.SMTP('smtp.gmail.com' , 587)
+            mailServer = smtplib.SMTP('smtp.gmail.com:587')
             mailServer.starttls()
             mailServer.login(gmailaddress , gmailpassword)
+
             msg = text('''Hey {}!!\n\tThank you for participating in the recruitment process!!! Your progress will be uploaded soon, which can be viewed by clicking on this link: http://127.0.0.1:8000/recruitments/progress/{}/'''.format(applicant.first_name,str(applicant.rollno)))
             msg['Subject'] = 'ISTE Recruitments - Applicant Progress'
             msg['From'] = gmailaddress
@@ -165,7 +166,9 @@ def personal_interview(request,sig,rollno):
     progress=ApplicantProgress.objects.get(sig__name=sig,applicant=applicant)
     sig_round=SIGRound.objects.get(sig__name=sig,round_number=progress.round_completed+1)
     criteria=Criteria.objects.filter(sig_round=sig_round)
-    context={'round_number':progress.round_completed+1,'sig':sig,'rollno':rollno,'applicant':applicant,'criteria':criteria,'sig_round':sig_round,'progress':progress,'responses':responses}
+    questions=Question.objects.filter(sig_round=sig_round)
+    
+    context={'questions':questions,'round_number':progress.round_completed+1,'sig':sig,'rollno':rollno,'applicant':applicant,'criteria':criteria,'sig_round':sig_round,'progress':progress,'responses':responses}
     if progress.interview_done:
         return redirect('sig_interview',sig)
     if request.POST:

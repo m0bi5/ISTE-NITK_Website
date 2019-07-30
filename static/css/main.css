@@ -186,8 +186,11 @@ main {
   display:inline !important;
 }
 
-.circle
-    {
+textarea{
+  border:dashed 2px #bdbdbd;
+}
+
+.circle{
     width:100px;
     height:100px;
     border-radius:50%;
@@ -196,4 +199,4 @@ main {
     color:#fff;
     text-align:center;
     background:#1a237e
-    }
+}
