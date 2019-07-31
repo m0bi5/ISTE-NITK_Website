@@ -1,9 +1,16 @@
 from django import forms
 from django.core.validators import RegexValidator
 from account import models as account_models
+from snowpenguin.django.recaptcha3.fields import ReCaptchaField
+
 year_choices = (
     ('2nd year','2nd year'),
     ('3rd year','3rd year'))
+
+class recaptchaForm(forms.Form):
+    recaptcha=ReCaptchaField(score_threshold=0.75)
+    
+
 
 class ApplicantForm(forms.Form):
     rollno_regex = RegexValidator(regex=r'^1[78]1(IT|MN|MT|ME|CS|EE|EC|CH)[12][0-7][0-9]$',message="Roll number must be in the format: 1[7/8]1XX[1/2]XX")
@@ -15,4 +22,5 @@ class ApplicantForm(forms.Form):
     email = forms.EmailField(required=True)
     year = forms.ChoiceField(choices=year_choices, required=True)
     sigs=account_models.SIG.objects.all()
+    captcha=ReCaptchaField(score_threshold=0.25)
     sig_choices = forms.ModelMultipleChoiceField(widget=forms.SelectMultiple(attrs={'data-limit':'3','class':'limit'}),queryset=account_models.SIG.objects.all(),required=True)

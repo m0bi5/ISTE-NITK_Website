@@ -4,3 +4,7 @@ from .models import Registration
 
 admin.site.register(EventDetails)
 admin.site.register(Registration)
+
+class Registration(admin.ModelAdmin):
+    list_filter=('event.sig',)
+    

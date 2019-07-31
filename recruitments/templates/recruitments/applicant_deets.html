@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+{% load recaptcha3 %}
+
+{% block head %}
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+{% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
@@ -64,6 +70,7 @@
                             </div>
                         </div>
                     </div>
+                    {{form.captcha}}
                     <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                         <i class="material-icons right">send</i>
                     </button>

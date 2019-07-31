@@ -1,6 +1,6 @@
+import importlib
 class EmailHandler():
 	def __init__(self):
-		install_package('smtplib')
 		self.MIMEMultipart=importlib.import_module('email.mime.multipart').MIMEMultipart
 		self.MIMEText=importlib.import_module('email.mime.text').MIMEText
 		self.imaplib=importlib.import_module('imaplib')

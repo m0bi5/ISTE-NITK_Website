@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response,render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import ApplicantForm
+from .forms import ApplicantForm,recaptchaForm
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from .models import *
@@ -52,52 +52,37 @@ def questions(request,applicant_rollno,sigs):
         questions = {}
         for sig in sig_choices:
             questions[sig] = Question.objects.filter(sig_round=SIGRound.objects.get(sig=sig,round_number=1))
-        return render(request,'recruitments/sig_questions.html',{'questions':questions})
+        return render(request,'recruitments/sig_questions.html',{'captcha':recaptchaForm,'questions':questions})
     else:
-        recaptcha_response = request.POST.get('g-recaptcha-response')
-        url = 'https://www.google.com/recaptcha/api/siteverify'
-        values = {
-            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
-            'response': recaptcha_response
-        }
-        data = urllib.parse.urlencode(values).encode('utf-8')
-        req = urllib.request.Request(url, data)
-        response = urllib.request.urlopen(req)
-        result = json.load(response)
+        details = eval(request.COOKIES['details'])
+        applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
+        sig_choices=[account_models.SIG.objects.get(id=i) for i in sigs.split('&')]
+        for sig in sig_choices:
+            ApplicantProgress.objects.create(applicant=applicant,sig=sig,round_completed=1)
+        response = dict(request.POST.copy())
+        quest_ids = list(response.keys())
+        quest_ids.remove('csrfmiddlewaretoken')
+        quest_ids.remove('g-recaptcha-response')
+        quest_ids.remove('action')
+        for id in quest_ids:
+            question = Question.objects.get(id=int(id))
+            ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig_round=question.sig_round)
 
-        if result['success']:
-            details = eval(request.COOKIES['details'])
-            applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
-            sig_choices=[account_models.SIG.objects.get(id=i) for i in sigs.split('&')]
-            for sig in sig_choices:
-                ApplicantProgress.objects.create(applicant=applicant,sig=sig,round_completed=1)
-            response = dict(request.POST.copy())
-            quest_ids = list(response.keys())
-            quest_ids.remove('csrfmiddlewaretoken')
-            quest_ids.remove('g-recaptcha-response')
-            quest_ids.remove('action')
-            for id in quest_ids:
-                question = Question.objects.get(id=int(id))
-                ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig_round=question.sig_round)
+        gmailaddress = "istenitkchapter@gmail.com"
+        gmailpassword = "tqlsyhqfyskwutxh"
+        mailto = applicant.email
+        mailServer = smtplib.SMTP('smtp.gmail.com:587')
+        mailServer.starttls()
+        mailServer.login(gmailaddress , gmailpassword)
 
-            gmailaddress = "istenitkchapter@gmail.com"
-            gmailpassword = "tqlsyhqfyskwutxh"
-            mailto = applicant.email
-            mailServer = smtplib.SMTP('smtp.gmail.com:587')
-            mailServer.starttls()
-            mailServer.login(gmailaddress , gmailpassword)
-
-            msg = text('''Hey {}!!\n\tThank you for participating in the recruitment process!!! Your progress will be uploaded soon, which can be viewed by clicking on this link: http://127.0.0.1:8000/recruitments/progress/{}/'''.format(applicant.first_name,str(applicant.rollno)))
-            msg['Subject'] = 'ISTE Recruitments - Applicant Progress'
-            msg['From'] = gmailaddress
-            msg['To'] = mailto
-            mailServer.sendmail(gmailaddress, mailto , msg.as_string())
-            mailServer.quit()
-            return render(request,'recruitments/finished.html')
-        else:
-            messages.add_message(request,messages.ERROR,"Error in ReCaptcha, try again")
-            return redirect('/recruitments/questions/{}/{}'.format(applicant_rollno,sigs))
-
+        msg = text('''Hey {}!!\n\tThank you for participating in the recruitment process!!! Your progress will be uploaded soon, which can be viewed by clicking on this link: http://127.0.0.1:8000/recruitments/progress/{}/'''.format(applicant.first_name,str(applicant.rollno)))
+        msg['Subject'] = 'ISTE Recruitments - Applicant Progress'
+        msg['From'] = gmailaddress
+        msg['To'] = mailto
+        mailServer.sendmail(gmailaddress, mailto , msg.as_string())
+        mailServer.quit()
+        return render(request,'recruitments/finished.html')
+        
 def application_progress(request,applicant_rollno):
     applicant=Applicant.objects.get(rollno=applicant_rollno)
     sigs_progress=ApplicantProgress.objects.filter(applicant=applicant)

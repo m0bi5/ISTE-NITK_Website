@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+{% load recaptcha3 %}
+
+{% block head %}
+    {% recaptcha_init %}
+    {% recaptcha_ready action_name='homepage' %}
+{% endblock %}
 
 {% block content %}
 
@@ -19,12 +25,8 @@
                     </div>
                 </div>
             {% endfor %}
-            
-            <div class="col l6 offset-l2 s2">
-                <script src='https://www.google.com/recaptcha/api.js'></script>
-                <div class="g-recaptcha" data-sitekey="6LexoqoUAAAAAPAb_LVSUpzht2E-Zjf9tGfxz1rZ" required></div>
-            </div>
             <br>
+            {{captcha.recaptcha}}
             <div class="col l6 offset-l3 s12">
                 <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                     <i class="material-icons right">send</i>

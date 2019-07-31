@@ -1,7 +1,11 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
+    
+        {% block head %}
+        {% endblock head %}
         <title>ISTE NITK Student Chapter</title>
         <script src="https://kit.fontawesome.com/8fae0507a3.js"></script>
         <!--Import Google Icon Font-->
@@ -13,6 +17,7 @@
         <script type="text/javascript" src="{% static 'js/jquery.js'%}"></script>
         <script type="text/javascript" src="{% static 'js/jquery_ui.js'%}"></script>
         <script type="text/javascript" src="{% static 'materialize/js/materialize.js'%}"></script>
+        <script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script>
         <script type="text/javascript" src="{% static 'js/progressbar.js'%}"></script>
         <link type="text/css" rel="stylesheet" href="{% static 'css/progressbar.css' %}"  media="screen,projection"/>
         <link type="text/css" rel="stylesheet" href="{% static 'css/main.css' %}"  media="screen,projection"/>

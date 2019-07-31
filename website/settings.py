@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'blogs',
     #3rd Party
     'ckeditor',
+    'snowpenguin.django.recaptcha3',
     'ckeditor_uploader',
 ]
 
@@ -144,7 +145,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
+
+
 GOOGLE_RECAPTCHA_SECRET_KEY = '6LexoqoUAAAAAE9tc1yAnWZNJUKvIghOM_3fO2_q'
+
+RECAPTCHA_PRIVATE_KEY = '6LcomLAUAAAAAP7bdzxJODu-Ar1wQGSTBb6eYu39'
+RECAPTCHA_PUBLIC_KEY = '6LcomLAUAAAAAJFOWy2KrT8KHZVb3QBjUlYaA9lN'
+RECAPTCHA_DEFAULT_ACTION = 'generic'
+RECAPTCHA_SCORE_THRESHOLD = 0.5
 
 
 CKEDITOR_CONFIGS = {

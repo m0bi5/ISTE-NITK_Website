@@ -39,5 +39,5 @@ class Registration(models.Model):
     last_name=models.CharField(default="",max_length=200)
     roll_no=models.CharField(default="",max_length=200)
     email=models.CharField(default="",max_length=200)
-    contact_number=models.IntegerField(default=0)
+    phone=models.IntegerField(default=0)
     attendance=models.CharField(max_length=12, default="", choices=ATTENDED)
