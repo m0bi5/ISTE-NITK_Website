@@ -1,11 +1,4 @@
 {% extends 'base.html' %}
-{% load recaptcha3 %}
-
-{% block head %}
-    {% recaptcha_init %}
-    {% recaptcha_ready action_name='homepage' %}
-{% endblock %}
-
 {% block content %}
 <div id="details_form" class="row center">
     <div class="col l6 offset-l3 s12">
@@ -51,6 +44,7 @@
                                     <span class="helper-text">A form to make teams will be sent to this email</span>
                                 </div>
                             </div>
+                            {{form.captcha}}
                         </div>
                     </div>
                     <button class="btn waves-effect waves-light" type="submit" name="action">Submit

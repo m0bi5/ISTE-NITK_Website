@@ -5,6 +5,8 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class EventDetails(models.Model):
+    def __str__(self):
+        return self.event_name
     SIG_CHOICES = (
     ('Catalyst','Catalyst'),
     ('Chronicle','Chronicle'),
@@ -30,6 +32,8 @@ class EventDetails(models.Model):
 
 
 class Registration(models.Model):
+    def __str__(self):
+        return self.first_name+" "+self.last_name
     ATTENDED = (
     ("Present","Present"),
     ("Absent", "Absent"),
@@ -40,4 +44,20 @@ class Registration(models.Model):
     roll_no=models.CharField(default="",max_length=200)
     email=models.CharField(default="",max_length=200)
     phone=models.IntegerField(default=0)
+
+class Team(models.Model):
+    def __str__(self):
+        return self.team_name
+    ATTENDED = (
+    ("Present","Present"),
+    ("Absent", "Absent"),
+    )
+    event=models.ForeignKey(EventDetails, on_delete=models.CASCADE)
+    team_name=models.CharField(default="",max_length=200)
+    member1=models.CharField(default="",max_length=200)
+    member2=models.CharField(default="",max_length=200,blank=True)
+    member3=models.CharField(default="",max_length=200,blank=True)
+    first_place=models.BooleanField(default=False)
+    second_place=models.BooleanField(default=False)
+    third_place=models.BooleanField(default=False)
     attendance=models.CharField(max_length=12, default="", choices=ATTENDED)

@@ -13,3 +13,10 @@ class RegistrationForm(forms.Form):
     email = forms.EmailField(required=True)
     captcha = ReCaptchaField(score_threshold=0.75)
     
+class TeamForm(forms.Form):
+    team_name = forms.CharField(max_length=30, required=True)
+    rollno_regex = RegexValidator(regex=r'^1[78]1(IT|MN|MT|ME|CS|EE|EC|CH)[12][0-7][0-9]$',message="Roll number must be in the format: 1[7/8]1XX[1/2]XX")
+    member1 = forms.CharField(validators=[rollno_regex],label="Roll no",max_length=8,required=True)
+    member2 = forms.CharField(validators=[rollno_regex],label="Roll no",max_length=8,required=False)
+    member3 = forms.CharField(validators=[rollno_regex],label="Roll no",max_length=8,required=False)
+

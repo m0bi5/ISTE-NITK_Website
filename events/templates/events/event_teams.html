@@ -1,10 +1,59 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1>{{event.event_name}}</h1>
-<img src="{{event.poster_image}}">
-<p>{{event.contact1_name}}</p>
-<p>{{event.contact1_number}}</p>
-<p>{{event.contact2_name}}</p>
-<p>{{event.contact2_number}}</p>
-<a href="{% url 'event_register' event.id %}">Click here to register</a>
+<div id="details_form" class="row center">
+    <div class="col l6 offset-l3 s12">
+        <div class="card">
+            <div class="card-content black-text">
+                <center>
+                    <span class="card-title">Form teams for {{event.event_name}}</span>
+                    <span>Your team should consist of at most 3 members</span>
+                </center>
+                <form action="{% url 'event_form_team' event.id member1 %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="form-icon material-icons prefix">group</i>
+                                    {{form.team_name}}
+                                    <label for="id_team_name">Team Name</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="form-icon material-icons prefix">person</i>
+                                    <input class="input" name="member1" id="id_member1" value="{{member1}}" disabled>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="form-icon material-icons prefix">person</i>
+                                    {{form.member2}}
+                                    <label for="id_member2">Member2 Roll Number</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="form-icon material-icons prefix">person</i>
+                                    {{form.member3}}
+                                    <label for="id_member3">Member3 Roll Number</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
+
+
+
+
+
