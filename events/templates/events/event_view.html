@@ -1,13 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-{% for event in all_events %}
-<h1>{{event.event_name}}</h1>
-<img src="{{event.poster_image}}">
-<p>{{event.contact1_name}}</p>
-<p>{{event.contact1_number}}</p>
-<p>{{event.contact2_name}}</p>
-<p>{{event.contact2_number}}</p>
-<a href="{% url 'event_details' event.id%}">Click here for more details</a>
-{% endfor %}
+<h3><span>Upcoming Events</span></h3>
+
+<div class="row">
+    {% for event in all_events %}
+        <div class="col s12 m4">
+            <div class="card hoverable">
+                <div class="card-image">
+                    <img src="/media/{{event.poster_image}}">
+                </div>
+                <div class="card-content">
+                    <p class="grey-text">{{event.event_date}}, {{event.event_time}}</p>
+                    <h5 style="font-weight: bold;">{{event.event_name}}</h5>
+                    <p class=" grey-text text-darken-2">
+                        {{event.description|safe}}
+                        <a class="activator">Point of Contact</a>
+                    </p>
+                </div>
+                
+                <div class="card-action"> 
+                    <a class="indigo-text" href="{% url 'event_register' event.id%}">Register Now</a>
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">Point of Contact
+                        <i class="material-icons right">close</i>
+                    </span>
+                    <br>
+                    <div class="flexrow">
+                            <a class="core_img ">
+                                <div class="img__overlay">
+                                    {{event.contact1.first_name}} {{event.contact1.last_name}}
+                                    <br>
+                                    {{event.contact1.phone_number}}
+                                </div>
+                                <img src='/media/{{event.contact1.avatar}}'>
+                            </a>
+                    </div>
+                    <br>
+                    <div class="flexrow">
+                            <a class="core_img ">
+                                <div class="img__overlay">
+                                    {{event.contact2.first_name}} {{event.contact2.last_name}}
+                                    <br>
+                                    {{event.contact2.phone_number}}
+                                </div>
+                                <img src='/media/{{event.contact2.avatar}}'>
+                            </a>
+
+                    </div>
+                </div>
+            </div> 
+        </div> 
+    {% endfor %}
+</div>
 
 {% endblock %}
