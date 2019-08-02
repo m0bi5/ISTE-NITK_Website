@@ -1,0 +1,25 @@
+[Unit]
+Description=iste_website app
+
+# Requirements
+Requires=network.target
+
+# Dependency ordering
+After=network.target
+
+[Service]
+TimeoutStartSec=0
+RestartSec=10
+Restart=always
+
+# path to app
+WorkingDirectory=/home/iste/ISTE-NITK_Website
+# the user that you want to run app by
+User=app
+
+KillSignal=SIGQUIT
+Type=notify
+NotifyAccess=all
+
+# Main process
+ExecStart=uwsgi --http-socket=8000 --ini=/home/iste/ISTE-NITK_Website/conf/iste_uwsgi.ini

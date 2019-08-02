@@ -7,3 +7,7 @@ dj-static==0.0.6
 django-dotenv==1.4.2
 django-social-share
 importlib
+snowpenguin
+psycopg2-binary
+psycopg2
+django-recaptcha3
