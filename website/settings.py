@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['istenitk.herokuapp.com','localhost','10.4.0.8','127.0.0.1','*']
+ALLOWED_HOSTS = ['iste.nitk.ac.in','localhost','10.11.0.12','127.0.0.1','*']
 
 # Application definition
 
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'blogs',
     #3rd Party
     'ckeditor',
+    'sslserver',
     'snowpenguin.django.recaptcha3',
     'ckeditor_uploader',
 ]
