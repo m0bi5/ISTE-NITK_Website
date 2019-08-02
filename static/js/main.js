@@ -6,6 +6,10 @@ $(document).ready(function() {
     $( "#progress" ).slideToggle('slow');
     $('.fixed-action-btn').floatingActionButton();
  });
+ $('.carousel.carousel-slider').carousel({
+  fullWidth: true,
+  indicators: true
+});
  $('body').on('touchstart', function() {});
  ////////////////////////////////////////////////////////////
 //

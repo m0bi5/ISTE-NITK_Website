@@ -10,7 +10,7 @@
                     <img src="/media/{{event.poster_image}}">
                 </div>
                 <div class="card-content">
-                    <p class="grey-text">{{event.event_date}}, {{event.event_time}}</p>
+                    <p class="grey-text"><i class="material-icons">date_range</i> {{event.event_date}}, {{event.event_time}} <i class="material-icons">location_on</i>{{event.venue}}</p>
                     <h5 style="font-weight: bold;">{{event.event_name}}</h5>
                     <p class=" grey-text text-darken-2">
                         {{event.description|safe}}

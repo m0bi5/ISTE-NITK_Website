@@ -1,8 +1,20 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block carousel %}
+  <div class="carousel carousel-slider center">
+    <div class="carousel-fixed-item center">
+      <a href="{% url 'recruitments' %}" class="btn waves-effect white grey-text darken-text-2">Get Recruited</a>
+    </div>
+    <div class="carousel-item indigo darken-4 white-text" href="#one!">
+      <h1>We are Recruiting!</h1>
+      <p class="white-text">Join us today</p>
+    </div>
+    </div>
+  </div>
+{% endblock %}
 
-<!--<div class="center row">
+{% block content %}
+<div class="row">
     <h3><span>Special Interest Groups (SIGs)</span></h3>
     {% for sig_choice in sigs %}
     <div class="col s12 l3">
@@ -15,13 +27,13 @@
             </div>
             <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4">{{sig_choice.name}}<i class="material-icons right">close</i></span>
+                <br>
                 <p>{{sig_choice.description|safe}}</p>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
--->
 
 
 <div id="counter" class="center row">

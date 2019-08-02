@@ -4,6 +4,7 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'website.settings'
 django.setup()
 from account import models
 from django.contrib.auth.models import Group
+from django.core.files.images import ImageFile
 
 def install_pip(log=None):
    # log("Installing pip, the standard Python Package Manager, first")
@@ -73,7 +74,7 @@ class SpreadsheetHandler():
 			for col, entry in enumerate(new_row, start=1):
 				ws.cell(row=row, column=col, value=entry)
 		wb.save(file)
-
+'''
 sheet=SpreadsheetHandler()
 sigs=['Crypt','Charge','Chronicle','Clutch','Concrete','Create','Credit','Catalyst']
 l=sheet.excel_read('list.xlsx','4th Years')[1:]
@@ -104,3 +105,8 @@ for members in l:
     except Exception as e:
         print(e)
         print(username," already exists")
+'''
+for u in models.User.objects.all():
+	if u.avatar=="":
+		u.avatar=ImageFile(open("generic_pp.jpg", "rb"))
+		u.save()
