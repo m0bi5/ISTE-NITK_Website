@@ -12,15 +12,27 @@
                         <span class="center card-title">{{progress.sig}}</span> 
                                 Rounds Completed : {{progress.round_completed}}
                                 <br>
+
         {% if progress.qualified_for_next %}
             {% if progress.next_round_time %}
-                Your next round is on {{progress.next_round_time}}
+                You have qualified for the next round!<br>
+                Your next round is on {{progress.next_round_time}} in {{progress.next_round_location}}
             {% else %}
-                Interview time slots yet to be allocated, please wait!
+                You have qualified for the next round!<br>
+                Time slots for the next round are yet to be allocated, please wait!
             {% endif %}
-            
         {% else %}
-            Sorry you did not qualify for the next round
+            {% if progress.interview_done %}
+                Sorry you did not qualify for the next round
+            {% else %}
+                {% if progress.next_round_time %}
+                    You have qualified for the next round!<br>
+                    Your next round is on {{progress.next_round_time}}
+                {% else %}
+                    You have qualified for the next round!<br>
+                    Time slots for the next round are yet to be allocated, please wait!
+                {% endif %}
+            {% endif %}
         {% endif %}
                 </div>
             </div>

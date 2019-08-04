@@ -58,7 +58,7 @@ def questions(request,applicant_rollno,sigs):
         applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
         sig_choices=[account_models.SIG.objects.get(id=i) for i in sigs.split('&')]
         for sig in sig_choices:
-            ApplicantProgress.objects.create(applicant=applicant,sig=sig,round_completed=1)
+            ApplicantProgress.objects.create(applicant=applicant,sig=sig,round_completed=0,qualified_for_next=True)
         response = dict(request.POST.copy())
         quest_ids = list(response.keys())
         quest_ids.remove('csrfmiddlewaretoken')

@@ -7,6 +7,8 @@ from django.contrib.auth.models import Group
 def send_to_next_round_interview(modeladmin, request, queryset):
     applicants=[i.applicant for i in queryset]
     unselected=InterviewResponse.objects.filter(sig_round=queryset[0].sig_round).exclude(applicant__in=applicants)
+    unselected_applicants=[interview.applicant for interview in unselected]
+    unselected_applicants=list(set(unselected_applicants))
     for interview in queryset:
         progress=ApplicantProgress.objects.get(applicant=interview.applicant,sig=interview.sig_round.sig)
         progress.round_completed+=1
@@ -15,32 +17,35 @@ def send_to_next_round_interview(modeladmin, request, queryset):
         progress.sig=interview.sig_round.sig
         progress.save()
     
-    for interview in unselected:
-        progress=ApplicantProgress.objects.get(applicant=interview.applicant,sig=interview.sig_round.sig)
+    for interview in unselected_applicants:
+        progress=ApplicantProgress.objects.get(applicant=applicant,sig=queryset[0].sig_round.sig)
         progress.round_completed+=1
         progress.qualified_for_next=False
         progress.interview_done=True
-        progress.sig=interview.sig_round.sig
+        progress.sig=queryset[0].sig_round.sig
         progress.save()
 send_to_next_round_interview.short_description="Qualify applicants to the next round"
 
 def send_to_next_round_response(modeladmin, request, queryset):
     applicants=[i.applicant for i in queryset]
     unselected=ApplicantResponse.objects.filter(sig_round=queryset[0].sig_round).exclude(applicant__in=applicants)
+    unselected_applicants=[interview.applicant for interview in unselected]
+    unselected_applicants=list(set(unselected_applicants))
+    print(unselected_applicants)
     for interview in queryset:
-        progress=ApplicantProgress.objects.get(applicant=interview.applicant,sig=interview.sig_round.sig)
+        progress=ApplicantProgress.objects.get(applicant=interview.applicant,sig=queryset[0].sig_round.sig)
         progress.round_completed+=1
         progress.interview_done=False
         progress.qualified_for_next=True
         progress.sig=interview.sig_round.sig
         progress.save()
     
-    for interview in unselected:
-        progress=ApplicantProgress.objects.get(applicant=interview.applicant,sig=interview.sig_round.sig)
+    for interview in unselected_applicants:
+        progress=ApplicantProgress.objects.get(applicant=interview,sig=queryset[0].sig_round.sig)
         progress.round_completed+=1
         progress.qualified_for_next=False
         progress.interview_done=True
-        progress.sig=interview.sig_round.sig
+        progress.sig=queryset[0].sig_round.sig
         progress.save()
 send_to_next_round_response.short_description="Qualify applicants to the next round"
 
