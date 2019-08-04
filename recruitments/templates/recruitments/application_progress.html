@@ -12,15 +12,15 @@
                         <span class="center card-title">{{progress.sig}}</span> 
                                 Rounds Completed : {{progress.round_completed}}
                                 <br>
-        {% if score_calculated %}
+        {% if progress.qualified_for_next %}
             {% if progress.next_round_time %}
                 Your next round is on {{progress.next_round_time}}
             {% else %}
-                Sorry, you did not qualify for the next round
+                Interview time slots yet to be allocated, please wait!
             {% endif %}
             
         {% else %}
-            Scores for current round have not been calculated yet
+            Sorry you did not qualify for the next round
         {% endif %}
                 </div>
             </div>
