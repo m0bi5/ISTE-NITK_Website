@@ -75,7 +75,7 @@ def questions(request,applicant_rollno,sigs):
         mailServer.starttls()
         mailServer.login(gmailaddress , gmailpassword)
 
-        msg = text('''Hey {}!!\n\tThank you for participating in the recruitment process!!! Your progress will be uploaded soon, which can be viewed by clicking on this link: http://127.0.0.1:8000/recruitments/progress/{}/'''.format(applicant.first_name,str(applicant.rollno)))
+        msg = text('''Hey {}!\n\tThank you for participating in the recruitment process! Your progress will be uploaded soon, which can be viewed by clicking on this link: http://iste.nitk.ac.in/recruitments/progress/{}/'''.format(applicant.first_name,str(applicant.rollno)))
         msg['Subject'] = 'ISTE Recruitments - Applicant Progress'
         msg['From'] = gmailaddress
         msg['To'] = mailto
