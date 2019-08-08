@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
     $(".dropdown-trigger").dropdown();
     $('.sidenav').sidenav();
@@ -10,6 +11,7 @@ $(document).ready(function() {
   fullWidth: true,
   indicators: true
 });
+
  $('body').on('touchstart', function() {});
  ////////////////////////////////////////////////////////////
 //

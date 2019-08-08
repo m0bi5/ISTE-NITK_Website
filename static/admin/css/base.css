@@ -165,6 +165,11 @@ hr {
     line-height: 1px;
 }
 
+.field-question{
+    width:100px !important;
+    color:red;
+}
+
 /* TEXT STYLES & MODIFIERS */
 
 .small {
@@ -236,7 +241,6 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 }
 
 .nowrap {
-    white-space: nowrap;
 }
 
 /* TABLES */
@@ -244,6 +248,7 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
 table {
     border-collapse: collapse;
     border-color: #ccc;
+    table-layout: fixed;
 }
 
 td, th {

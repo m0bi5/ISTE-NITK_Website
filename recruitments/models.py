@@ -46,16 +46,23 @@ class ApplicantResponse(models.Model):
     response = models.TextField(blank=True)
     question = models.ForeignKey(Question,on_delete=models.CASCADE)
     sig_round = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
-
+    disabled = models.BooleanField(default=True)
     def __str__(self):
-        return self.response
-
+        return str(self.response)
+    def process_button(self):
+        return ('%(value)s' % {'value': not self.disabled})
+    process_button.short_description = 'Action'
+    process_button.allow_tags = True
+    
 class InterviewResponse(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     interviewer = models.ForeignKey(account_models.User,on_delete=models.CASCADE)
     criteria = models.ForeignKey(Criteria,on_delete=models.CASCADE)
     response = models.TextField(blank=True)
     sig_round = models.ForeignKey(SIGRound,on_delete=models.CASCADE)
+    disabled = models.BooleanField(default=True)
+    def process_button(self):
+        return ('%(value)s' % {'value': not self.disabled})
     def get_round(self):
         return self.criteria.sig
     def __str__(self):

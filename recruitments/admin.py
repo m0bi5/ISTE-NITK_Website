@@ -51,13 +51,14 @@ send_to_next_round_response.short_description="Qualify applicants to the next ro
 
 @admin.register(Applicant)
 class ApplicantAdmin(admin.ModelAdmin):
+    search_fields=('first_name','last_name','rollno')
     list_display=('first_name','last_name','phone','email','year')
 
 @admin.register(ApplicantProgress)
 class ApplicantProgressAdmin(admin.ModelAdmin):
     list_display=('applicant','round_completed','qualified_for_next','sig')
     list_filter=('sig','round_completed','qualified_for_next')
-    search_fields=('applicant__first_name',)
+    search_fields=('applicant__first_name','applicant__last_name')
     ordering=('applicant__first_name','applicant__last_name')
 
 
@@ -70,21 +71,33 @@ class InterviewResponseManager(models.Manager):
 
 @admin.register(ApplicantResponse)
 class ApplicantResponseAdmin(admin.ModelAdmin):
-    list_filter=('sig_round','question__sig_round__round_number','applicant__year')
-    search_fields=('applicant__first_name',)
-    list_display=('applicant','response','question','sig_round')
+    list_filter=('sig_round','applicant__year')
+    search_fields=('applicant__first_name','applicant__last_name',)
+    list_display=('process_button','applicant','question','response')
     actions = [send_to_next_round_response]
+    def has_delete_permission(self, request, obj=None):
+        if request.user.username=='istenitk':
+            return True
+        return False
+    class Media:
+        js = ('js/admin.js', )
 
 @admin.register(InterviewResponse)
 class InterviewResponseAdmin(admin.ModelAdmin):
     list_filter=('sig_round','applicant__year')
-    list_display=('applicant','interviewer','criteria','response','sig_round')
+    list_display=('process_button','applicant','interviewer','criteria','response','sig_round')
     search_fields=('applicant__first_name',)
     ordering=('applicant__first_name','applicant__last_name')
     actions = [send_to_next_round_interview]    
     def get_queryset(self,request):
         qs = InterviewResponseManager.get_queryset(self,request)
         return qs
+    def has_delete_permission(self, request, obj=None):
+        if request.user.username=='istenitk':
+            return True
+        return False
+    class Media:
+        js = ('js/admin.js', )
 
 class QuestionInline(admin.TabularInline):
     #model = SIGRound.questions.through

@@ -55,7 +55,11 @@ def questions(request,applicant_rollno,sigs):
         return render(request,'recruitments/sig_questions.html',{'captcha':recaptchaForm,'questions':questions})
     else:
         details = eval(request.COOKIES['details'])
-        applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
+        applicant=None
+        try:
+            applicant = Applicant.objects.create(rollno=details['rollno'],first_name=details['first_name'],last_name=details['last_name'],phone=details['phone'],email=details['email'],year=details['year'])
+        except:
+            applicant = Applicant.objects.get(rollno=details['rollno'])
         sig_choices=[account_models.SIG.objects.get(id=i) for i in sigs.split('&')]
         for sig in sig_choices:
             ApplicantProgress.objects.create(applicant=applicant,sig=sig,round_completed=0,qualified_for_next=True)
@@ -121,24 +125,22 @@ def sig_interview(request,sig):
 
     context={'applicants':zip(applicants,progresses),'sig':sig}
     if request.POST:
+        print(request.POST['rollno'])
         try:
             applicants=Applicant.objects.filter(rollno=request.POST['rollno'])
             if len(applicants)==0:
                 messages.add_message(request,messages.ERROR,"Roll number not found")
-            progress=ApplicantProgress.objects.get(applicant=[applicant for applicant in applicants],sig__name=sig)
+            progress=ApplicantProgress.objects.filter(applicant=applicants[0],sig__name=sig)
             context['applicants']=zip(applicants,progress)
         except Exception as e:
+            print(e)
             messages.add_message(request,messages.ERROR,"Roll number not found")
     return render(request,'recruitments/sig_interview.html',context)
 
 @login_required(login_url='/account/login')
 def edit_applicant(request,sig,rollno):
     applicant=Applicant.objects.get(rollno=rollno)
-    applicant.first_name=request.POST['first_name']
-    applicant.last_name=request.POST['last_name']
     applicant.rollno=request.POST['rollno']
-    applicant.email=request.POST['email']
-    applicant.phone=request.POST['phone']
     applicant.save()
     messages.add_message(request,messages.SUCCESS,"Applicant details edited")
 
@@ -157,8 +159,11 @@ def personal_interview(request,sig,rollno):
     if progress.interview_done:
         return redirect('sig_interview',sig)
     if request.POST:
-        for crit in criteria:
-            InterviewResponse.objects.create(criteria=crit,response=request.POST[str(crit.id)],sig_round=sig_round,applicant=applicant,interviewer=request.user)
+        for crit in range(len(criteria)):
+            if crit==0:
+                InterviewResponse.objects.create(criteria=criteria[crit],response=request.POST[str(criteria[crit].id)],sig_round=sig_round,applicant=applicant,interviewer=request.user,disabled=False)
+            else:
+                InterviewResponse.objects.create(criteria=criteria[crit],response=request.POST[str(criteria[crit].id)],sig_round=sig_round,applicant=applicant,interviewer=request.user,disabled=True)
         progress.interview_done=True
         progress.save()
         return redirect('sig_interview',sig)
