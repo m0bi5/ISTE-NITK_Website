@@ -1,5 +1,4 @@
 *pyc
 .env
 media
-istewebsite
 db.sqlite3

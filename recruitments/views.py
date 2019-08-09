@@ -68,10 +68,14 @@ def questions(request,applicant_rollno,sigs):
         quest_ids.remove('csrfmiddlewaretoken')
         quest_ids.remove('g-recaptcha-response')
         quest_ids.remove('action')
+        cc=0
         for id in quest_ids:
             question = Question.objects.get(id=int(id))
-            ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig_round=question.sig_round)
-
+            if cc==0:
+                ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig_round=question.sig_round,disabled=False)
+            else:
+                ApplicantResponse.objects.create(applicant=applicant,response=response[id][0],question=question,sig_round=question.sig_round,disabled=True)
+            cc+=1
         gmailaddress = "istenitkchapter@gmail.com"
         gmailpassword = "tqlsyhqfyskwutxh"
         mailto = applicant.email
