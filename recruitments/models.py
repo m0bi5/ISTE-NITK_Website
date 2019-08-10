@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 from django.core.validators import RegexValidator
 from account import models as account_models
+from helper import *
 from ckeditor_uploader.fields import RichTextUploadingField
 year_choices = (
     ('2nd year','2nd year'),
@@ -78,3 +79,7 @@ class ApplicantProgress(models.Model):
     next_round_time = models.DateTimeField(blank=True,null=True)
     next_round_location = models.TextField(blank=True)
     sig = models.ForeignKey(account_models.SIG,on_delete=models.CASCADE)
+    def save(self, *args, **kwargs):
+        EmailHandler().send_email(self.applicant.email,'An update on your application!','Hello '+self.applicant.first_name+'\n An update on your applicant status has been made, you may check your progress here: http://iste.nitk.ac.in/recruitments/progress/'+self.applicant.rollno,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+        

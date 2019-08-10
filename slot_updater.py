@@ -27,7 +27,6 @@ for s in am.SIG.objects.all():
                 date=datetime.datetime.strptime(date_time_str+':00', '%d/%m/%Y %H:%M:%S') 
             m.next_round_time=date
             m.save()
-            EmailHandler().send_email(m.applicant.email,'An update on your application!','Hello '+m.applicant.first_name+'\n An update on your applicant status has been made, you may check your progress here: http://iste.nitk.ac.in/recruitments/progress/'+m.applicant.rollno,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
             i+=1
             print(str(s),': ',i,' out of ',len(applicants), 'done')
         except:
