@@ -13,7 +13,11 @@ from django.contrib import messages
 from django.template import RequestContext
 
 # Create your views here.
-def applicant_details(request):
+def applicant_details(request,rollno):
+    access=False
+    if rollno in ['16EC142', '181MT029', '181MT003', '181ME156', '181CV113', '181CO130', '181ME162 ', '181ME152', '181ME175', '181EE151', '171IT113', '181ME256', '181CV244', '181ME185', '181EC120', '181EC121', '181ME248', '181EC209', '181IT226', '184CA036', '181CO212', '18EC151', '181EE230', '184CA049', '181CH051', '181EC254', '181CO249', '181EC119', '181IT249', '181EC119', '181IT140', '181EC110', '181EC153', '181ME110', '181ME140', '181IT240', '181ch026', '181IT240', '181ME277', '181ME227', '181ME178', '181ME275', '181CV152', '181MT008', '181EC109', '181MT034', '171EC220', '181CO239', '181MT032', '181EE126', '181ME204', '181CO135', '181CV210', '181IT102', '181EC252', '181CV238', '181EC246 ', '181IT104', '181CO121 ', '181IT221', '18EE253', '17CV249', '181CO108', '18EC125', '181CO152 ', '181EC155', '171ME177']:
+        access=True
+    
     if request.method=='POST':
         form = ApplicantForm(request.POST)
         if form.is_valid():
@@ -40,11 +44,11 @@ def applicant_details(request):
             return response
         else:
             print("sdgfbsjdknawmlkfbn")
-            return render(request,'recruitments/applicant_deets.html',{'form':form})
+            return render(request,'recruitments/applicant_deets.html',{'form':form,'access':access})
 
     else:
         form = ApplicantForm()
-        return render(request,'recruitments/applicant_deets.html',{'form':form})
+        return render(request,'recruitments/applicant_deets.html',{'form':form,'access':access})
 
 def questions(request,applicant_rollno,sigs):
     if request.method=='GET':
