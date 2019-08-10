@@ -14,4 +14,4 @@ for s in am.SIG.objects.all():
 		if m.qualified_for_next and m.applicant.rollno in spots:
 			l.append([str(m.applicant),str(m.applicant.phone),str(m.applicant.email),str(m.applicant.year)])
 	t=SpreadsheetHandler()
-	t.excel_write(l,'applicant_spots.xlsx',str(s))
+	t.excel_write(l,str(s)+'.xlsx',str(s))
