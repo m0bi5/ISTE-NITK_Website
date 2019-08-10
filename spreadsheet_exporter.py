@@ -12,6 +12,6 @@ l=[]
 for s in am.SIG.objects.all():
 	for m in rm.ApplicantProgress.objects.filter(sig=am.SIG.objects.get(name=str(s))):
 		if m.qualified_for_next and m.applicant.rollno in spots:
-			l.append([str(m.applicant),str(m.applicant.phone),str(m.applicant.email),str(m.applicant.year)])
+			l.append([str(m.sig),str(m.applicant),str(m.applicant.phone),str(m.applicant.email),str(m.applicant.year)])
 	t=SpreadsheetHandler()
 	t.excel_write(l,str(s)+'.xlsx',str(s))
