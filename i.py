@@ -11,17 +11,14 @@ import datetime
 
 
 for s in am.SIG.objects.all():
-    if 'Charge' in str(s):
+    if 'Credit' in str(s):
     
-        applicants=SpreadsheetHandler().excel_read('charge_slot.xlsx','Sheet1')[1:]
+        applicants=SpreadsheetHandler().excel_read('redit.xlsx','Sheet1')[1:]
         i=0
         for applicant in applicants:
             try:
-                applicant[0]=str(int(applicant[0]))
-                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[0]),sig=s)
-                m.round_completed=0
-                m.save()
-                continue
+                applicant[1]=str(int(applicant[1]))
+                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[1]),sig=s)
                 date_time_str='12/08/2019 '+str(applicant[-1])
                 try:
                     date=datetime.datetime.strptime(date_time_str, '%d/%m/%Y %H:%M:%S')
