@@ -57,7 +57,7 @@ class ApplicantAdmin(admin.ModelAdmin):
 @admin.register(ApplicantProgress)
 class ApplicantProgressAdmin(admin.ModelAdmin):
     list_display=('applicant','round_completed','qualified_for_next','sig')
-    list_filter=('sig','round_completed','qualified_for_next')
+    list_filter=('sig','round_completed','qualified_for_next','applicant__year')
     search_fields=('applicant__first_name','applicant__last_name')
     ordering=('applicant__first_name','applicant__last_name')
 
