@@ -18,7 +18,7 @@ def send_to_next_round_interview(modeladmin, request, queryset):
         progress.save()
     
     for interview in unselected_applicants:
-        progress=ApplicantProgress.objects.get(applicant=applicant,sig=queryset[0].sig_round.sig)
+        progress=ApplicantProgress.objects.get(applicant=interview.applicant,sig=queryset[0].sig_round.sig)
         progress.round_completed+=1
         progress.qualified_for_next=False
         progress.interview_done=True
