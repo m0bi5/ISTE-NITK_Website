@@ -11,16 +11,16 @@ import datetime
 
 
 for s in am.SIG.objects.all():
-    if 'Crypt' in str(s) or 'Catalyst' in str(s):
+    if 'Charge' in str(s):
     
-        applicants=SpreadsheetHandler().excel_read('slot.xlsx',str(s))[1:]
+        applicants=SpreadsheetHandler().excel_read('charge_slots.xlsx','Sheet1')[1:]
         i=0
         for applicant in applicants:
             try:
-                applicant[1]=str(int(applicant[1]))
-                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[1]),sig=s)
-                m.next_round_location=applicant[6]
-                date_time_str=str(applicant[4])+' '+str(applicant[5])
+                applicant[1]=str(applicant[1])
+                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(first_name__iexact=applicant[1].split()[0],last_name__iexact=applicant[1].split()[1]),sig=s)
+                m.next_round_location="Main Building"
+                date_time_str='12/08/2019 '+str(applicant[0])
                 try:
                     date=datetime.datetime.strptime(date_time_str, '%d/%m/%Y %H:%M:%S')
                 except Exception as e:
