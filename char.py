@@ -11,16 +11,16 @@ import datetime
 
 
 for s in am.SIG.objects.all():
-    if 'Clutch' in str(s):
+    if 'Charge' in str(s):
     
-        applicants=SpreadsheetHandler().excel_read('slots.xlsx',str(s))[1:]
+        applicants=SpreadsheetHandler().excel_read('charge_slot.xlsx','Sheet1')[1:]
         i=0
         for applicant in applicants:
             try:
-                applicant[1]=str(int(applicant[1]))
-                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[1]),sig=s)
-                m.next_round_location=applicant[-4]
-                date_time_str=str(applicant[-2])+' '+str(applicant[-1])
+                applicant[0]=str(int(applicant[0]))
+                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[0]),sig=s)
+                m.next_round_location="Main Building"
+                date_time_str='12/08/2019 '+str(applicant[-1])
                 try:
                     date=datetime.datetime.strptime(date_time_str, '%d/%m/%Y %H:%M:%S')
                 except Exception as e:

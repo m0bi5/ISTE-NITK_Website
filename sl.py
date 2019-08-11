@@ -13,7 +13,7 @@ import datetime
 for s in am.SIG.objects.all():
     if 'Charge' in str(s):
     
-        applicants=SpreadsheetHandler().excel_read('charge_slots.xlsx','Sheet1')[1:]
+        applicants=SpreadsheetHandler().excel_read('charge_slot.xlsx','Sheet1')[1:]
         i=0
         for applicant in applicants:
             try:
