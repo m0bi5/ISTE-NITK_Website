@@ -80,6 +80,6 @@ class ApplicantProgress(models.Model):
     next_round_location = models.TextField(blank=True)
     sig = models.ForeignKey(account_models.SIG,on_delete=models.CASCADE)
     def save(self, *args, **kwargs):
-        #EmailHandler().send_email(self.applicant.email,'An update on your application!','Hello '+self.applicant.first_name+'\n An update on your applicant status has been made, you may check your progress here: http://iste.nitk.ac.in/recruitments/progress/'+self.applicant.rollno,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
+        EmailHandler().send_email(self.applicant.email,'An update on your application!','Hello '+self.applicant.first_name+'\n An update on your applicant status has been made, you may check your progress here: http://iste.nitk.ac.in/recruitments/progress/'+self.applicant.rollno,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
         super().save(*args, **kwargs)  # Call the "real" save() method.
         
