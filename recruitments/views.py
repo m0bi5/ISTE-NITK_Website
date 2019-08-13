@@ -122,7 +122,10 @@ def sig_interview(request,sig):
     applicants=[Applicant.objects.get(rollno=applicant) for applicant in applicants]
     progresses=[]
     for applicant in applicants:
-        progress=ApplicantProgress.objects.get(applicant=applicant,sig__name=sig)
+        try:
+            progress=ApplicantProgress.objects.get(applicant=applicant,sig__name=sig)
+        except:
+            print(applicant)
         if progress.interview_done:
             del applicants[applicants.index(applicant)]
         else:

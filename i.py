@@ -13,7 +13,7 @@ import datetime
 for s in am.SIG.objects.all():
     if 'Credit' in str(s):
     
-        applicants=SpreadsheetHandler().excel_read('redit.xlsx','Sheet1')[1:]
+        applicants=SpreadsheetHandler().excel_read('redit.xlsx',str(s))[1:]
         i=0
         for applicant in applicants:
             try:

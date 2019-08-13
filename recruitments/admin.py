@@ -53,7 +53,7 @@ send_to_next_round_response.short_description="Qualify applicants to the next ro
 class ApplicantAdmin(admin.ModelAdmin):
     search_fields=('first_name','last_name','rollno')
     list_display=('first_name','last_name','phone','email','year')
-
+    list_filter=('year',)
 @admin.register(ApplicantProgress)
 class ApplicantProgressAdmin(admin.ModelAdmin):
     list_display=('applicant','round_completed','qualified_for_next','sig')
@@ -89,13 +89,7 @@ class InterviewResponseAdmin(admin.ModelAdmin):
     search_fields=('applicant__first_name',)
     ordering=('applicant__first_name','applicant__last_name')
     actions = [send_to_next_round_interview]    
-    def get_queryset(self,request):
-        qs = InterviewResponseManager.get_queryset(self,request)
-        return qs
-    def has_delete_permission(self, request, obj=None):
-        if request.user.username=='istenitk':
-            return True
-        return False
+    
     class Media:
         js = ('js/admin.js', )
 
