@@ -18,7 +18,6 @@ class Applicant(models.Model):
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     email = models.EmailField()
     year = models.CharField(choices=year_choices, max_length=8)
-
     def __str__(self):
         return self.first_name+' '+self.last_name
 
@@ -79,7 +78,19 @@ class ApplicantProgress(models.Model):
     next_round_time = models.DateTimeField(blank=True,null=True)
     next_round_location = models.TextField(blank=True)
     sig = models.ForeignKey(account_models.SIG,on_delete=models.CASCADE)
+    def qualify(self):
+        self.interview_done=True
+        self.qualified_for_next=True
+        self.next_round_time=None
+        self.next_round_location=""
+        self.round_completed+=1
+        self.save()
+    def disqualify(self):
+        self.interview_done=True
+        self.qualified_for_next=False
+        self.save()
+        
     def save(self, *args, **kwargs):
-        #EmailHandler().send_email(self.applicant.email,'An update on your application!','Hello '+self.applicant.first_name+'\n An update on your applicant status has been made, you may check your progress here: http://iste.nitk.ac.in/recruitments/progress/'+self.applicant.rollno,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
+        EmailHandler().send_email(self.applicant.email,'An update on your application!','Hello '+self.applicant.first_name+'\n An update on your applicant status has been made, you may check your progress here: http://iste.nitk.ac.in/recruitments/progress/'+self.applicant.rollno,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
         super().save(*args, **kwargs)  # Call the "real" save() method.
         
