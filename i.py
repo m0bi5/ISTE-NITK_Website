@@ -8,28 +8,18 @@ from django.contrib.auth.models import Group
 from django.core.files.images import ImageFile
 from helper import *
 import datetime
+from datetime import timedelta
 
+Today= datetime.datetime(year=2019,month=8,day=15,hour=14,minute=0,second=0)
+date_list = [Today + datetime.timedelta(minutes=15*x) for x in range(0, 100)]
 
 for s in am.SIG.objects.all():
-    if 'Credit' in str(s):
+    if 'Crypt' in str(s):
     
         applicants=SpreadsheetHandler().excel_read('redit.xlsx',str(s))[1:]
         i=0
-        for applicant in applicants:
-            try:
-                applicant[1]=str(int(applicant[1]))
-                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[1]),sig=s)
-                date_time_str='12/08/2019 '+str(applicant[-1])
-                try:
-                    date=datetime.datetime.strptime(date_time_str, '%d/%m/%Y %H:%M:%S')
-                except Exception as e:
-                    print(e)
-                    date=datetime.datetime.strptime(date_time_str+':00', '%d/%m/%Y %H:%M:%S') 
-                m.next_round_time=date
-                m.save()
-                i+=1
-                print(str(s),': ',i,' out of ',len(applicants), 'done')
-            except Exception as e:
-                print(e)
-                FileHandler().text_write([applicant[1]],applicant[1]+'.txt')
+        a=list(rm.ApplicantProgress.objects.filter(round_completed=2,sig=s))
+        for applicant in a:
+            applicant.next_round_time=date_list[a.index(applicant)]
+            applicant.save()
 

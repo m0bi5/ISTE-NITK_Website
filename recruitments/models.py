@@ -91,6 +91,6 @@ class ApplicantProgress(models.Model):
         self.save()
         
     def save(self, *args, **kwargs):
-        EmailHandler().send_email(self.applicant.email,'An update on your application!','Hello '+self.applicant.first_name+'\n An update on your applicant status has been made, you may check your progress here: http://iste.nitk.ac.in/recruitments/progress/'+self.applicant.rollno,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
+        #EmailHandler().send_email(self.applicant.email,'An update on your application!','Hello '+self.applicant.first_name+'\n An update on your applicant status has been made, you may check your progress here: http://iste.nitk.ac.in/recruitments/progress/'+self.applicant.rollno,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
         super().save(*args, **kwargs)  # Call the "real" save() method.
         
