@@ -9,28 +9,22 @@ from django.core.files.images import ImageFile
 from helper import *
 import datetime
 
+qualified_numbers=[]
 
 for s in am.SIG.objects.all():
     if 'Charge' in str(s):
-    
-        applicants=SpreadsheetHandler().excel_read('charge_slot.xlsx','Sheet1')[1:]
-        i=0
+        applicants=SpreadsheetHandler().excel_read('slots.xlsx',str(s))[1:]
         for applicant in applicants:
-            try:
-                applicant[0]=str(int(applicant[0]))
-                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[0]),sig=s)
-                m.next_round_location="Main Building"
-                date_time_str='12/08/2019 '+str(applicant[-1])
-                try:
-                    date=datetime.datetime.strptime(date_time_str, '%d/%m/%Y %H:%M:%S')
-                except Exception as e:
-                    print(e)
-                    date=datetime.datetime.strptime(date_time_str+':00', '%d/%m/%Y %H:%M:%S') 
-                m.next_round_time=date
-                m.save()
-                i+=1
-                print(str(s),': ',i,' out of ',len(applicants), 'done')
-            except Exception as e:
-                print(e)
-                FileHandler().text_write([applicant[1]],applicant[1]+'.txt')
+        	if 'Y' in applicant[-2]:
+        		qualified_numbers.append(str(int(applicant[1])))
 
+for s in am.SIG.objects.all():
+    if 'Charge' in str(s):
+        applicants=rm.ApplicantProgress.objects.filter(sig=s)
+        for applicant in applicants:
+        	if applicant.applicant.phone in qualified_numbers:
+        		applicant.qualify()
+        	else:
+        		applicant.disqualify()
+
+print(qualified_numbers)
