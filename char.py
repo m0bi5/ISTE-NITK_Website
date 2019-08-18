@@ -12,11 +12,9 @@ import datetime
 qualified_numbers=[]
 
 for s in am.SIG.objects.all():
-    if 'Charge' in str(s):
-        applicants=SpreadsheetHandler().excel_read('slots.xlsx',str(s))[1:]
-        for applicant in applicants:
-        	if 'Y' in applicant[-2]:
-        		qualified_numbers.append(str(int(applicant[1])))
+    applicants=SpreadsheetHandler().excel_read('slots.xlsx',str(s))[1:]
+    for applicant in applicants:
+    	rm.ApplicantProgress.objects.get(sig=s,applicant=rm.Applicant.objects.get(phone=applicant[1]))
 
 for s in am.SIG.objects.all():
     if 'Charge' in str(s):

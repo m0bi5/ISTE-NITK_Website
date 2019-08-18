@@ -11,26 +11,24 @@ import datetime
 
 
 for s in am.SIG.objects.all():
-    if 'Clutch' in str(s):
-    
-        applicants=SpreadsheetHandler().excel_read('slots.xlsx',str(s))[1:]
-        i=0
-        for applicant in applicants:
+    print(str(s))
+    applicants=SpreadsheetHandler().excel_read('slots.xlsx',str(s))[1:]
+    i=0
+    for applicant in applicants:
+        try:
+            applicant[1]=str(int(applicant[1]))
+            m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[1]),sig=s)
+            m.next_round_location=applicant[-1]
+            date_time_str='18/08/2019 '+str(applicant[-2])
             try:
-                applicant[1]=str(int(applicant[1]))
-                m=rm.ApplicantProgress.objects.get(applicant=rm.Applicant.objects.get(phone=applicant[1]),sig=s)
-                m.next_round_location=applicant[-4]
-                date_time_str=str(applicant[-2])+' '+str(applicant[-1])
-                try:
-                    date=datetime.datetime.strptime(date_time_str, '%d/%m/%Y %H:%M:%S')
-                except Exception as e:
-                    print(e)
-                    date=datetime.datetime.strptime(date_time_str+':00', '%d/%m/%Y %H:%M:%S') 
-                m.next_round_time=date
-                m.save()
-                i+=1
-                print(str(s),': ',i,' out of ',len(applicants), 'done')
+                date=datetime.datetime.strptime(date_time_str, '%d/%m/%Y %H:%M:%S')
             except Exception as e:
-                print(e)
-                FileHandler().text_write([applicant[1]],applicant[1]+'.txt')
+                date=datetime.datetime.strptime(date_time_str+':00', '%d/%m/%Y %H:%M:%S') 
+            m.next_round_time=date
+            m.save()
+            i+=1
+            print(str(s),': ',i,' out of ',len(applicants), 'done')
+        except Exception as e:
+            print(e)
+            FileHandler().text_write([applicant[1]],applicant[1]+'.txt')
 
