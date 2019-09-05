@@ -16,6 +16,7 @@ class EventDetails(models.Model):
     ('Create','Create'),
     ('Credit','Credit'),
     ('Crypt','Crypt'),
+    ('Club','Club')
     )
     
     event_name=models.CharField(default="",max_length=200)
