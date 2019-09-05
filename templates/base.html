@@ -36,7 +36,8 @@
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'recruitments' %}">Get Recruited</a></li>
+                <!--<li><a href="{% url 'recruitments' %}">Get Recruited</a></li>
+                -->
             {% endif %}
             <li><a href="{% url 'projects_list' %}">Projects</a></li>
             <li><a href="{% url 'events' %}">Events</a></li>
@@ -51,7 +52,8 @@
                         <li><a class="dropdown-trigger" href="" data-target="user-action">Hi {{user.first_name}}!<i class="material-icons right">arrow_drop_down</i></a></li>          
                     {% else %}
                         <li><a href="{% url 'login' %}">Login</a></li>
-                        <li><a href="{% url 'recruitments' %}">Get Recruited</a></li>
+                        <!--<li><a href="{% url 'recruitments' %}">Get Recruited</a></li>
+                        -->
                     {% endif %}
                     <li><a href="{% url 'projects_list' %}">Projects</a></li>
                     <li><a href="{% url 'events' %}">Events</a></li>
@@ -127,7 +129,8 @@
                         <h5 class="white-text">Quick Access</h5>
                         <ul>
                             <li><a class="white-text" href="{% url 'login' %}">Login</a></li>
-                            <li><a class="white-text" href="{% url 'recruitments' %}">Get Recruited</a></li>
+                            <!--<li><a class="white-text" href="{% url 'recruitments' %}">Get Recruited</a></li>
+                            -->
                             <li><a class="white-text" href="{% url 'projects_list' %}">Projects</a></li>
                             <li><a class="white-text" href="{% url 'events' %}">Events</a></li>
                             <li><a class="white-text" href="{% url 'blogs' %}">Blogs</a></li>
