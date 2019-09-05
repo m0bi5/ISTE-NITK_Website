@@ -12,6 +12,28 @@ class RegistrationForm(forms.Form):
     phone = forms.CharField(validators=[phone_regex], max_length=17, required=True)
     email = forms.EmailField(required=True)
     captcha = ReCaptchaField(score_threshold=0.75)
+
+class FourForm(forms.Form):
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
+    team_name = forms.CharField(label="Team Name",max_length=50,required=True)
+    participant1 = forms.CharField(label="Participant 1",max_length=50,required=True)
+    participant2 = forms.CharField(label="Participant 2",max_length=50,required=True)
+    participant3 = forms.CharField(label="Participant 3",max_length=50,required=True)
+    participant4 = forms.CharField(label="Participant 4 (Optional)",max_length=50)
+    phone1 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
+    phone2 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
+    email = forms.EmailField(required=True)
+
+class ThreeForm(forms.Form):
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
+    team_name = forms.CharField(label="Team Name",max_length=50,required=True)
+    participant1 = forms.CharField(label="Participant 1",max_length=50,required=True)
+    participant2 = forms.CharField(label="Participant 2",max_length=50,required=True)
+    participant3 = forms.CharField(label="Participant 3 (Optional)",max_length=50)
+    phone1 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
+    phone2 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
+    email = forms.EmailField(required=True)    
+    
     
 class TeamForm(forms.Form):
     team_name = forms.CharField(max_length=30, required=True)

@@ -4,8 +4,8 @@ import urllib
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
-from .forms import RegistrationForm,TeamForm
-from .models import Registration,Team,EventDetails
+from .forms import *
+from .models import *
 from .emailer import EmailHandler as em
 from django.urls import reverse
 
@@ -39,23 +39,34 @@ def event_form_team(request,event_id,roll_no):
 def event_register(request, event_id):
     event=EventDetails.objects.get(id=event_id)
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = None
+        if event.members==3:
+            form=ThreeForm(request.POST)
+        if event.members==4:
+            form=FourForm(request.POST)
         if form.is_valid():
-            obj=Registration(first_name=request.POST['first_name'],last_name=request.POST['last_name'],roll_no=request.POST['rollno'],email=request.POST['email'],phone=request.POST['phone'],event=event)
+            obj=None
+            if event.members==3:
+                obj=ThreeMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],email=request.POST['email'])
+            if event.members==4:
+                obj=FourMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],participant4=request.POST['participant4'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],email=request.POST['email'])       
             obj.save()
             em_obj=em()
-            link=request.build_absolute_uri(reverse('event_form_team',args=(event_id,request.POST['rollno'],)))
-            em_obj.send_email(request.POST['email'],"You have registered for ISTE NITK's "+event.event_name,"Hello "+request.POST['first_name']+"!\n Thank you for registering for "+event.event_name+" which will be held on "+str(event.event_date)+"\n Form your teams here : "+link,'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
-            messages.success(request, 'Success! You may now create a team by clicking the link in the email')
+            em_obj.send_email(request.POST['email'],"You have registered for ISTE NITK's "+event.event_name,"Hello "+request.POST['participant1']+"!\n Thank you for registering for "+event.event_name+" which will be held on "+str(event.event_date),'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
+            messages.success(request, 'Thank you for registering!')
         else:
+            print(form.errors)
             messages.error(request, 'Invalid reCAPTCHA. Please try again.')
 
             return redirect(event_register,event_id)
     else:
-        form = RegistrationForm()
-
+        if event.members==3:
+            form=ThreeForm()
+        if event.members==4:
+            form = FourForm()
     context = {
-        'form': form
+        'form': form,
+        'four': event.members==4
     }
     
     

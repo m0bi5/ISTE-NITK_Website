@@ -1,9 +1,11 @@
 from django.db import models
 from datetime import date, datetime
+from django.core.validators import RegexValidator
 from ckeditor_uploader.fields import RichTextUploadingField
 from account import models as account_models
 
-
+phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
+    
 class EventDetails(models.Model):
     def __str__(self):
         return self.event_name
@@ -25,8 +27,30 @@ class EventDetails(models.Model):
     event_time=models.TimeField(default=datetime.time(datetime.now()))
     sig=models.CharField(max_length=12, default="", choices=SIG_CHOICES)
     no_people_signedup=models.IntegerField(default=0,editable=False)
+    members=models.IntegerField(default=3)
     no_people_showedup=models.IntegerField(default=0,editable=False)
     poster_image=models.FileField()
+
+class FourMember(models.Model):
+    team_name = models.CharField(max_length=50)
+    participant1 = models.CharField(max_length=50)
+    participant2 = models.CharField(max_length=50)
+    participant3 = models.CharField(max_length=50)
+    participant4 = models.CharField(max_length=50)
+    phone1 = models.CharField(validators=[phone_regex], max_length=17)
+    phone2 = models.CharField(validators=[phone_regex], max_length=17)
+    email = models.EmailField()
+    event = models.ForeignKey(EventDetails,on_delete=models.CASCADE,default=None,null=True)
+
+class ThreeMember(models.Model):
+    team_name = models.CharField(max_length=50)
+    participant1 = models.CharField(max_length=50)
+    participant2 = models.CharField(max_length=50)
+    participant3 = models.CharField(max_length=50)
+    phone1 = models.CharField(validators=[phone_regex], max_length=17)
+    phone2 = models.CharField(validators=[phone_regex], max_length=17)
+    email = models.EmailField()    
+    event = models.ForeignKey(EventDetails,on_delete=models.CASCADE,default=None,null=True)
 
 class Registration(models.Model):
     def __str__(self):
