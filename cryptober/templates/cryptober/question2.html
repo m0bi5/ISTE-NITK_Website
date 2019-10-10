@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Question 2</title>
+  </head>
+  <body>
+    <h3>Previous inputs and outputs</h3>
+    <ul>
+      <li>ahriakeer -> 3</li><br>
+      {% for i in inputs %}
+        <li>{{ i.0 }} ->  {{ i.1 }}</li><br>
+      {% endfor %}
+    </ul>
+    <h4>Enter 1 string below and the output will be displayed. Remember you can do this 5 TIMES ONLY!!</h4>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" name="query">
+      <button type="submit">Get output</button><br>
+    </form>
+  </body>
+</html>

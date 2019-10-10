@@ -1,0 +1,19 @@
+<<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>CRYPTOBER ROUND 2 INSTRUCTIONS</title>
+  </head>
+  <body>
+    <h1>Instructions</h1>
+    <p>Do shit!<p>
+    <form method="POST">
+      {% csrf_token %}
+      <label>Team Name:</label>
+      <input type="text" name="name"><br>
+      <label>Email id:</label>
+      <input type="email" name="email"><br>
+      <button type="submit">Get Started!</button><br>
+    </form>
+  </body>
+</html>

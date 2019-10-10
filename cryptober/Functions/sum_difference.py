@@ -1,4 +1,4 @@
-# LOGIC:Python program to print diffrence between sum of even array indices and 
+# LOGIC:Python program to print diffrence between sum of even array indices and
 #sum of odd array indices
 
 def solve(a):
@@ -12,5 +12,5 @@ def solve(a):
 
     return sumeven-sumodd
 
-a = [200,100,1000]
+a = [200,100,1000,150,250]
 print(solve(a))
