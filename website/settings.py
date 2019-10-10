@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'projects',
     'recruitments',
     'blogs',
+    'cryptober',
     #3rd Party
     'ckeditor',
     'sslserver',
