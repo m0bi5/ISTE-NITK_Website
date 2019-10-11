@@ -11,33 +11,37 @@ def instructions(request):
         return redirect(name+'/questions/1')
 
 def questions(request,team,id):
-    response = Response.objects.get(name=team)
-    # print("GOT IT",len(response.input1))
-    prev_inputs = eval('response.input'+id)
-    prev_inputs = eval(prev_inputs)
-    # print(type(prev_inputs))
-    if request.method=='GET':
-        return render(request,'cryptober/question'+str(id)+'.html',{'inputs':prev_inputs,'team':team})
-    else:
-        if len(prev_inputs)<5:
-            query = request.POST.get('query',None).strip().split()
-            query,output = eval('func'+str(id)+'(query)')
-            if output==-6942069:
-                return render(request,'cryptober/error.html')
-            query.append(output)
-            prev_inputs.append(query)
-            if id=='1':
-                response.input1 = prev_inputs
-            elif id=='2':
-                response.input2 = prev_inputs
-            elif id=='3':
-                response.input3 = prev_inputs
-            elif id=='4':
-                response.input4 = prev_inputs
-            elif id=='5':
-                response.input5 = prev_inputs
-            response.save()
-        return render(request,'cryptober/question'+str(id)+'.html',{'inputs':prev_inputs,'team':team})
+    try:
+        response = Response.objects.get(name=team)
+        # print("GOT IT",len(response.input1))
+        prev_inputs = eval('response.input'+id)
+        prev_inputs = eval(prev_inputs)
+        # print(type(prev_inputs))
+        if request.method=='GET':
+            return render(request,'cryptober/question'+id+'.html',{'inputs':prev_inputs,'team':team})
+        else:
+            if len(prev_inputs)<5:
+                query = request.POST.get('query',None).strip().split()
+                # print(type())
+                query,output = eval('func'+id+'(query)')
+                if output==-6942069:
+                    return render(request,'cryptober/error.html')
+                query.append(output)
+                prev_inputs.append(query)
+                if id=='1':
+                    response.input1 = prev_inputs
+                elif id=='2':
+                    response.input2 = prev_inputs
+                elif id=='3':
+                    response.input3 = prev_inputs
+                elif id=='4':
+                    response.input4 = prev_inputs
+                elif id=='5':
+                    response.input5 = prev_inputs
+                response.save()
+            return render(request,'cryptober/question'+str(id)+'.html',{'inputs':prev_inputs,'team':team})
+    except:
+        return render(request,'cryptober/error.html')
 
 #Logic: This program prints the difference of cube
 #of number having maximum absolute value and minimum absolute value.
@@ -133,4 +137,4 @@ def func5(a):
             sumeven+=a[i]
         else:
             sumodd+=a[i]
-    return sumeven-sumodd
+    return a,sumeven-sumodd
