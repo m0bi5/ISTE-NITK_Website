@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'projects',
     'recruitments',
     'blogs',
+    'cryptober',
     #3rd Party
     'ckeditor',
     'sslserver',
@@ -82,6 +83,7 @@ TEMPLATES = [
     },
 ]
 
+#WSGI_APPLICATION = 'website.wsgi.application'
 WSGI_APPLICATION = 'website.wsgi.application'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default

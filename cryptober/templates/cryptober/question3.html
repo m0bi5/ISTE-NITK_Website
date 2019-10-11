@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <style>
+    body {
+      text-align:center;
+      font-family: "Arial";
+    }
+    li{
+      display: inline;
+    }
+    a{
+      text-decoration: None;
+    }
+    .simple-input {
+      display: inline-block;
+      padding: 5px;
+      border: 4px solid #F1B720;
+      border-radius: 5px;
+      color: #333;
+      transition: all 0.3s ease-out;
+    }
+    .simple-input:hover{
+      border-radius: 8px;
+    }
+    .simple-input:focus {
+      outline: none;
+      border-radius: 8px;
+      border-color: #EBD292;
+    }
+
+    .bordered{
+      width:98%;
+      display: inline-block;
+      padding: 8px;
+      border: 3px solid #FCB326;
+      border-radius: 6px;
+      box-shadow:
+        0 2px 1px rgba(0, 0, 0, 0.2),
+        inset 0 2px 1px rgba(0, 0, 0, 0.2);
+
+      /* Font styles */
+      text-decoration: none;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #222;
+    }
+
+    .metro {
+      display: inline-block;
+      padding: 10px;
+      margin: 10px;
+      background: #08C;
+
+  /* Font styles */
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .metro.three-d {
+      position: relative;
+      box-shadow:
+        1px 1px #53A7EA,
+        2px 2px #53A7EA,
+        3px 3px #53A7EA;
+      transition: all 0.1s ease-in;
+    }
+    .metro {
+      display: inline-block;
+      padding: 10px;
+      margin: 10px;
+      background: #08C;
+
+      /* Font styles */
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .metro.three-d:active {
+      box-shadow: none;
+      top: 3px;
+      left: 3px;
+    }
+
+    .inline-link-2 {
+      display: inline-block;
+      border-bottom: 1px dashed rgba(0,0,0,0.4);
+
+      /* Font styles */
+      text-decoration: none;
+      color: #777;
+    }
+
+    .inline-link-2:hover   { border-bottom-style: dotted; }
+    .inline-link-2:active  { border-bottom-style: solid; }
+    .inline-link-2:visited { border-bottom: 1px solid #97CAF2; }
+    </style>
+
+
+    <title>Question 3</title>
+  </head>
+  <body class="bordered">
+    <h2>Question 3</h2>
+    <h3>Previous inputs and outputs</h3>
+    <ul class="bordered">
+      <li>sunday saturday -> 3</li><br>
+      {% for i in inputs %}
+        <li>{{ i.0 }} {{ i.1 }} ->  {{ i.2 }}</li><br>
+      {% endfor %}
+    </ul>
+    <h4>Enter 2 strings, space separated only, and the output will be displayed. Remember you can do this 5 TIMES ONLY!!</h4>
+    <form method="POST">
+      {% csrf_token %}
+      <input class="simple-input" type="text" name="query"><br>
+      <button class="metro" type="submit">Get output</button><br>
+    </form>
+    <ul>
+      <li class="inline-link-2"><a href="1">1</a></li>
+      <li class="inline-link-2"><a href="2">2</a></li>
+      <li class="inline-link-2">3</li>
+      <li class="inline-link-2"><a href="4">4</a></li>
+      <li class="inline-link-2"><a href="5">5</a></li>
+    </ul>
+  </body>
+</html>

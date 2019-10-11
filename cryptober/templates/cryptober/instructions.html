@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <style>
+    h1{
+      font-family:"digital-clock-font";
+    }
+    body {
+      font-family: "Arial";
+    }
+    li{
+      display: inline;
+    }
+    a{
+      text-decoration: None;
+    }
+    .simple-input {
+      display: block;
+      padding: 5px;
+      border: 4px solid #F1B720;
+      border-radius: 5px;
+      color: #333;
+      transition: all 0.3s ease-out;
+    }
+    .simple-input:hover{
+      border-radius: 8px;
+    }
+    .simple-input:focus {
+      outline: none;
+      border-radius: 8px;
+      border-color: #EBD292;
+    }
+
+    .bordered{
+      width:98%;
+      display: inline-block;
+      padding: 8px;
+      border: 3px solid #FCB326;
+      border-radius: 6px;
+      box-shadow:
+        0 2px 1px rgba(0, 0, 0, 0.2),
+        inset 0 2px 1px rgba(0, 0, 0, 0.2);
+
+      /* Font styles */
+      text-decoration: none;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #222;
+    }
+
+    .metro {
+      display: inline-block;
+      padding: 10px;
+      margin: 10px;
+      background: #08C;
+
+  /* Font styles */
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .metro.three-d {
+      position: relative;
+      box-shadow:
+        1px 1px #53A7EA,
+        2px 2px #53A7EA,
+        3px 3px #53A7EA;
+      transition: all 0.1s ease-in;
+    }
+    .metro {
+      display: inline-block;
+      padding: 10px;
+      margin: 10px;
+      background: #08C;
+
+      /* Font styles */
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .metro.three-d:active {
+      box-shadow: none;
+      top: 3px;
+      left: 3px;
+    }
+
+    .inline-link-2 {
+      display: inline-block;
+      border-bottom: 1px dashed rgba(0,0,0,0.4);
+
+      /* Font styles */
+      text-decoration: none;
+      color: #777;
+    }
+
+    .inline-link-2:hover   { border-bottom-style: dotted; }
+    .inline-link-2:active  { border-bottom-style: solid; }
+    .inline-link-2:visited { border-bottom: 1px solid #97CAF2; }
+    </style>
+
+
+    <link rel="stylesheet" href="styles.css">
+    <title>CRYPTOBER ROUND 2</title>
+  </head>
+  <body class="bordered">
+    <center><h1>Cryptober<br></h1>
+      <h2>Round 2</h2>
+    <div class="bordered">
+      <ul>
+        <li>On filling in your details below, you will be redirected to five problems which you must solve.</li><br>
+        <li>In each of these problems, you will have to give an input, and a certain function will process it to give you an output.</li><br>
+        <li>Your task is to find the logic behind the function and inform it to any one of the invigilators.</li><br>
+        <li> However, you can give the inputs only <b>5 times per problem.</b>.<li><br>
+        <li>Read the other instructions in each question's page carefully and avoid entering invalid input.</li><br>
+        <li>The first five teams to solve all of them will qualify for the final round.</li><br>
+        <li><h3><b>HACK AWAY THEN!!!</b></h3></li>
+      </ul>
+    </div>
+    <br><br>
+    <form method="POST">
+      {% csrf_token %}
+      <label>Team Name:</label>
+      <input class="simple-input" type="text" name="name"><br>
+      <label>Email id:</label>
+      <input class="simple-input" type="email" name="email"><br>
+      <button class="metro" type="submit">Get Started!</button></center><br>
+    </form>
+  </body>
+</html>
