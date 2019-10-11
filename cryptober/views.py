@@ -108,7 +108,7 @@ def func3(query):
 # lis returns length of the longest increasing subsequence
 # in arr of size n
 def func4(arr):
-    if len(arr)!=5:
+    if len(arr)!=7:
         return -6942069
     n = len(arr)
     for i in range(n):
