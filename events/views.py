@@ -52,7 +52,7 @@ def event_register(request, event_id):
                 obj=FourMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],participant4=request.POST['participant4'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],email=request.POST['email'])       
             obj.save()
             em_obj=em()
-            em_obj.send_email(request.POST['email'],"You have registered for ISTE NITK's "+event.event_name,"Hello "+request.POST['participant1']+"!\n Thank you for registering for "+event.event_name+" which will be held on "+str(event.event_date),'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
+           # em_obj.send_email(request.POST['email'],"You have registered for ISTE NITK's "+event.event_name,"Hello "+request.POST['participant1']+"!\n Thank you for registering for "+event.event_name+" which will be held on "+str(event.event_date),'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
             messages.success(request, 'Thank you for registering!')
         else:
             print(form.errors)
