@@ -52,6 +52,13 @@ class ThreeMember(models.Model):
     phone2 = models.CharField(validators=[phone_regex], max_length=17)
     email = models.EmailField()    
     event = models.ForeignKey(EventDetails,on_delete=models.CASCADE,default=None,null=True)
+    
+class OneMember(models.Model):
+    team_name = models.CharField(max_length=50)
+    participant1 = models.CharField(max_length=50)
+    phone1 = models.CharField(validators=[phone_regex], max_length=17)
+    email = models.EmailField()    
+    event = models.ForeignKey(EventDetails,on_delete=models.CASCADE,default=None,null=True)
 
 class Registration(models.Model):
     def __str__(self):
