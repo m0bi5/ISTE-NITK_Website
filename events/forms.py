@@ -24,3 +24,9 @@ class ThreeForm(forms.Form):
     phone1 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
     phone2 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
     email = forms.EmailField(required=True)    
+    
+class OneForm(forms.Form):
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
+    participant1 = forms.CharField(label="Participant 1",max_length=50,required=True)
+    phone1 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
+    email = forms.EmailField(required=True)  
