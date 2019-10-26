@@ -42,7 +42,7 @@ def event_register(request, event_id):
         form = None
         if event.members==3:
             form=ThreeForm(request.POST)
-        if event,members==1:
+        if event.members==1:
             form=OneForm(request.POST)
         if event.members==4:
             form=FourForm(request.POST)
