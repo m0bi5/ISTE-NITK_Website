@@ -11,9 +11,15 @@
     <div class="col l6 offset-l3 s12">
         <div class="card">
             <div class="card-content black-text">
+                {% if not one %}
                 <center>
                     <span class="card-title">Let us know about your team</span>
                 </center>
+                {% else %}
+                <center>
+                    <span class="card-title">Let us know about you</span>
+                </center>
+                {% endif %}
                 <form method="POST">
                     {% csrf_token %}
                     <div class="row">
@@ -60,6 +66,7 @@
                                 </div>
                             </div>
                             {% else %}
+                            {% if not one %}
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="form-icon material-icons prefix">person</i>
@@ -67,6 +74,7 @@
                                     <label for="id_participant3">Member 3 (Optional)</label>
                                 </div>
                             </div>
+                            {% endif %}
                             {% endif %}
 
 
