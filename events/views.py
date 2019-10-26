@@ -72,7 +72,8 @@ def event_register(request, event_id):
             form = FourForm()
     context = {
         'form': form,
-        'four': event.members==4
+        'four': event.members==4,
+        'one' : event.members==1
     }
     
     
