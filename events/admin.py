@@ -7,6 +7,12 @@ class ThreeMember(admin.ModelAdmin):
     search_fields=('participant1','participant2','participant3','team_name')
     list_display=('team_name','phone1','event')
     list_filter=('event__sig','event__event_name')
+    
+@admin.register(OneMember)
+class OneMember(admin.ModelAdmin):
+    search_fields=('participant1','team_name')
+    list_display=('team_name','phone1','event')
+    list_filter=('event__sig','event__event_name')
 
 @admin.register(FourMember)
 class FourMember(admin.ModelAdmin):
