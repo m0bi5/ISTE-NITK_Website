@@ -20,6 +20,7 @@ for members in l:
     last_name=name.replace(first_name,"")
     sig_models=list(models.SIG.objects.all())
     sig_responses=members[1:-1]
+    #contact number !!
     my_sigs=[]
     for i in range(len(sig_responses)):
         if 'Y' in sig_responses[i] or 'y' in sig_responses[i]:

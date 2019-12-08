@@ -1,0 +1,5 @@
+django
+python-decouple
+django-ckeditor
+django-sslserver
+django-recaptcha2

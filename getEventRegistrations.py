@@ -1,0 +1,70 @@
+import importlib,os
+import django
+os.environ['DJANGO_SETTINGS_MODULE'] = 'website.settings'
+django.setup()
+from events.models import *
+import xlsxwriter
+
+def excel_write(dataset,file,worksheet_name):
+    workbook = xlsxwriter.Workbook(file)
+    worksheet = workbook.add_worksheet(worksheet_name)
+    n=1
+    for data in dataset:
+        c='A'
+        for x in data:
+            cell=c+str(n)
+            worksheet.write(cell, x)
+            c=chr(ord(c)+1)
+        n+=1
+    workbook.close()
+
+
+
+
+
+
+event_name = input("Enter the exact event name:").strip()
+
+event = EventDetails.objects.get(event_name=event_name)
+n = event.members
+
+reg = []
+if n==1:
+    l=['Name','Phone number','Email']
+    reg.append(l)
+    for obj in OneMember.objects.filter(event=event):
+        l = []
+        l.append(obj.participant1)
+        l.append(obj.phone1)
+        l.append(obj.email)
+        reg.append(l)
+elif n==3:
+    l=['Team Name','Particpant 1','Participant 2','Participant 3',"Contact 1",'Contact 2','Email']
+    reg.append(l)
+    for obj in ThreeMember.objects.filter(event=event):
+        l=[]
+        l.append(obj.team_name)
+        l.append(obj.participant1)
+        l.append(obj.participant2)
+        l.append(obj.participant3)
+        l.append(obj.phone1)
+        l.append(obj.phone2)
+        l.append(obj.email)
+        reg.append(l)
+else:
+    l = ['Team Name','Particpant 1','Participant 2','Participant 3','Participant 4',"Contact 1",'Contact 2','Email']
+    reg.append(l)
+    for obj in FourMember.objects.filter(event=event):
+        l=[]
+        l.append(obj.team_name)
+        l.append(obj.participant1)
+        l.append(obj.participant2)
+        l.append(obj.participant3)
+        l.append(obj.participant4)
+        l.append(obj.phone1)
+        l.append(obj.phone2)
+        l.append(obj.email)
+        reg.append(l)
+
+excel_write(reg,event_name+'.xlsx',event_name)
+print("Registrations exported")
