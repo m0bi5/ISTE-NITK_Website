@@ -33,37 +33,19 @@ if n==1:
     l=['Name','Phone number','Email']
     reg.append(l)
     for obj in OneMember.objects.filter(event=event):
-        l = []
-        l.append(obj.participant1)
-        l.append(obj.phone1)
-        l.append(obj.email)
+        l = [obj.participant1,obj.phone1,obj.email]
         reg.append(l)
 elif n==3:
     l=['Team Name','Particpant 1','Participant 2','Participant 3',"Contact 1",'Contact 2','Email']
     reg.append(l)
     for obj in ThreeMember.objects.filter(event=event):
-        l=[]
-        l.append(obj.team_name)
-        l.append(obj.participant1)
-        l.append(obj.participant2)
-        l.append(obj.participant3)
-        l.append(obj.phone1)
-        l.append(obj.phone2)
-        l.append(obj.email)
+        l=[obj.team_name,obj.participant1,obj.participant2,obj.participant3,obj.phone1,obj.phone2,obj.email]
         reg.append(l)
 else:
     l = ['Team Name','Particpant 1','Participant 2','Participant 3','Participant 4',"Contact 1",'Contact 2','Email']
     reg.append(l)
     for obj in FourMember.objects.filter(event=event):
-        l=[]
-        l.append(obj.team_name)
-        l.append(obj.participant1)
-        l.append(obj.participant2)
-        l.append(obj.participant3)
-        l.append(obj.participant4)
-        l.append(obj.phone1)
-        l.append(obj.phone2)
-        l.append(obj.email)
+        l=[obj.team_name,obj.participant1,obj.participant2,obj.participant3,obj.participant4,obj.phone1,obj.phone2,obj.email]
         reg.append(l)
 
 excel_write(reg,event_name+'.xlsx',event_name)
