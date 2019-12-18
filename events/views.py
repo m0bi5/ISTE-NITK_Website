@@ -31,10 +31,10 @@ def event_form_team(request,event_id,roll_no):
             team=Team.objects.create(event=event,team_name=request.POST['member1'],member1=roll_no)
             team.save()
             messages.success(request,"Team successfully created!")
-                
+
     return render(request, "events/event_teams.html",{'member1':roll_no,'form':TeamForm(),'event':event})
 
-    
+
 
 def event_register(request, event_id):
     event=EventDetails.objects.get(id=event_id)
@@ -51,16 +51,16 @@ def event_register(request, event_id):
             if event.members==3:
                 obj=ThreeMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],email=request.POST['email'])
             if event.members==4:
-                obj=FourMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],participant4=request.POST['participant4'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],email=request.POST['email'])       
+                obj=FourMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],participant4=request.POST['participant4'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],email=request.POST['email'])
             if event.members==1:
-                obj=OneMember(event=event,team_name=request.POST['participant1'],participant1=request.POST['participant1'],phone1=request.POST['phone1'],email=request.POST['email']) 
+                obj=OneMember(event=event,  participant1=request.POST['participant1'],phone1=request.POST['phone1'],email=request.POST['email'])
             obj.save()
             em_obj=em()
            # em_obj.send_email(request.POST['email'],"You have registered for ISTE NITK's "+event.event_name,"Hello "+request.POST['participant1']+"!\n Thank you for registering for "+event.event_name+" which will be held on "+str(event.event_date),'istenitkchapter@gmail.com','tqlsyhqfyskwutxh')
             messages.success(request, 'Thank you for registering!')
         else:
             print(form.errors)
-            messages.error(request, 'Invalid reCAPTCHA. Please try again.')
+            messages.error(request, 'Invalid details entered! Please try again.')
 
             return redirect(event_register,event_id)
     else:
@@ -75,6 +75,4 @@ def event_register(request, event_id):
         'four': event.members==4,
         'one' : event.members==1
     }
-    
-    
     return render(request,"events/event_registration.html", context)

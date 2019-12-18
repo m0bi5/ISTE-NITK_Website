@@ -15,14 +15,14 @@ class EmailHandler():
 		msg['From'] = from_id
 		msg['To'] = to_id
 		msg['Subject'] = subject
-		
+
 		msg.attach(self.MIMEText(body, 'plain'))
 
 		server.sendmail(from_id, to_id, msg.as_string())
 		server.quit()
 
 	def read_email(self,from_email,from_pwd,smtp_server,search_filter,smtp_port=993):
-		
+
 		mail = self.imaplib.IMAP4_SSL(smtp_server)
 		mail.login(from_email,from_pwd)
 		mail.select('inbox')
@@ -34,7 +34,7 @@ class EmailHandler():
 		result,data = mail.fetch(latest_email_id, "(RFC822)")
 		raw_email = data[0][1].decode('utf-8')
 
-		#read the email 
+		#read the email
 		email_message = email.message_from_string(raw_email)
 
 		return str(email_message)

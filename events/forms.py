@@ -23,11 +23,11 @@ class ThreeForm(forms.Form):
     participant3 = forms.CharField(label="Participant 3 (Optional)",max_length=50,required=False)
     phone1 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
     phone2 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
-    email = forms.EmailField(required=True)    
-    
+    email = forms.EmailField(required=True)
+
 class OneForm(forms.Form):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
-    team_name = forms.CharField(label="Team Name",max_length=50,initial="",required=False)
+    # team_name = forms.CharField(label="Team Name",max_length=50,initial="",required=False)
     participant1 = forms.CharField(label="Participant 1",max_length=50,required=True)
     phone1 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
-    email = forms.EmailField(required=True)  
+    email = forms.EmailField(required=True)

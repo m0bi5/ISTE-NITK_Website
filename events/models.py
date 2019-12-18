@@ -5,7 +5,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from account import models as account_models
 
 phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
-    
+
 class EventDetails(models.Model):
     def __str__(self):
         return self.event_name
@@ -18,7 +18,7 @@ class EventDetails(models.Model):
     ('Crypt','Crypt'),
     ('Club','Club')
     )
-    
+
     event_name=models.CharField(default="",max_length=200)
     contact1=models.ForeignKey(account_models.User,on_delete=models.CASCADE,default=None,related_name='contact1',null=True)
     contact2=models.ForeignKey(account_models.User,on_delete=models.CASCADE,default=None,related_name='contact2',null=True)
@@ -37,7 +37,7 @@ class FourMember(models.Model):
     participant1 = models.CharField(max_length=50)
     participant2 = models.CharField(max_length=50)
     participant3 = models.CharField(max_length=50)
-    participant4 = models.CharField(max_length=50)
+    participant4 = models.CharField(max_length=50,default="")
     phone1 = models.CharField(validators=[phone_regex], max_length=17)
     phone2 = models.CharField(validators=[phone_regex], max_length=17)
     email = models.EmailField()
@@ -47,17 +47,17 @@ class ThreeMember(models.Model):
     team_name = models.CharField(max_length=50)
     participant1 = models.CharField(max_length=50)
     participant2 = models.CharField(max_length=50)
-    participant3 = models.CharField(max_length=50)
+    participant3 = models.CharField(max_length=50,default="")
     phone1 = models.CharField(validators=[phone_regex], max_length=17)
     phone2 = models.CharField(validators=[phone_regex], max_length=17)
-    email = models.EmailField()    
+    email = models.EmailField()
     event = models.ForeignKey(EventDetails,on_delete=models.CASCADE,default=None,null=True)
-    
+
 class OneMember(models.Model):
-    team_name = models.CharField(max_length=50)
+    # team_name = models.CharField(max_length=50)
     participant1 = models.CharField(max_length=50)
     phone1 = models.CharField(validators=[phone_regex], max_length=17)
-    email = models.EmailField()    
+    email = models.EmailField()
     event = models.ForeignKey(EventDetails,on_delete=models.CASCADE,default=None,null=True)
 
 class Registration(models.Model):
