@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% block content %}
+<br><h3>Registrations for {{event_name}} </h3><br>
+<div class="card">
+    <div class="row">
+        <div class="col s12">
+          {% if one %}
+              <table class="centered highlight">
+                  <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Phone no.</th>
+                          <th>Email id</th>
+                      </tr>
+                  </thead>
+                  {% for obj in regs %}
+
+                      <tr onclick="window.location=">
+                          <td>
+                              {{obj.0}}
+                          </td>
+                          <td>
+                            {{obj.1}}
+                          </td>
+                          <td>
+                            {{obj.2}}
+                          </td>
+                      </tr>
+                  {% endfor %}
+              </table>
+          {% elif four %}
+              <table class="centered highlight">
+                  <thead>
+                      <tr>
+                          <th>Team Name</th>
+                          <th>Participant1</th>
+                          <th>Participant2</th>
+                          <th>Participant3</th>
+                          <th>Participant4</th>
+                          <th>Contact 1</th>
+                          <th>Contact 2</th>
+                          <th>Email id</th>
+                      </tr>
+                  </thead>
+                  {% for obj in regs %}
+
+                      <tr onclick="window.location=">
+                          <td>
+                              {{obj.0}}
+                          </td>
+                          <td>
+                            {{obj.1}}
+                          </td>
+                          <td>
+                            {{obj.2}}
+                          </td>
+                          <td>
+                              {{obj.3}}
+                          </td>
+                          <td>
+                              {{obj.4}}
+                          </td>
+                          <td>
+                              {{obj.5}}
+                          </td>
+                          <td>
+                              {{obj.6}}
+                          </td>
+                          <td>
+                              {{obj.7}}
+                          </td>
+                      </tr>
+                  {% endfor %}
+              </table>
+          {% else %}
+            <table class="centered highlight">
+                <thead>
+                    <tr>
+                        <th>Team Name</th>
+                        <th>Participant1</th>
+                        <th>Participant2</th>
+                        <th>Participant3</th>
+                        <th>Contact 1</th>
+                        <th>Contact 2</th>
+                        <th>Email id</th>
+                    </tr>
+                </thead>
+                {% for obj in regs %}
+
+                    <tr onclick="window.location=">
+                        <td>
+                            {{obj.0}}
+                        </td>
+                        <td>
+                          {{obj.1}}
+                        </td>
+                        <td>
+                          {{obj.2}}
+                        </td>
+                        <td>
+                            {{obj.3}}
+                        </td>
+                        <td>
+                            {{obj.4}}
+                        </td>
+                        <td>
+                            {{obj.5}}
+                        </td>
+                        <td>
+                            {{obj.6}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

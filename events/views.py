@@ -76,3 +76,32 @@ def event_register(request, event_id):
         'one' : event.members==1
     }
     return render(request,"events/event_registration.html", context)
+
+def view_registrations(request,event_id):
+    if request.method=='GET':
+        event = EventDetails.objects.get(id=event_id)
+        regs = []
+        one = False
+        four= False
+        if event.members==1:
+            objs = OneMember.objects.filter(event=event)
+            one = True
+            for obj in objs:
+                l=[obj.participant1,obj.phone1,obj.email]
+                regs.append(l)
+        elif event.members==3:
+            objs = ThreeMember.objects.filter(event=event)
+            for obj in objs:
+                l = [obj.team_name,obj.participant1,obj.participant2,obj.participant3,obj.phone1,obj.phone2,obj.email]
+                regs.append(l)
+        else:
+            objs = ThreeMember.objects.filter(event=event)
+            four = True
+            for obj in objs:
+                l = [obj.team_name,obj.participant1,obj.participant2,obj.participant3,obj.participant4,obj.phone1,obj.phone2,obj.email]
+                regs.append(l)
+        print(one)
+        print(four)
+        for i in regs:
+            print(i)
+        return render(request,'events/view_registrations.html',{'one':one,'four':four,'regs':regs,'event_name':event.event_name})

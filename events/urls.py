@@ -5,4 +5,5 @@ from django.conf.urls import url
 urlpatterns = [
     path('', views.event_view, name='events'),
     path('register/<event_id>/', views.event_register, name='event_register'),
-] 
+    path('registrations/<event_id>',views.view_registrations,name='view_registrations'),
+]

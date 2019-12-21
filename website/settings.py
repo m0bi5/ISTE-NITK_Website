@@ -79,12 +79,15 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+            'grouptags':'events.templatetags.grouptags'
+            }
         },
     },
 ]
 
 #WSGI_APPLICATION = 'website.wsgi.application'
-WSGI_APPLICATION = 'website.wsgi.application'
+# WSGI_APPLICATION = 'website.wsgi.application'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
     #'guardian.backends.ObjectPermissionBackend',
