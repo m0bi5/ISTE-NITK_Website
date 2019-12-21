@@ -1,6 +1,13 @@
 import json
 import urllib
 
+import smtplib,ssl
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.utils import formatdate
+from email import encoders
+
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
@@ -8,7 +15,7 @@ from .forms import *
 from .models import *
 from .emailer import EmailHandler as em
 from django.urls import reverse
-
+from getEventRegistrations import create_event_excel_sheet as exsheet
 # Create your views here.
 def event_view(request):
     all_events=EventDetails.objects.all()
@@ -78,30 +85,56 @@ def event_register(request, event_id):
     return render(request,"events/event_registration.html", context)
 
 def view_registrations(request,event_id):
+    event = EventDetails.objects.get(id=event_id)
+    regs = []
+    one = False
+    four= False
+    if event.members==1:
+        objs = OneMember.objects.filter(event=event)
+        one = True
+        for obj in objs:
+            l=[obj.participant1,obj.phone1,obj.email]
+            regs.append(l)
+    elif event.members==3:
+        objs = ThreeMember.objects.filter(event=event)
+        for obj in objs:
+            l = [obj.team_name,obj.participant1,obj.participant2,obj.participant3,obj.phone1,obj.phone2,obj.email]
+            regs.append(l)
+    else:
+        objs = ThreeMember.objects.filter(event=event)
+        four = True
+        for obj in objs:
+            l = [obj.team_name,obj.participant1,obj.participant2,obj.participant3,obj.participant4,obj.phone1,obj.phone2,obj.email]
+            regs.append(l)
+
     if request.method=='GET':
-        event = EventDetails.objects.get(id=event_id)
-        regs = []
-        one = False
-        four= False
-        if event.members==1:
-            objs = OneMember.objects.filter(event=event)
-            one = True
-            for obj in objs:
-                l=[obj.participant1,obj.phone1,obj.email]
-                regs.append(l)
-        elif event.members==3:
-            objs = ThreeMember.objects.filter(event=event)
-            for obj in objs:
-                l = [obj.team_name,obj.participant1,obj.participant2,obj.participant3,obj.phone1,obj.phone2,obj.email]
-                regs.append(l)
-        else:
-            objs = ThreeMember.objects.filter(event=event)
-            four = True
-            for obj in objs:
-                l = [obj.team_name,obj.participant1,obj.participant2,obj.participant3,obj.participant4,obj.phone1,obj.phone2,obj.email]
-                regs.append(l)
-        print(one)
-        print(four)
-        for i in regs:
-            print(i)
+        return render(request,'events/view_registrations.html',{'one':one,'four':four,'regs':regs,'event_name':event.event_name})
+    else:
+        exsheet(event.event_name)
+        file = event.event_name+'.xlsx'
+        username='istenitkchapter@gmail.com'
+        password='asdasdasff'
+        send_from = username
+        send_to = request.user.email
+
+        msg = MIMEMultipart()
+        msg['From'] = send_from
+        msg['To'] = send_to
+        msg['Subject'] = 'Registrations for '+event.event_name
+        server = smtplib.SMTP('smtp.gmail.com',587)
+        fp = open(file, 'rb')
+        part = MIMEBase('application','vnd.ms-excel')
+        part.set_payload(fp.read())
+        fp.close()
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', 'attachment', filename=file)
+        msg.attach(part)
+        smtp = smtplib.SMTP('smtp.gmail.com',587)
+        smtp.ehlo()
+        smtp.starttls()
+        smtp.login(username,password)
+        smtp.sendmail(send_from, send_to, msg.as_string())
+        smtp.quit()
+        print("Mail sent successfully")
+        messages.success(request,"Event registration details mailed to "+send_to)
         return render(request,'events/view_registrations.html',{'one':one,'four':four,'regs':regs,'event_name':event.event_name})
