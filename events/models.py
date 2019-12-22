@@ -15,6 +15,8 @@ class EventDetails(models.Model):
     ('Clutch', 'Clutch'),
     ('Create','Create'),
     ('Credit','Credit'),
+    ('Concrete','Concrete'),
+    ('Charge','Charge'),
     ('Crypt','Crypt'),
     ('Club','Club')
     )
@@ -23,7 +25,7 @@ class EventDetails(models.Model):
     contact1=models.ForeignKey(account_models.User,on_delete=models.CASCADE,default=None,related_name='contact1',null=True)
     contact2=models.ForeignKey(account_models.User,on_delete=models.CASCADE,default=None,related_name='contact2',null=True)
     venue=models.CharField(default="",max_length=200)
-    description=RichTextUploadingField(default="a")
+    description=RichTextUploadingField(default="Event Description goes here")
     event_date=models.DateField(default=date.today)
     event_time=models.TimeField(default=datetime.time(datetime.now()))
     sig=models.CharField(max_length=12, default="", choices=SIG_CHOICES)
