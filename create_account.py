@@ -58,7 +58,7 @@ for members in l:
             u.sigs.set(my_sigs)
             u.groups.add(Group.objects.get(name='Member'))
             u.set_password('istenitk')
-            u.avatar=ImageFile(open("media/generic_pp.jpg", "rb"))
+            u.avatar=ImageFile(open("media/user_10/avatar/generic_pp.jpg", "rb"))
             u.save()
     except Exception as e:
         print(e)
