@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'sslserver',
     'snowpenguin.django.recaptcha3',
     'ckeditor_uploader',
+    'meet',
 ]
 
 MIDDLEWARE = [

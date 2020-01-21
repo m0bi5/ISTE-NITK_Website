@@ -24,14 +24,16 @@
     </head>
     <body>
         <ul id="user-action" class="dropdown-content">
-            <li><a href="{% url 'interview' %}">Conduct Interview</a></li>
+            <!-- <li><a href="{% url 'interview' %}">Conduct Interview</a></li> -->
+            <li><a href="{% url 'meets' %}">Meets</a></li>
             <li><a href="{% url 'admin:index' %}">Admin</a></li>
             <li><a href="{% url 'logout' %}">Logout</a></li>
         </ul>
         <ul id="mobile-menu" class="sidenav">
             {% if user.is_authenticated %}
                 <li><a href="#">Hi {{user.first_name}}!</a></li>
-                <li><a href="{% url 'interview' %}">Conduct Interview</a></li>
+                <!-- <li><a href="{% url 'interview' %}">Conduct Interview</a></li> -->
+                <li><a href="{% url 'meets' %}">Meets</a><li>
                 <li><a href="{% url 'admin:index' %}">Admin</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}

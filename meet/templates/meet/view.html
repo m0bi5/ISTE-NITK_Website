@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% if empty %}
+    <h3> No meets planned</h3>
+  {% else %}
+  <h3> ISTE Meets</h3>
+    {% for date,objs in meets.items %}
+      <h4>{{date}}</h4>
+      {% for meet in objs %}
+      <div class="card hoverable">
+        <div class="card-content">
+          <h5>{{meet.sig}} meet</h5>
+            <h6>Booked by :{{meet.member}}<br>
+            Topic : {{meet.topic}}<br>
+            Venue : {{meet.venue}}<br>
+            Time  : {{meet.start_time}}-{{meet.end_time}}</h6><br>
+        </div>
+      </div>
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
+  {% if senior %}
+  <a class="white-text" href="{% url 'add_meet' %}">
+  <button class="btn waves-effect waves-light" href="{% url 'add_meet' %}">
+    Add meet
+      <i class="material-icons right">send</i>
+  </button></a>
+    <!-- <a class="indigo-text" href="{% url 'add_meet' %}">Add meet</a> -->
+  {% endif %}
+{% endblock %}
