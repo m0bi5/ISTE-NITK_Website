@@ -18,10 +18,12 @@ SIG_CHOICES = (
     ('Club','Club')
     )
 members_choices = (
+    ('0','0'),
     ('1',1),
     ('3',3),
     ('4',4),
 )
+
 class FourForm(forms.Form):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
     team_name = forms.CharField(label="Team Name",max_length=50,required=True)
@@ -33,6 +35,17 @@ class FourForm(forms.Form):
     phone2 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
     email = forms.EmailField(required=True)
 
+
+class SpectacleForm(forms.Form):
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
+    team_name = forms.CharField(label="Team Name",max_length=50,required=True)
+    participant1 = forms.CharField(label="Participant 1",max_length=50,required=True)
+    participant2 = forms.CharField(label="Participant 2",max_length=50,required=True)
+    participant3 = forms.CharField(label="Participant 3",max_length=50,required=True)
+    section = forms.CharField(label="Section", max_length=50,required=True)
+    phone1 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
+    phone2 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
+
 class ThreeForm(forms.Form):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
     team_name = forms.CharField(label="Team Name",max_length=50,required=True)
@@ -42,7 +55,7 @@ class ThreeForm(forms.Form):
     phone1 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
     phone2 = forms.CharField(validators=[phone_regex], max_length=17, required=True)
     email = forms.EmailField(required=True)
-
+    section = forms.CharField(label="Section",max_length=50,required=False)
 class OneForm(forms.Form):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,12}$', message="Phone number invalid")
     # team_name = forms.CharField(label="Team Name",max_length=50,initial="",required=False)

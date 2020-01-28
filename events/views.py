@@ -54,12 +54,23 @@ def event_register(request, event_id):
             form=OneForm(request.POST)
         if event.members==4:
             form=FourForm(request.POST)
+        if event.members==0:
+            form=SpectacleForm(request.POST)
         if form.is_valid():
             obj=None
             add = None
             if event.members==3:
                 add = request.POST['team_name']
+
                 obj=ThreeMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],email=request.POST['email'])
+
+            
+            elif event.members==0:
+                add = request.POST['team_name']
+                obj=SpectacleMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],section=request.POST['section'])
+            
+        
+                
             elif event.members==4:
                 add = request.POST['team_name']
                 obj=FourMember(event=event,team_name=request.POST['team_name'],participant1=request.POST['participant1'],participant2=request.POST['participant2'],participant3=request.POST['participant3'],participant4=request.POST['participant4'],phone1=request.POST['phone1'],phone2=request.POST['phone2'],email=request.POST['email'])
@@ -67,8 +78,12 @@ def event_register(request, event_id):
                 add = request.POST['participant1']
                 obj=OneMember(event=event,  participant1=request.POST['participant1'],phone1=request.POST['phone1'],email=request.POST['email'])
             obj.save()
-            em_obj=em()
-            em_obj.send_email(request.POST['email'],"You have registered for ISTE NITK's "+event.event_name,"Hello "+add+"!\n\nThank you for registering for "+event.event_name+"! The event will be held on "+str(event.event_date)+" at "+event.venue+".\nWe look forward to seeing you there!\n\nWith love,\nISTE NITK",'istenitkchapter@gmail.com','#includeistenitk.h')
+            try:
+                em_obj=em()
+                em_obj.send_email(request.POST['email'],"You have registered for ISTE NITK's "+event.event_name,"Hello "+add+"!\n\nThank you for registering for "+event.event_name+"! The event will be held on "+str(event.event_date)+" at "+event.venue+".\nWe look forward to seeing you there!\n\nWith love,\nISTE NITK",'istenitkchapter@gmail.com','#includeistenitk.h')
+            except:
+                print("No Email Required for registration")
+
             messages.success(request, 'Thank you for registering!')
         else:
             print(form.errors)
@@ -82,10 +97,13 @@ def event_register(request, event_id):
             form=OneForm()
         if event.members==4:
             form = FourForm()
+        if event.members==0:
+            form = SpectacleForm()
     context = {
         'form': form,
         'four': event.members==4,
-        'one' : event.members==1
+        'one' : event.members==1,
+        'zero' : event.members==3   #Spectacle jugaad fixup plss
     }
     return render(request,"events/event_registration.html", context)
 
@@ -171,3 +189,4 @@ def create_event(request):
             return render(request,'events/create_event.html',{'form':form})
         messages.error(request,'Invalid input(s)! Please check again!')
         return render(request,'events/create_event.html',{'form':form})
+

@@ -4,7 +4,7 @@ rm /etc/nginx/sites-enabled/iste_nginx_conf
 ln -s /etc/nginx/sites-available/iste_nginx_conf /etc/nginx/sites-enabled
  
 uid = iste
-base = /home/%(uid)
+base = /home/iste
 
 chdir = %(base)/ISTE-NITK_Website
 #home = %(base)/projects/p1

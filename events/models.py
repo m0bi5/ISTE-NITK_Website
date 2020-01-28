@@ -45,11 +45,25 @@ class FourMember(models.Model):
     email = models.EmailField()
     event = models.ForeignKey(EventDetails,on_delete=models.CASCADE,default=None,null=True)
 
-class ThreeMember(models.Model):
+class SpectacleMember(models.Model):
+    section = models.CharField(max_length=50)
     team_name = models.CharField(max_length=50)
     participant1 = models.CharField(max_length=50)
     participant2 = models.CharField(max_length=50)
     participant3 = models.CharField(max_length=50,default="")
+    phone1 = models.CharField(validators=[phone_regex], max_length=17)
+    phone2 = models.CharField(validators=[phone_regex], max_length=17)
+    email = models.EmailField()
+    event = models.ForeignKey(EventDetails,on_delete=models.CASCADE,default=None,null=True)
+
+
+class ThreeMember(models.Model):
+
+    team_name = models.CharField(max_length=50)
+    participant1 = models.CharField(max_length=50)
+    participant2 = models.CharField(max_length=50)
+    participant3 = models.CharField(max_length=50,default="")
+    section = models.CharField(max_length=50,default="")
     phone1 = models.CharField(validators=[phone_regex], max_length=17)
     phone2 = models.CharField(validators=[phone_regex], max_length=17)
     email = models.EmailField()
