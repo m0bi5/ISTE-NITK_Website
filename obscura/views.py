@@ -11,7 +11,6 @@ def login(request):
         pwd = request.POST.get('pwd').strip()
         obj = Team.objects.filter(name=team,pwd=pwd)
         if len(obj)==1:
-            print("LOGGED IN")
             obj = obj[0]
             return render(request,'obscura/home.html',{'team':team,'points':obj.points,'hearts':obj.lives})
         else:
@@ -89,13 +88,14 @@ def fbird(request,team):
 def done(team):
     obj = Team.objects.filter(name=team)
     if len(obj)==1:
+        obj=obj[0]
         easy = eval(obj.easy_subs)
         med = eval(obj.med_subs)
         hard = eval(obj.hard_subs)
         if '*' not in easy and '*' not in med and '*' not in hard:
             return True
     else:
-        obj.finish_time = datetime.now()
+        obj.finish_time = str(datetime.now())
         messages.error(request,'Invalid login credentials!')
         return render(request,'obscura/login.html')
 
@@ -123,7 +123,7 @@ def easy(request,team,id):
             obj.save()
             if done(team):
                 messages.success("You have answered all the questions!! Check out your ranking in the leaderboard!!")
-                teams = Team.objects.all().order_by('points','finish_time','hearts')
+                teams = Team.objects.all().order_by('-points','finish_time','-hearts')
                 return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
             if '*' not in subs:
                 messages.success(request,'You have answered all Easy quests! Medium Level unlocked!')
@@ -165,7 +165,7 @@ def med(request,team,id):
 
                 if done(team):
                     messages.success("You have answered all the questions!! Check out your ranking in the leaderboard!!")
-                    teams = Team.objects.all().order_by('points','finish_time','hearts')
+                    teams = Team.objects.all().order_by('-points','finish_time','-hearts')
                     return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
                 if '*' not in subs:
                     messages.success(request,'You have answered all Medium quests! Hard Level unlocked!')
@@ -209,7 +209,7 @@ def hard(request,team,id):
                 obj.save()
                 if done(team):
                     messages.success("You have answered all the questions!! Check out your ranking in the leaderboard!!")
-                    teams = Team.objects.all().order_by('points','finish_time','hearts')
+                    teams = Team.objects.all().order_by('-points','finish_time','-hearts')
                     return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
             else:
                 messages.error(request, 'Wrong Answer! Try again!')
@@ -239,7 +239,7 @@ def un_med(request,team):
 
 
 def lboard(request,team):
-    teams = Team.objects.all().order_by('points','finish_time','lives')
+    teams = Team.objects.all().order_by('-points','finish_time','-lives')
     return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
 
 def un_hard(request,team):
