@@ -15,4 +15,5 @@ urlpatterns = [
     path('ckeditor/',include('ckeditor_uploader.urls')),
     path('cryptober/',include('cryptober.urls')),
     path('meets/',include('meet.urls')),
+    path('obscura/',include('obscura.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

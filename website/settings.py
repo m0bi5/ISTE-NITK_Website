@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'snowpenguin.django.recaptcha3',
     'ckeditor_uploader',
     'meet',
+    'obscura',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +89,7 @@ TEMPLATES = [
 ]
 
 #WSGI_APPLICATION = 'website.wsgi.application'
-WSGI_APPLICATION = 'website.wsgi.application'
+# WSGI_APPLICATION = 'website.wsgi.application'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
     #'guardian.backends.ObjectPermissionBackend',
@@ -146,6 +147,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
+    'obscura/static/'
 )
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

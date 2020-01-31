@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Concert+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <meta charset="utf-8">
+    <title>Quests Menu</title>
+    <style>
+    body{
+        background-image: url('https://media.giphy.com/media/1Aj19xvsQn7rHZ9gIa/giphy.gif');
+        background-size: cover;
+        font-family: 'Concert One', cursive;
+    }
+    h1{
+      font-size:90px;
+      color:white;
+    }
+    h2{
+      font-size:50px;
+      color:white;
+    }
+    li{
+      color:white;
+      list-style-type: none;
+    }
+      .myButton {
+      	box-shadow: 3px 4px 0px 0px #ffcc00;
+      	background-color:#fff200;
+      	border-radius:5px;
+      	border:1px solid #337bc4;
+      	display:inline-block;
+      	cursor:pointer;
+      	color:#0f0f0a;
+        font-family: 'Concert One', cursive;
+      	font-size:30px;
+      	font-weight:bold;
+      	padding:12px 44px;
+      	text-decoration:none;
+      	text-shadow:0px 1px 0px #528ecc;
+      }
+      .myButton:hover {
+      	background-color:#f7ff03;
+      }
+      .myButton:active {
+      	position:relative;
+      	top:1px;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <h3 style="color:yellow;">Points:{{points}}<br>Hearts:{{hearts}}<br></h3>
+    <br><br><br><br><br><br><br><br>
+  <center><h1 style="color:white;
+
+      font-family: 'Press Start 2P', cursive;
+
+  ;">OBSCURA</h1></center>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <center><div>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <center><li {% if message.tags %} class="{{ message.tags }}"{% endif %}><h3>{{ message }}</h3></li></center>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div></center>
+    <center><h2>Choose the difficulty</h2><br>
+    <a href="{% url 'easy' team=team id=1 %}"><button class="myButton">Easy</button></a>
+    {% if med %}
+      <a href="{% url 'medium' team=team id=1 %}"><button class="myButton">Medium</button></a>
+    {% else %}
+      <a href="{% url 'un_med' team=team%}"><button class="myButton" style="background-color:#ff99cc;">Unlock Medium quests</button></a>
+    {% endif %}
+
+    {% if hard %}
+      <a href="{% url 'hard' team=team id=1 %}"><button class="myButton">Hard</button></a><br><br>
+    {% else %}
+      <a href="{% url 'un_hard' team=team %}"><button class="myButton" style="background-color:#ff99cc;">Unlock Hard quests</button></a><br><br>
+    {% endif %}
+    <a href="{% url 'obs' team=team %}"><button class="myButton">Go to Home</button></a>
+  </center>
+  </body>
+</html>

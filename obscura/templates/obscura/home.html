@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Concert+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <meta charset="utf-8">
+    <title>Home</title>
+    <style>
+    body{
+        background-image: url('https://media.giphy.com/media/1Aj19xvsQn7rHZ9gIa/giphy.gif');
+        background-size: cover;
+        font-family: 'Concert One', cursive;
+    }
+    h1{
+      font-size:90px;
+    }
+    li{
+      color:white;
+      list-style-type: none;
+    }
+      .myButton {
+      	box-shadow: 3px 4px 0px 0px #ffcc00;
+      	background-color:#fff200;
+      	border-radius:5px;
+      	border:1px solid #337bc4;
+      	display:inline-block;
+      	cursor:pointer;
+      	color:#0f0f0a;
+        font-family: 'Concert One', cursive;
+      	font-size:30px;
+      	font-weight:bold;
+      	padding:12px 44px;
+      	text-decoration:none;
+      	text-shadow:0px 1px 0px #528ecc;
+      }
+      .myButton:hover {
+      	background-color:#f7ff03;
+      }
+      .myButton:active {
+      	position:relative;
+      	top:1px;
+      }
+
+
+    </style>
+  </head>
+  <body>
+
+    <h3 style="color:yellow;">Points:{{points}}<br>Hearts:{{hearts}}<br></h3>
+    <br><br><br><br><br><br><br><br><br><br><br>
+  <center><h1 style="color:white;
+
+      font-family: 'Press Start 2P', cursive;
+
+  ;">OBSCURA</h1></center>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <center>
+      <div>
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <center><li {% if message.tags %} class="{{ message.tags }}"{% endif %}><h3>{{ message }}</h3></li></center>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div><br>
+      <a href="{% url 'instructions' team=team %}"><button class="myButton">Instructions</button></a><t>
+    <a href="{% url 'mini_games' team=team %}"><button class="myButton">Mini games</button></a>
+    <a href="{% url 'quests_menu' team=team %}"><button class="myButton">Quests Menu</button></a><br><br>
+    <a href="{% url 'lboard' team=team %}"><button class="myButton">Leaderboard</button></a><center>
+  </body>
+</html>

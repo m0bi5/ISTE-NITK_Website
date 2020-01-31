@@ -6,7 +6,7 @@ import datetime
 # Create your views here.
 def projects(request):
     projects_list = {}
-    year_list = [r for r in range(2018, datetime.date.today().year +1)]
+    year_list = [r for r in range(2018, datetime.date.today().year)]
     for year in year_list:
         projects_list[year] = {}
         sigs = ['Crypt','Charge','Credit','Chronicle','Clutch','Concrete','Create','Catalyst']

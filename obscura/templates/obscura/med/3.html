@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Concert+One&display=swap" rel="stylesheet">
+
+    <meta charset="utf-8">
+    <title>Med-3</title>
+    <style>
+    body{
+        background-color:black;
+        font-family: 'Concert One', cursive;
+    }
+    h1{
+      font-size:90px;
+      color:white;
+    }
+    label{
+      font-size:30px;
+    }
+    h2{
+      font-size:50px;
+      color:white;
+    }
+    a{
+      color:white;
+    }
+    p{
+      font-size:30px;
+      color:white;
+    }
+    li{
+      color:yellow;
+      display:inline;
+      list-style-type: none;
+    }
+      .myButton {
+      	box-shadow: 3px 4px 0px 0px #ffcc00;
+      	background-color:#fff200;
+      	border-radius:5px;
+      	border:1px solid #337bc4;
+      	display:inline-block;
+      	cursor:pointer;
+      	color:#0f0f0a;
+        font-family: 'Concert One', cursive;
+      	font-size:30px;
+      	font-weight:bold;
+      	padding:12px 44px;
+      	text-decoration:none;
+      	text-shadow:0px 1px 0px #528ecc;
+      }
+      .myButton:hover {
+      	background-color:#f7ff03;
+      }
+      .myButton:active {
+      	position:relative;
+      	top:1px;
+      }
+      form-style-1 {
+      	margin:10px auto;
+      	max-width: 400px;
+      	padding: 20px 12px 10px 20px;
+      	font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+      }
+      .form-style-1 label{
+      	margin:0 0 3px 0;
+      	padding:0px;
+      	display:block;
+      	font-weight: bold;
+      }
+      .form-style-1 input[type=text]{
+      	box-sizing: border-box;
+      	-webkit-box-sizing: border-box;
+      	-moz-box-sizing: border-box;
+      	border:1px solid #BEBEBE;
+      	padding: 7px;
+      	margin:0px;
+      	-webkit-transition: all 0.30s ease-in-out;
+      	-moz-transition: all 0.30s ease-in-out;
+      	-ms-transition: all 0.30s ease-in-out;
+      	-o-transition: all 0.30s ease-in-out;
+      	outline: none;
+      }
+      .form-style-1 input[type=text]:focus{
+      	-moz-box-shadow: 0 0 8px #88D5E9;
+      	-webkit-box-shadow: 0 0 8px #88D5E9;
+      	box-shadow: 0 0 8px #88D5E9;
+      	border: 1px solid #88D5E9;
+      }
+
+      .form-style-1 input[type=submit], .form-style-1 button{
+      	background: #4B99AD;
+      	padding: 8px 15px 8px 15px;
+      	border: none;
+      	color: #fff;
+        font-family: 'Concert One', cursive;
+
+      }
+      .form-style-1 input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+      	background: #4691A4;
+      	box-shadow:none;
+      	-moz-box-shadow:none;
+      	-webkit-box-shadow:none;
+        font-family: 'Concert One', cursive;
+
+      }
+    </style>
+  </head>
+  <body>
+    <h3 style="color:yellow;">Points:{{points}}<br>Hearts:{{hearts}}<br></h3>
+
+    {% if subbd %}
+      <center><p>You have answered this question correctly! Try the others!</p><br>
+        <a href="{% url 'obs' team=team %}"><button class="myButton">Go to Home</button></a>
+        <a href="{% url 'quests_menu' team=team %}"><button class="myButton">Go to quests menu</button></a></center><br></center>
+    {% else %}
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+
+      <p>Question:<br>What is the minimum number of numbers (0-9) needed to
+        form every number from 1 to 3,500? (the numbers used can be repeated
+        but not for the same number, eg: 11 requires two different ones)</p>
+        <form method="POST">
+          {% csrf_token %}
+          <label for="ans" style="color:yellow;">Your answer:</label>
+          <input type="text" name="ans"><br><br><br></input>
+          <center><button class="myButton" type="submit">Check</button></center></form><br><br>
+            <center><a href="{% url 'obs' team=team %}"><button class="myButton">Go to Home</button></a>
+            <a href="{% url 'quests_menu' team=team %}"><button class="myButton">Go to quests menu</button></a></center><br></center>
+
+      {% endif %}
+      <center><ul>
+        <li ><a href="1">1</a></li>
+        <li ><a href="2">2</a></li>
+        <li >3</li>
+        <li ><a href="4">4</a></li>
+        <li ><a href="5">5</a></li>
+        <li ><a href="6">6</a></li>
+        <li ><a href="7">7</a></li>
+      </ul>
+
+  </body>
+</html>
