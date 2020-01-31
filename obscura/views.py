@@ -114,7 +114,7 @@ def easy(request,team,id):
             return render(request,'obscura/mg_menu.html',{'team':team})
     else:
         ans = request.POST.get('ans').strip()
-        l = ['1','5','1','3','4','16=8+8','matchstick']
+        l = ['1','5','1','3','4','16=8+8','match']
         if ans==l[int(id)-1]:
             subbd = True
             subs[int(id)-1]=ans
@@ -122,7 +122,7 @@ def easy(request,team,id):
             obj.points += 25
             obj.save()
             if done(team):
-                messages.success("You have answered all the questions!! Check out your ranking in the leaderboard!!")
+                messages.success(request,"You have answered all the questions!! Check out your ranking in the leaderboard!!")
                 teams = Team.objects.all().order_by('-points','finish_time','-hearts')
                 return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
             if '*' not in subs:
@@ -164,7 +164,7 @@ def med(request,team,id):
                 obj.save()
 
                 if done(team):
-                    messages.success("You have answered all the questions!! Check out your ranking in the leaderboard!!")
+                    messages.success(request,"You have answered all the questions!! Check out your ranking in the leaderboard!!")
                     teams = Team.objects.all().order_by('-points','finish_time','-hearts')
                     return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
                 if '*' not in subs:
@@ -208,7 +208,7 @@ def hard(request,team,id):
                 obj.points+=60
                 obj.save()
                 if done(team):
-                    messages.success("You have answered all the questions!! Check out your ranking in the leaderboard!!")
+                    messages.success(request,"You have answered all the questions!! Check out your ranking in the leaderboard!!")
                     teams = Team.objects.all().order_by('-points','finish_time','-hearts')
                     return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
             else:
