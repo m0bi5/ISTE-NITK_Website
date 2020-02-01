@@ -123,7 +123,7 @@ def easy(request,team,id):
             obj.save()
             if done(team):
                 messages.success(request,"You have answered all the questions!! Check out your ranking in the leaderboard!!")
-                teams = Team.objects.all().order_by('-points','finish_time','-hearts')
+                teams = Team.objects.all().order_by('-points','finish_time','-lives')
                 return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
             if '*' not in subs:
                 messages.success(request,'You have answered all Easy quests! Medium Level unlocked!')
@@ -165,7 +165,7 @@ def med(request,team,id):
 
                 if done(team):
                     messages.success(request,"You have answered all the questions!! Check out your ranking in the leaderboard!!")
-                    teams = Team.objects.all().order_by('-points','finish_time','-hearts')
+                    teams = Team.objects.all().order_by('-points','finish_time','-lives')
                     return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
                 if '*' not in subs:
                     messages.success(request,'You have answered all Medium quests! Hard Level unlocked!')
@@ -209,7 +209,7 @@ def hard(request,team,id):
                 obj.save()
                 if done(team):
                     messages.success(request,"You have answered all the questions!! Check out your ranking in the leaderboard!!")
-                    teams = Team.objects.all().order_by('-points','finish_time','-hearts')
+                    teams = Team.objects.all().order_by('-points','finish_time','-lives')
                     return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams})
             else:
                 messages.error(request, 'Wrong Answer! Try again!')
