@@ -2,6 +2,10 @@ from django.shortcuts import render
 from datetime import datetime
 from account import models as account_models
 from projects import models as project_models
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import os
+
 def home(request):
     this_year=datetime.now().year
     years_in_operation=this_year-1995
@@ -12,3 +16,9 @@ def home(request):
     core=account_models.Core.objects.all()
     context={'core':core,'sigs':sigs,'year':years_in_operation,'member':member_count,'sig':sig_count,'project':project_count}
     return render(request,'home/index.html',context)
+
+@require_POST
+@csrf_exempt
+def webhook(request):
+    print(os.getcwd())
+    return HttpResponse('pong')
