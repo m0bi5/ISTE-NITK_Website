@@ -21,4 +21,4 @@ def home(request):
 @csrf_exempt
 def webhook(request):
     print(os.getcwd())
-    return HttpResponse('pong')
+    return render(request,'home/index.html',{})
