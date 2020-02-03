@@ -1,3 +1,3 @@
-sudo git pull https://istenitk:#includeistenitk.h@github.com/m0bi5/ISTE-NITK_Website
+git pull
 sudo pkill -9 -f manage.py
 sudo python3 manage.py runserver 0.0.0.0:80
