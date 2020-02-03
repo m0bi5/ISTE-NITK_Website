@@ -21,4 +21,5 @@ def home(request):
 @csrf_exempt
 def webhook(request):
     os.system('sudo nohup ./deploy.sh &')
+    print("Updated local repository...")
     return render(request,'home/index.html',{})
