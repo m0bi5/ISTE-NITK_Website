@@ -12,7 +12,7 @@
         font-family: 'Concert One', cursive;
     }
     h2{
-      font-size:90px;
+      font-size:75px;
       color:yellow;
     }
     li{
@@ -57,13 +57,18 @@
           </ul>
         {% endif %}
       </div><br>
-    <center><h2>LEADERBOARD</h2><center>
+      <center><h1 style="color:white;
+
+    font-family: 'Press Start 2P', cursive;
+
+;">OBSCURA</h1></center>
+      <br><br><br>
+    <center><h2>ISTE NITK congratulates all the winners of OBSCURA!</h2><center>
     <br><center><ol>
     {% for team in lboard %}
       <li>{{team.name}}</li>
     {% endfor %}
     </ol></center>
-    <a href="{% url 'obs' team=team %}"><button class="myButton">Go to Home</button></a>
 
   </body>
 </html>
