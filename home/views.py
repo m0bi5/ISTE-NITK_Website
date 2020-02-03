@@ -20,5 +20,5 @@ def home(request):
 @require_POST
 @csrf_exempt
 def webhook(request):
-    os.system('nohup ./deploy.sh &')
+    os.system('sudo nohup ./deploy.sh &')
     return render(request,'home/index.html',{})
