@@ -5,9 +5,9 @@ from datetime import datetime
 # Create your views here.
 def login(request):
     if request.method=='GET':
-        team=request.session['team']
-        teams = Team.objects.all().order_by('-points','finish_time','-lives')
-        return render(request,'obscura/leaderboard.html',{'team':team,'lboard':teams[:3]})
+        # team=request.session['team']
+        # teams = Team.objects.all().order_by('-points','finish_time','-lives')
+        return render(request,'obscura/leaderboard.html',{'lboard':teams[:3]})
         #return render(request,'obscura/.html')
     else:
         team = request.POST.get('team').strip()
