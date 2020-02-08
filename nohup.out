@@ -643,3 +643,11 @@ System check identified 4 issues (0 silenced).
 [28/Jan/2020 18:45:15] "GET /static/js/main.js HTTP/1.1" 304 0
 [28/Jan/2020 18:45:15] "GET /media/logo.png HTTP/1.1" 304 0
 [28/Jan/2020 18:45:15] "GET /static/materialize/css/materialize.css.map HTTP/1.1" 304 0
+From https://github.com/m0bi5/ISTE-NITK_Website
+   109883f..8dfef99  master     -> origin/master
+Updating 109883f..8dfef99
+Fast-forward
+ obscura/views.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+Killed
+Must be connected to a terminal.
